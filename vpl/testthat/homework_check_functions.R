@@ -1,5 +1,5 @@
 # ***************************************************************************************************
-# Create Date:        2019-10-26
+# Create Date:        2020-10-26
 # Author:             Kaur Lumiste
 # Description:        Contains functions that check all provided files according to a provided tests 
 #                     file. Results are written into a Google Spreadsheet.

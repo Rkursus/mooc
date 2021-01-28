@@ -1,4 +1,4 @@
-# 2.1.1. ----
+###% ylesanne2.1.1 ----
 #1.
 25-1/4+5/9
 
@@ -14,7 +14,7 @@
 
 
 
-# 2.2.1. ----
+###% ylesanne2.2.1. ----
 #1.
 w <- 3
 z <- w+5
@@ -22,7 +22,7 @@ z
 
 
 
-# 2.3.1. ----
+###% ylesanne2.3.1. ----
 #1.
 z = 25*pi
 
@@ -37,14 +37,14 @@ z + 1/z - 2^(z/19)
 
 
 
-# 2.4.1. ----
+###% ylesanne2.4.1. ----
 poisse <- 3
 tydrukuid <- 2
 lapsi <- poisse + tydrukuid
 
 
 
-# 2.5.1. ----
+###% ylesanne2.5.1. ----
 temp <- c(-6.2, -12.9, -13.0, -15.4, -16.1, -16.9, -17.0, -19.6, -19.9)
 jaam <- c("Ruhnu", "Kihnu", "Pakri", "Tallinn", "Pärnu", "Kunda", "Kuusiku", "Võru", "Jõgeva")            
 names(temp) <- jaam
@@ -65,7 +65,7 @@ temp2
 
 
 
-# 2.6.1. ----
+###% ylesanne2.6.1. ----
 #1.
 exp(temp2)
 vastus1 <- "jah"
@@ -81,7 +81,7 @@ vastus3 <- "ei"
 
 
 
-# 2.7.1. ----
+###% ylesanne2.7.1. ----
 #1.
 temp; jaam
 temp[1]
@@ -102,7 +102,7 @@ vastus2
 
 
 
-# 2.8.1. ----
+###% ylesanne2.8.1. ----
 muutuja1 <- c("TRUE", "true",  "Tru", "FALSE", "F", "false", NA)
 muutuja2 <- c(1:3, NA, 0, Inf - Inf)
 muutuja3 <- 1:6
@@ -120,7 +120,7 @@ muutuja3
 
 
 
-# 2.9.1. ----
+###% ylesanne2.9.1. ----
 x <- c(34, 23, 45, 67, 10, 21, 37)
 x1 <- x > 50
 x1
@@ -143,7 +143,7 @@ x6
 
 
 
-# 2.10.1. ----
+###% ylesanne2.10.1. ----
 abc <- letters[1:3]
 abc
 abc == "a" | abc == "b"

@@ -3,9 +3,11 @@ library(testthat)
 # Helpful command, then whiespace differences will not show up (assumes 'filename' is provided)
 tmp_file = gsub(" ","", readLines(filename))
 
-# Test setup
-context("Kodutöö 1 kontroll")
+# Split the submission by exercises, to that previous results would not interfere
+tmp_parts = split(tmp_file, cumsum(stringr::str_detect(tmp_file, "^###%")))
 
+# Test setup name
+context("Kodutöö 1 kontroll")
 
 
 # Ülesanne 2.1.1 õige lahendus -----
@@ -19,10 +21,18 @@ test_that(ylesanne,
 
 # Ülesanne 2.2.1 õige lahendus -----
 
+if(FALSE){
+  w <- 3
+  z <- w+5
+  z
+}
+
 ylesanne = "Ülesanne 2.02.1"
 
 test_that(ylesanne, 
   {
+    eval(parse(text = paste(tmp_parts[[2]], collapse = '\n')))
+    
     expect_equal(object = w,
                  expected = 3,
                  info = paste0(ylesanne, " Muutujale 'w' on antud vale väärtus"))
@@ -51,6 +61,8 @@ ylesanne = "Ülesanne 2.03.1"
 
 test_that(ylesanne, 
           {
+            eval(parse(text = paste(tmp_parts[[3]], collapse = '\n')))
+            
             #1
             expect_equal(object = z,
                          expected = 25*pi,
