@@ -7,7 +7,7 @@ library(reshape2)
 #install.packages('rstudioapi')
 setwd(dirname(rstudioapi::getActiveDocumentContext()[[2]]))
 
-source('homework_check_functions.R')
+source('../homework_check_functions.R')
 
 # Setup variables ----
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
