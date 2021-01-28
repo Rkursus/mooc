@@ -101,6 +101,8 @@ ylesanne = "Ülesanne 2.04.1"
 
 test_that(ylesanne, 
           {
+            eval(parse(text = paste(tmp_parts[[3]], collapse = '\n')))
+            
             #1
             expect_is(poisse,"numeric")
             
