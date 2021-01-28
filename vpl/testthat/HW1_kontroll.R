@@ -41,15 +41,3 @@ source('homework_check_functions.R')
 # Test and write results into a Google Spreadsheet
 homework_check(.submission, .tests_file, .tests_structure)
 
-
-
-## Checking a single file ----
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-(filename = .filenames[5])
-
-# Clean environment from previous results
-rm(list=ls()[!ls() %in% c("filename", 'y')])
-
-# Read in the submitted file
-try(source(filename, encoding = "UTF-8", verbose = F, echo = F, print.eval = F, max.deparse.length = 1))
-test_file(.tests_file)

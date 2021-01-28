@@ -1,7 +1,7 @@
 library(testthat)
 
 # Helpful command, then whiespace differences will not show up (assumes 'filename' is provided)
-tmp_file = gsub(" ","", readLines(filename))
+tmp_file = gsub(" ","", readLines(.submission))
 
 # Split the submission by exercises, to that previous results would not interfere
 tmp_parts = split(tmp_file, cumsum(stringr::str_detect(tmp_file, "^###%")))
@@ -31,6 +31,7 @@ ylesanne = "Ülesanne 2.02.1"
 
 test_that(ylesanne, 
   {
+    # Evaluate submission exercise
     eval(parse(text = paste(tmp_parts[[2]], collapse = '\n')))
     
     expect_equal(object = w,
@@ -41,10 +42,7 @@ test_that(ylesanne,
                  expected = 8,
                  info = paste0(ylesanne, " Muutuja 'z' on valesti arvutatud"))
     
-    # expect_true(length(grep("read\\.table\\(.+(header.+sep.+dec|sep.+header.+dec|dec.+sep.+header|sep.+dec.+header).+\\)", tmp_file)) > 0, 
-    #           info = paste0(ylesanne, " käsust on midagi puudu"))
-    
-    expect_true(length(grep("^z$", tmp_file)) > 0, 
+    expect_true(length(grep("^z$", tmp_parts[[2]])) > 0, 
                 info = paste0(ylesanne, " muutujat z pole välja prinditud"))
     
   })
