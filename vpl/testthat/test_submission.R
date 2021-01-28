@@ -87,7 +87,6 @@ temp; jaam
 temp[1]
 temp[-1]
 temp[c(1,5,9)]
-temp < -15
 jaam == "Tallinn"
 jaam[ temp < -15 ]
 temp[jaam == "Tallinn"]
