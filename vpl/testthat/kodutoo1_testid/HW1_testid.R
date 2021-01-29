@@ -68,7 +68,7 @@ test_that(ylesanne,
             #1
             expect_equal(object = z,
                          expected = 25*pi,
-                         info = paste0(ylesanne, " muutujale 'u' on antud vale väärtus"))
+                         info = paste0(ylesanne, " muutujale 'z' on antud vale väärtus"))
             
             #2
             expect_true(length(grep("log10\\(z\\)", tmp_parts[[yl]])) > 0 |         # juht log10(z)
@@ -172,10 +172,18 @@ test_that(ylesanne,
                          expected = lisa_x,
                          info = paste0(ylesanne, ".2 valesti lisatud uued nimed"))
             
+            expect_true(length(grep("^lisa$", tolower(tmp_parts[[yl]]))) > 0,
+                        info = paste0(ylesanne, ".2 käsus pole muutujat 'lisa' välja prinditud"),
+                        label = paste0(ylesanne, ".2 käsu kontroll"))
+            
             #3
             expect_equal(object = temp2,
                          expected = temp2_x,
                          info = paste0(ylesanne, ".3 valesti tehtud vektor"))
+            
+            expect_true(length(grep("^temp2$", tolower(tmp_parts[[yl]]))) > 0,
+                        info = paste0(ylesanne, ".3 käsus pole muutujat 'temp2' välja prinditud"),
+                        label = paste0(ylesanne, ".3 käsu kontroll"))
             
           })
 
@@ -418,15 +426,27 @@ test_that(ylesanne,
                         expected = x_test4,
                         label = paste0(ylesanne, ".1 Valesti koostatud tõeväärtusvektor"))
             
+            expect_true(length(grep("^x4$", tmp_parts[[yl]])) > 0, 
+                        info = paste0(ylesanne, ".1 Muutujat 'x4' pole välja prinditud"),
+                        label = paste0(ylesanne, ".1 väljatrüki kontroll"))
+            
             #2
             expect_equal(object = x5,
                          expected = x_test5,
                          info = paste0(ylesanne, ".2 Valesti koostatud tõeväärtusvektor"))
             
+            expect_true(length(grep("^x5$", tmp_parts[[yl]])) > 0, 
+                        info = paste0(ylesanne, ".2 Muutujat 'x5' pole välja prinditud"),
+                        label = paste0(ylesanne, ".2 väljatrüki kontroll"))
+            
             #3
             expect_equal(object = x6,
                          expected = x_test4 & x_test5,
                          info = paste0(ylesanne, ".3 Valesti koostatud tõeväärtusvektor"))
+            
+            expect_true(length(grep("^x6$", tmp_parts[[yl]])) > 0, 
+                        info = paste0(ylesanne, ".3 Muutujat 'x6' pole välja prinditud"),
+                        label = paste0(ylesanne, ".3 väljatrüki kontroll"))
             
           })
 
