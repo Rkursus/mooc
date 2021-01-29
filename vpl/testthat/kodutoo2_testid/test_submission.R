@@ -1,11 +1,4 @@
-# II kodutöö
-
-# Setting up workspace, install 'rstudioapi' if using for first time
-#install.packages('rstudioapi')
-#setwd(dirname(rstudioapi::getActiveDocumentContext()[[2]]))
-
-
-###% ylesanne 1.1.1 lahendus
+###% ylesanne 1.1.1 lahendus, II kodutöö
 
 #1
 andmed2 <- read.table("https://raw.githubusercontent.com/Rkursus/sygis2019/master/data/tulemused.txt", header = T, sep = "\\", dec = ",")
@@ -24,10 +17,10 @@ summary(andmed2)
 
 ###% ylesanne 1.3.1 lahendus
 
-#download.file("https://github.com/Rkursus/sygis2019/raw/master/data/A.csv", "A.csv",  mode = "wb")
+download.file("https://github.com/Rkursus/sygis2019/raw/master/data/A.csv", "A.csv",  mode = "wb")
 
 #1
-read.csv("A.csv", header = T, sep = ";",argumendinimi)
+#read.csv("A.csv", header = T, sep = ";",argumendinimi)
 argumendinimi <- "nrows"
 
 #2
@@ -51,20 +44,21 @@ str(andmed5a)
 tail(andmed5a[ , 1:5])
 
 #2
-andmed5 <- read.csv2(file = "B.csv", nrows = 160, colClasses = "character")
+andmed5 <- read.csv2(file = "B.csv", nrows = 160, stringsAsFactors = FALSE)
 
 #3
-ontaust <- substr(names(andmed5), 1, 79) == "taust"
-onhinnang <- substr(names(andmed5), 1, 79) == "hinnang"
+ontaust <- substr(names(andmed5), 1, 5) == "taust"
+onhinnang <- substr(names(andmed5), 1, 7) == "hinnang"
 
 valik <- andmed5[, ontaust | onhinnang]
-str(valik)                  #Mingil põhjusel ei tööta
+#str(valik)                  #Mingil põhjusel ei tööta
 
 
 ###% ylesanne 2.1.1 lahendus
 
 #1
 pojad <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/pojad.txt", header = T)
+pojad 
 
 #2
 esimene <- pojad$l1
@@ -112,7 +106,7 @@ pikkus_vahe <- pojad$l1 - pojad$l2
 pojad <- cbind(pojad, pikkus_vahe)
 
 #2
-laius_suhe <- pojad$l1 / pojad$l2
+laius_suhe <- pojad$b1 / pojad$b2
 pojad <- cbind(pojad, laius_suhe)
 
 #3
@@ -143,8 +137,7 @@ B <- B[, c("id", "grupp", sort(names(B)[-(1:2)]))]
 olemasBmitteA <- setdiff(B$id, A$id)
 
 #2
-AjaB <- union(A$id, B$id)
-sort(AjaB, decreasing = T)
+AjaB <- sort(intersect(A$id, B$id), decreasing = TRUE)
 
 #3
 uuring1 <- merge(A, B, by = "id", all = T)
@@ -163,15 +156,15 @@ uuring2$sugu2 <- factor(uuring2$sugu, labels = c("Naine", "Mees"))
       #Mingil põhjusel ei tööta, sellest tulenevalt ka järgnev kood mitte
 
 #7
-tabel1 <- table(uuring2$grupp, uuring2$sugu)
+tabel1 <- table(uuring2$grupp, uuring2$sugu2)
 tabel1
 
 #8
-tabel2 <- table(uuring2$sugu, uuring2$grupp)
+tabel2 <-  prop.table(tabel1, 1)
 tabel2
 
 #9
 filter_grupp <- uuring2$grupp == "c"
 filter_sugu <- uuring2$sugu == 0
-c.naisi <- uuring2[filter_grupp & filter_sugu, ]
+c.naisi <- nrow(uuring2[filter_grupp & filter_sugu, ])
 

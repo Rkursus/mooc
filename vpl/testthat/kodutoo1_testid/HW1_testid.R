@@ -1,7 +1,7 @@
 library(testthat)
 
 # Helpful command, then whiespace differences will not show up (assumes 'filename' is provided)
-tmp_file = gsub(" ","", readLines(.submission))
+tmp_file = gsub(" ","", readLines(.submission,encoding="UTF-8"))
 
 # Split the submission by exercises, to that previous results would not interfere
 tmp_parts = split(tmp_file, cumsum(stringr::str_detect(tmp_file, "^###%")))
