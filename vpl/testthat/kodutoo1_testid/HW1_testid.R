@@ -38,14 +38,15 @@ test_that(ylesanne,
     
     expect_equal(object = w,
                  expected = 3,
-                 info = paste0(ylesanne, " Muutujale 'w' on antud vale väärtus"))
+                 info = paste0(ylesanne, ": muutujale 'w' on antud vale väärtus"))
     
     expect_equal(object = z,
                  expected = 8,
-                 info = paste0(ylesanne, " Muutuja 'z' on valesti arvutatud"))
+                 info = paste0(ylesanne, ": muutuja 'z' on valesti arvutatud"))
     
     expect_true(length(grep("^z$", tmp_parts[[2]])) > 0, 
-                info = paste0(ylesanne, " muutujat z pole välja prinditud"))
+                info = paste0(ylesanne, ": muutujat 'z' pole välja prinditud"),
+                label = paste0(ylesanne, " muutuja 'z' väljatrüki kontroll"))
     
   })
 
@@ -68,24 +69,27 @@ test_that(ylesanne,
             #1
             expect_equal(object = z,
                          expected = 25*pi,
-                         info = paste0(ylesanne, " muutujale 'z' on antud vale väärtus"))
+                         info = paste0(ylesanne, ": muutujale 'z' on antud vale väärtus"))
             
             #2
             expect_true(length(grep("log10\\(z\\)", tmp_parts[[yl]])) > 0 |         # juht log10(z)
                           length(grep("log\\(z,base=10\\)", tmp_parts[[yl]])) > 0 | # juht log(z,base=10)
                           length(grep("log\\(z,10\\)", tmp_parts[[yl]])) > 0,       # juht log(z,10)
-                        info = paste0(ylesanne, " kümnendlogaritmi pole leitud või pole kasutatud muutujat 'z'"))
+                        info = paste0(ylesanne, ": kümnendlogaritmi pole leitud või pole kasutatud muutujat 'z'"),
+                        label = paste0(ylesanne, " kümnendlogaritmi kontroll"))
             
             #3
             expect_true(length(grep("log\\(z\\)", tmp_parts[[yl]])) > 0, 
-                        info = paste0(ylesanne, " naturaallogaritmi pole leitud või pole kasutatud muutujat 'z'"))
+                        info = paste0(ylesanne, ": naturaallogaritmi pole leitud või pole kasutatud muutujat 'z'"),
+                        label = paste0(ylesanne, " naturaallogaritmi kontroll"))
           
             #4
             expect_true(length(grep("z\\+\\(1\\/z\\)-2\\^\\(z\\/19\\)", tmp_parts[[yl]])) > 0 |       # juht z+(1/z)-2^(z/19)
                           length(grep("z\\+\\(1\\/z\\)-2\\**\\(z\\/19\\)", tmp_parts[[yl]])) > 0 |    # juht z+(1/z)-2**(z/19)
                             length(grep("z\\+1\\/z-2\\**\\(z\\/19\\)", tmp_parts[[yl]])) > 0 |        # juht z+1/z-2**(z/19)
                           length(grep("z\\+1\\/z-2\\^\\(z\\/19\\)", tmp_parts[[yl]])) > 0,            # juht z+1/z-2^(z/19)
-                        info = paste0(ylesanne, " viimane tehe muutujaga z on valesti arvutatud"))
+                        info = paste0(ylesanne, ": viimane tehe muutujaga z on valesti arvutatud"),
+                        label = paste0(ylesanne, " viimase tehte kontroll"))
             
           })
 
@@ -117,7 +121,7 @@ test_that(ylesanne,
             #2
             expect_equal(object = lapsi,
                          expected = 5,
-                         info = paste0(ylesanne, " Kas asendasid muutuja 'poisse' millegi muuga kui 3?"))
+                         info = paste0(ylesanne, ": Kas asendasid muutuja 'poisse' millegi muuga kui 3?"))
             
           })
 
@@ -154,35 +158,35 @@ test_that(ylesanne,
             #1
             expect_true(length(grep("^fahrenheit(=|<-)temp", tolower(tmp_parts[[yl]]))) > 0 |
                           length(grep("^farenheit(=|<-)temp", tolower(tmp_parts[[yl]]))) > 0,  # Leidub kirjavigu
-                        info = paste0(ylesanne, ".1 käsus pole kasutatud muutujat 'temp'"),
+                        info = paste0(ylesanne, ".1: käsus pole kasutatud muutujat 'temp'"),
                         label = paste0(ylesanne, ".1 käsu kontroll"))
             
             
             expect_true(length(grep("^fahrenheit$", tolower(tmp_parts[[yl]]))) > 0 |
                           length(grep("^farenheit$", tolower(tmp_parts[[yl]]))) > 0,  # Leidub kirjavigu
-                        info = paste0(ylesanne, ".1 käsus pole muutujat Fahrenheit välja prinditud"),
+                        info = paste0(ylesanne, ".1: käsus pole muutujat Fahrenheit välja prinditud"),
                         label = paste0(ylesanne, ".1 käsu kontroll"))
             
             #2
             expect_true(length(grep("^names\\(lisa\\)", tmp_parts[[yl]])) > 0, 
-                        info = paste0(ylesanne, ".2 pole lisatud pealkirjasid"),
+                        info = paste0(ylesanne, ".2: pole lisatud pealkirjasid"),
                         label = paste0(ylesanne, ".1 käsu kontroll"))
             
             expect_equal(object = lisa,
                          expected = lisa_x,
-                         info = paste0(ylesanne, ".2 valesti lisatud uued nimed"))
+                         info = paste0(ylesanne, ".2: valesti lisatud uued nimed"))
             
             expect_true(length(grep("^lisa$", tolower(tmp_parts[[yl]]))) > 0,
-                        info = paste0(ylesanne, ".2 käsus pole muutujat 'lisa' välja prinditud"),
+                        info = paste0(ylesanne, ".2: käsus pole muutujat 'lisa' välja prinditud"),
                         label = paste0(ylesanne, ".2 käsu kontroll"))
             
             #3
             expect_equal(object = temp2,
                          expected = temp2_x,
-                         info = paste0(ylesanne, ".3 valesti tehtud vektor"))
+                         info = paste0(ylesanne, ".3: valesti tehtud vektor"))
             
             expect_true(length(grep("^temp2$", tolower(tmp_parts[[yl]]))) > 0,
-                        info = paste0(ylesanne, ".3 käsus pole muutujat 'temp2' välja prinditud"),
+                        info = paste0(ylesanne, ".3: käsus pole muutujat 'temp2' välja prinditud"),
                         label = paste0(ylesanne, ".3 käsu kontroll"))
             
           })
@@ -219,30 +223,31 @@ test_that(ylesanne,
             #1
             expect_equal(object = tolower(vastus1),
                          expected = 'jah',
-                         info = paste0(ylesanne, ".1 muutujale 'vastus1' on antud vale väärtus "))
+                         info = paste0(ylesanne, ".1: muutujale 'vastus1' on antud vale väärtus "),
+                         label = paste0(ylesanne, ".1 muutuja 'vastus1' kontroll"))
             
             expect_true(length(grep("^exp\\(temp2\\)$", tmp_parts[[yl]])) > 0, 
-                        info = paste0(ylesanne, ".1 midagi läks valesti"),
+                        info = paste0(ylesanne, ".1: midagi läks valesti"),
                         label = paste0(ylesanne, ".1 funktsiooni rakendamise kontroll"))
             
             #2
             expect_equal(object = vastus2,
                          expected = -16.1,
-                         info = paste0(ylesanne, ".2 muutujale 'vastus2' on antud vale väärtus "))
+                         info = paste0(ylesanne, ".2: muutujale 'vastus2' on antud vale väärtus "))
             
             
             expect_true(length(grep("^summary\\(temp2\\)$", tmp_parts[[yl]])) > 0, 
-                        info = paste0(ylesanne, ".2 pole 'summary' funktsiooni kasutatud"),
+                        info = paste0(ylesanne, ".2: pole 'summary' funktsiooni kasutatud"),
                         label = paste0(ylesanne, ".2 funktsiooni rakendamise kontroll"))
             
             #3
             expect_equal(object = tolower(vastus3),
                          expected = 'ei',
-                         info = paste0(ylesanne, ".3 muutujale 'vastus3' on antud vale väärtus "))
+                         info = paste0(ylesanne, ".3: muutujale 'vastus3' on antud vale väärtus "))
             
             
             expect_true(length(grep("^sd\\(temp2\\)$", tmp_parts[[yl]])) > 0, 
-                        info = paste0(ylesanne, ".3 pole 'sd' funktsiooni kasutatud"),
+                        info = paste0(ylesanne, ".3: pole 'sd' funktsiooni kasutatud"),
                         label = paste0(ylesanne, ".3 funktsiooni rakendamise kontroll"))
           })
 
@@ -284,28 +289,28 @@ test_that(ylesanne,
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
             #2
+            vastus1_test = temp_x[seq(0,length(temp_x),2)]
             expect_equal(object = vastus1,
-                         expected =  temp_x[seq(0,length(temp_x),2)],
-                         info = paste0(ylesanne, ".2 muutujale 'vastus1' on antud vale väärtus "))
+                         expected = vastus1_test ,
+                         info = paste0(ylesanne, ".2: muutujale 'vastus1' on antud vale väärtus "))
             
             expect_true(length(grep("temp\\[seq\\(", tmp_parts[[yl]])) > 0, 
-                        info = paste0(ylesanne, ".2 pole 'seq' funktsiooni kasutatud"),
+                        info = paste0(ylesanne, ".2: pole 'seq' funktsiooni kasutatud"),
                         label = paste0(ylesanne, ".2 funktsiooni rakendamise kontroll"))
             
             expect_true(length(grep("^vastus1$", tmp_parts[[yl]])) > 0, 
-                        info = paste0(ylesanne, ".2 Muutujat 'vastus1' pole välja prinditud"),
+                        info = paste0(ylesanne, ".2: muutujat 'vastus1' pole välja prinditud"),
                         label = paste0(ylesanne, ".2 väljatrüki kontroll"))
             
             #3
+            vastus2_test = jaam[temp_x <= -17]
             expect_equal(object = vastus2,
-                         expected =  jaam[temp_x <= -17],
-                         info = paste0(ylesanne, ".3 muutujale 'vastus2' on antud vale väärtus "))
+                         expected = vastus2_test,
+                         info = paste0(ylesanne, ".3: muutujale 'vastus2' on antud vale väärtus "))
             
             expect_true(length(grep("^vastus2$", tmp_parts[[yl]])) > 0, 
-                        info = paste0(ylesanne, ".3 Muutujat 'vastus2' pole välja prinditud"),
+                        info = paste0(ylesanne, ".3: muutujat 'vastus2' pole välja prinditud"),
                         label = paste0(ylesanne, ".3 väljatrüki kontroll"))
-            
-            
           })
 
 
@@ -344,8 +349,8 @@ test_that(ylesanne,
             
             #1
             expect_true(length(grep("^is\\.logical\\(muutuja1\\)", tmp_parts[[yl]])) > 0, 
-                        info = paste0(ylesanne, ".1 Pole kasutatud õiget funktsiooni"),
-                        label = paste0(ylesanne, ".1 Funktsiooni rakendamise kontroll"))
+                        info = paste0(ylesanne, ".1: pole kasutatud õiget funktsiooni"),
+                        label = paste0(ylesanne, ".1 funktsiooni rakendamise kontroll"))
             
             # expect_equal(object = is.logical(muutuja1),
             #              expected =  is.logical(c("TRUE", "true",  "Tru", "FALSE", "F", "false", NA)),
@@ -353,20 +358,20 @@ test_that(ylesanne,
             
             #2
             expect_true(length(grep("^is\\.nan\\(muutuja2\\)", tmp_parts[[yl]])) > 0, 
-                        info = paste0(ylesanne, ".2 Pole kasutatud õiget funktsiooni"),
-                        label = paste0(ylesanne, ".2 Funktsiooni rakendamise kontroll"))
+                        info = paste0(ylesanne, ".2: pole kasutatud õiget funktsiooni"),
+                        label = paste0(ylesanne, ".2 funktsiooni rakendamise kontroll"))
             
             #3
             expect_equal(object = muutuja3,
                          expected =  testi_muutuja3,
-                         info = paste0(ylesanne, ".3 Puuduv väärtus on valesti määratud"))
+                         info = paste0(ylesanne, ".3: puuduv väärtus on valesti määratud"))
             
             expect_true(length(grep("^is\\.na\\(muutuja3\\)\\[1\\][=|<-]NA", tmp_parts[[yl]])) == 0, 
-                        info = paste0(ylesanne, ".3 Valesti määratud väärtus, kasutatud 'NA'-d"),
-                        label = paste0(ylesanne, ".3 Teada vale vastuse kontroll"))
+                        info = paste0(ylesanne, ".3: valesti määratud väärtus, kasutatud 'NA'-d"),
+                        label = paste0(ylesanne, ".3 vastuse kontroll"))
             
             expect_true(length(grep("^muutuja3$", tmp_parts[[yl]])) > 0, 
-                        info = paste0(ylesanne, ".3 Muutujat 'muutuja3' pole välja prinditud"),
+                        info = paste0(ylesanne, ".3: muutujat 'muutuja3' pole välja prinditud"),
                         label = paste0(ylesanne, ".3 väljatrüki kontroll"))
           })
 
@@ -424,28 +429,28 @@ test_that(ylesanne,
             #1
             expect_equal(object = x4, 
                         expected = x_test4,
-                        label = paste0(ylesanne, ".1 Valesti koostatud tõeväärtusvektor"))
+                        info = paste0(ylesanne, ".1: valesti koostatud tõeväärtusvektor"))
             
             expect_true(length(grep("^x4$", tmp_parts[[yl]])) > 0, 
-                        info = paste0(ylesanne, ".1 Muutujat 'x4' pole välja prinditud"),
+                        info = paste0(ylesanne, ".1: muutujat 'x4' pole välja prinditud"),
                         label = paste0(ylesanne, ".1 väljatrüki kontroll"))
             
             #2
             expect_equal(object = x5,
                          expected = x_test5,
-                         info = paste0(ylesanne, ".2 Valesti koostatud tõeväärtusvektor"))
+                         info = paste0(ylesanne, ".2: valesti koostatud tõeväärtusvektor"))
             
             expect_true(length(grep("^x5$", tmp_parts[[yl]])) > 0, 
-                        info = paste0(ylesanne, ".2 Muutujat 'x5' pole välja prinditud"),
+                        info = paste0(ylesanne, ".2: muutujat 'x5' pole välja prinditud"),
                         label = paste0(ylesanne, ".2 väljatrüki kontroll"))
             
             #3
             expect_equal(object = x6,
                          expected = x_test4 & x_test5,
-                         info = paste0(ylesanne, ".3 Valesti koostatud tõeväärtusvektor"))
+                         info = paste0(ylesanne, ".3: valesti koostatud tõeväärtusvektor"))
             
             expect_true(length(grep("^x6$", tmp_parts[[yl]])) > 0, 
-                        info = paste0(ylesanne, ".3 Muutujat 'x6' pole välja prinditud"),
+                        info = paste0(ylesanne, ".3: muutujat 'x6' pole välja prinditud"),
                         label = paste0(ylesanne, ".3 väljatrüki kontroll"))
             
           })
@@ -488,9 +493,10 @@ test_that(ylesanne,
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
             #1
+            viimane_test = y =="tere" | y=="tsau"
             expect_equal(object = viimane,
-                         expected = y =="tere" | y=="tsau",
-                         info = paste0(ylesanne, ".1 Valesti koostatud vektor"))
+                         expected = viimane_test,
+                         info = paste0(ylesanne, ".1: valesti koostatud vektor"))
             
           })
 
