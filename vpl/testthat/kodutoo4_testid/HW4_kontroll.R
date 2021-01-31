@@ -21,16 +21,16 @@ source('../homework_check_functions.R')
   data.frame(
     context = as.character(Sys.time()),
     submission = 'Total nr of unit tests',
-    "Ülesanne 1.1" = 0.0,
-    "Ülesanne 2.1" = 0.0,
-    "Ülesanne 3.1" = 0.0,
-    "Ülesanne 4.1" = 0.0,
+    "Ülesanne 1.1" = 7.0,
+    "Ülesanne 2.1" = 10.0,
+    "Ülesanne 3.1" = 9.0,
+    "Ülesanne 4.1" = 8.0,
     "Ülesanne 5.1" = 0.0,
-    "Ülesanne 6.1" = 0.0,
-    "Ülesanne 7.1" = 0.0,
-    "Ülesanne 8.1" = 0.0,
-    "Ülesanne 9.1" = 0.0,
-    "Ülesanne 10.1" = 0.0
+    "Ülesanne 6.1" = 6.0,
+    "Ülesanne 7.1" = 8.0,
+    "Ülesanne 8.1" = 6.0,
+    "Ülesanne 9.1" = 6.0,
+    "Ülesanne 10.1" = 6.0
   ) %>%
   # Add total number of tests
   mutate(Total = rowSums(.[-c(1:2)]))
