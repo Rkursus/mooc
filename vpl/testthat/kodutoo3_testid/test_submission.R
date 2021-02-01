@@ -83,8 +83,8 @@ str(testid.pikk)
 
 ###% ylesanne 3.2.1 lahendus
 
-rotid <- read.csv(file.choose(), header = T, stringsAsFactors = F, 
-                  colClasses = c("numeric", "character", "character", "factor"))
+#rotid <- read.csv(file.choose(), header = T, stringsAsFactors = F, 
+#                  colClasses = c("numeric", "character", "character", "factor"))
 summary(rotid)
 #1
 library(reshape2)
@@ -102,7 +102,7 @@ tabel1 = table(rotid$Rat)
 tabel1
 
 #2
-tabel2 = dcast(rotid, Rat~"sagedus")
+tabel2 = dcast(rotid, Rat~"mootmisi")
 tabel2
 
 #3
@@ -111,7 +111,7 @@ tabel2
 ###% ylesanne 3.4.1 lahendus
 
 #1
-tabel3 = dcast(rotid, Rat~"kaalu mediaan",value.var = "weight", fun.aggregate = median)
+tabel3 = dcast(rotid, Diet+Rat~"kaalu mediaan",value.var = "weight", fun.aggregate = median)
 tabel3
 #2
 rott2mediaan = 240.0
@@ -134,5 +134,5 @@ transponeeritud
 ###% ylesanne 3.6.1 lahendus
 
 #1
-transponeeritud = recast(arstiabita, variable~Arstiabiliik)
+transponeeritud = recast(data = arstiabita, formula = variable~Arstiabiliik)
 transponeeritud

@@ -21,17 +21,17 @@ source('../homework_check_functions.R')
   data.frame(
     context = as.character(Sys.time()),
     submission = 'Total nr of unit tests',
-    "Ülesanne 1.1.1" = 4.0, 
-    "Ülesanne 1.2.1" = 1.0, # VAJA MUUTA
-    "Ülesanne 2.1.1" = 1.0,
-    "Ülesanne 2.2.1" = 1.0,
-    "Ülesanne 2.3.1" = 1.0,
-    "Ülesanne 3.1.1" = 1.0,
-    "Ülesanne 3.2.1" = 1.0,
-    "Ülesanne 3.3.1" = 1.0,
-    "Ülesanne 3.4.1" = 1.0,
-    "Ülesanne 3.5.1" = 1.0,
-    "Ülesanne 3.6.1" = 1.0
+    "Ülesanne 1.1.1" = 8.0, 
+    "Ülesanne 1.2.1" = 9.0, 
+    "Ülesanne 2.1.1" = 6.0,
+    "Ülesanne 2.2.1" = 3.0,
+    "Ülesanne 2.3.1" = 3.0,
+    "Ülesanne 3.1.1" = 8.0,
+    "Ülesanne 3.2.1" = 5.0,
+    "Ülesanne 3.3.1" = 6.0,
+    "Ülesanne 3.4.1" = 5.0,
+    "Ülesanne 3.5.1" = 4.0,
+    "Ülesanne 3.6.1" = 3.0
   ) %>%
   # Add total number of tests
   mutate(Total = rowSums(.[-c(1:2)]))
