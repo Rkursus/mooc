@@ -18,15 +18,15 @@ summary(andmed2)
 
 argumendinimi <- "nrows"
 
-###% Ülesanne 1.3.1.2
+#Ülesanne 1.3.1.2
 
 list.files(path = ".")
 
-###% Ülesanne 1.3.1.3
+#Ülesanne 1.3.1.3
 
 andmed4 <- read.csv2("A.csv", header = TRUE, sep = ";", na.rm = "TRUE")
 
-###% Ülesanne 1.3.1.4
+# Ülesanne 1.3.1.4
   
 valik <- andmed4[c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), c(-4, -5)]
 valik
