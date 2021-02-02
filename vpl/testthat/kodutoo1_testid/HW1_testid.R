@@ -34,7 +34,7 @@ yl = 2
 test_that(ylesanne, 
   {
     # Evaluate submission exercise
-    eval(parse(text = paste(tmp_parts[[2]], collapse = '\n')))
+    eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
     
     expect_equal(object = w,
                  expected = 3,
@@ -44,7 +44,7 @@ test_that(ylesanne,
                  expected = 8,
                  info = paste0(ylesanne, ": muutuja 'z' on valesti arvutatud"))
     
-    expect_true(length(grep("^z$", tmp_parts[[2]])) > 0, 
+    expect_true(length(grep("^z$", tmp_parts[[yl]])) > 0, 
                 info = paste0(ylesanne, ": muutujat 'z' pole välja prinditud"),
                 label = paste0(ylesanne, " muutuja 'z' väljatrüki kontroll"))
     
