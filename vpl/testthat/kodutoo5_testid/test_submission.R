@@ -30,7 +30,7 @@ tabel <- A1 %>% group_by(sugu, elukoht) %>%
 B <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/B.csv", nrows = 160)
 
 # 1
-B1 <- B %>% select( , starts_with("test"))
+B1 <- B %>% select(starts_with("test"))
 
 # 2
 library(reshape2)
@@ -73,7 +73,7 @@ AB2 <- A1 %>% left_join(B1, by = "id")
 ###% ylesanne6.1 lahendus ---
 
 # 1
-install.packages("data.table")
+#install.packages("data.table")
 library(data.table)
 A <- as.data.table(A)
 
@@ -105,6 +105,7 @@ valik <- tekstid[loigunr > 2 & startsWith(tekst, "A"),
                 .(mitu = length(loigunr)), by = hinnang]
 
 ###% ylesanne8.1 lahendus ---
+library(stringr)
 
 # 1
 esineb <- str_detect(tekstid$tekst, pattern = "[Ee]sti")
