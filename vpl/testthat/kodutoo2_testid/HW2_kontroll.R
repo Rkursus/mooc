@@ -21,11 +21,12 @@ source('../homework_check_functions.R')
   data.frame(
     context = as.character(Sys.time()),
     submission = 'Total nr of unit tests',
-    "Ülesanne 1.1.1" = 3,
-    "Ülesanne 1.3.1" = 6,
-    "Ülesanne 1.4.1" = 5,
-    "Ülesanne 2.1.1" = 6,
-    "Ülesanne 2.2.1" = 6,
+    "Ülesanne 1.1.1" = 7,
+    "Ülesanne 1.2.1" = 1,
+    "Ülesanne 1.3.1" = 7,
+    "Ülesanne 1.4.1" = 7,
+    "Ülesanne 2.1.1" = 4,
+    "Ülesanne 2.2.1" = 7,
     "Ülesanne 2.3.1" = 5,
     "Ülesanne 2.4.1" = 3,
     "Ülesanne 2.5.1" = 11

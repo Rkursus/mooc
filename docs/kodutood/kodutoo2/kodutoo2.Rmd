@@ -41,12 +41,18 @@ Loe avanevast vaatest funktsiooni argumentide ja töö kirjeldust. Seejärel val
 
 ### Ülesanded
 
--**Ülesanne 1** Milline neist väidetest on õige? (Vastus anna näiteks õige väite numbriga, NB! kirjuta vastus kommentaarina).
+-**Ülesanne 1** Milline neist väidetest on õige? (Vastus anna õige väite numbriga, NB! omista vastus muutujale 'vastus').
 
   1. Funktsiooni `read.csv` argumentide vaikeväärtused määravad, et imporditavas failis peab väljaeraldajaks olema semikoolon.
   1. Funktsiooni `read.csv` ei saa kasutada *.txt*-laiendiga faili importimiseks.
   1. Funktsiooni `read.csv` argumentide vaikeväärtused määravad, et imporditavas failis peab kümnendemurru eraldajaks olema punkt.
   1. Funktsiooni `read.csv` argumentide vaikeväärtused määravad, et imporditavas failis peab kümnendemurru eraldajaks olema koma.
+
+```{r eval = F}
+# Ülesanne 1: 
+vastus <- ____
+vastus
+```
 
 **Vihjed**
 
@@ -230,8 +236,7 @@ kapsad <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/cabba
 - **Ülesanne 2** Moodusta kaks tõeväärtusvektorit. Esimene nimega `filter1`, mille väärtus on `TRUE`, kui kapsapea on sordist `c52` ja `FALSE` vastasel juhul. Teine vektor nimega `filter2`, mille väärtus on `TRUE`, kui kapsas on külvatud 21. kuupäeval (`d21`) ja `FALSE` vastasel juhul. 
 - **Ülesanne 3** Kasutades loodud filtreid ja sobivat loogilist tehet vali andmestikust alamosa: need kapsad, mis on sordist `c52` ning on külvatud 21. kuupäeval. Omista valitud read andmestikust objektile `kapsad1`. 
 - **Ülesanne 4** Kasutades loodud filtreid ja sobivat loogilist tehet vali andmestikust alamosa: need kapsad, mis on sordist `c52` või on külvatud 21. kuupäeval. Omista valitud read andmestikust objektile `kapsad2`. 
-- **Ülesanne 5** Kummas alamandmestikus on rohkem vaatlusi? 
-
+- **Ülesanne 5** Kummas alamandmestikus on rohkem vaatlusi? Vastus anna andmetabeli nimetuses oleva numbriga (1 või 2) ja omista see muutujale 'vastus'.
 
 
 ```{r eval = F}
@@ -251,8 +256,8 @@ kapsad1 <- ____________________
 kapsad2 <- ____________________
 
 
-# Ülesanne 5:  pane kirja suurema objektide arvuga andmetabeli nimi
-__________________
+# Ülesanne 5:  pane kirja suurema objektide arvuga andmetabeli nimetuses olev number
+vastus <- ____
 
 
 
@@ -281,7 +286,7 @@ Kasutame andmestikku `pojad`. Meeldetuletuseks:
 ### Ülesanded
 
 - **Ülesanne 1** Lisa olemasolevasse andmestikku tunnus `pikkus_vahe`, mille väärtuseks on esimese ja teise poja pea pikkuse vahe (esimene - teine).  
-- **Ülesanne 2** Lisa olemasolevasse andmestikku tunnus `laus_suhe`, mille väärtuseks on esimese ja teise poja pea laiuse suhe (esimene / teine).  
+- **Ülesanne 2** Lisa olemasolevasse andmestikku tunnus `laius_suhe`, mille väärtuseks on esimese ja teise poja pea laiuse suhe (esimene / teine).  
 - **Ülesanne 3** Moodusta andmestikuobjekt `uus`, kus oleks samad objektid ja samad 6 tunnust kui andmestikus `pojad`, kuid erinev oleks tunnuste järjestus andmestikus.  Andmestiku `uus` tunnused peaks olema järjestuses:  `l1`, `l2`, `pikkus_vahe`, `b1`, `b2`, `laius_suhe`.
 
 
@@ -366,7 +371,7 @@ dieet <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/dieet.c
 
 - Et leida, millisel objektil on kaal sisestatud grammides ehk millisel objektil on `kaal1` maksimaalne, saad kasutada funktsiooni `which.max()`.
 - Andmestikus oleva väärtuse muutmiseks pead tegema omistamistehte, näiteks  kujul `andmed[veagaobjektiindeks, tunnusenr] <- õigeväärtus`.
-- Tühiku lisamiseks andmestikku kasuta funktsiooni `is.na()` abi.
+- Puuduva väärtuse lisamiseks andmestikku kasuta näiteks funktsiooni `is.na()` abi.
 
 
 

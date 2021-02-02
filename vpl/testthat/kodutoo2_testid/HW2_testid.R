@@ -26,6 +26,7 @@ yl = 1
 
 test_that(ylesanne, 
   {
+    tmp_part = tmp_parts[[yl]]
     eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
     
     veerud_expected = c("nimi", "tulemus")
@@ -34,9 +35,21 @@ test_that(ylesanne,
                  info = paste0(ylesanne, ".1: tabeli veerud ei ühti"),
                  label = paste0(ylesanne, ".1 andmestiku kontroll"))
     
-    expect_true(length(grep("read\\.table\\(.+(header.+sep.+dec|sep.+header.+dec|dec.+sep.+header|sep.+dec.+header|header.+dec.+sep|dec.+header.+sep).+\\)", tmp_file)) > 0, 
-              info = paste0(ylesanne, ".1: käsust on midagi puudu"),
-              label = paste0(ylesanne, ".1 käsu kontroll"))
+    expect_true(length(grep("header=T", tmp_part)) > 0, 
+              info = paste0(ylesanne, ".1: read.table() argument 'header' ei vasta oodatule"),
+              label = paste0(ylesanne, ".1 käsu argumendi kontroll"))
+    
+    expect_true(length(grep("sep=.+\\\\\"", tmp_part)) > 0, 
+                info = paste0(ylesanne, ".1: read.table() argument 'sep' ei vasta oodatule"),
+                label = paste0(ylesanne, ".1 käsu argumendi kontroll"))
+    
+    expect_true(length(grep("dec=\",\"", tmp_part)) > 0, 
+                info = paste0(ylesanne, ".1: read.table() argument 'dec' ei vasta oodatule"),
+                label = paste0(ylesanne, ".1 käsu argumendi kontroll"))
+    
+    expect_true(length(grep("read\\.table\\(", tmp_part)) > 0, 
+                info = paste0(ylesanne, ".1: pole kasutatud funktsiooni read.table()"),
+                label = paste0(ylesanne, ".1 käsu argumendi kontroll"))
     
     expect_true(length(grep("^andmed2$|^print\\(andmed2\\)$", tmp_file)) > 0, 
                 info = paste0(ylesanne, ".1: pole andmestikku välja prinditud"),
@@ -49,9 +62,24 @@ test_that(ylesanne,
   })
 
 # Ülesanne 1.2.1 õige lahendus -----
+if(FALSE){
+  #1
+  vastus = 3
+  vastus
+}
 
-# Valikvastustega küsimus
-# Õige variant oli kolmas
+ylesanne = "Ülesanne 1.2.1"
+yl = 2
+
+test_that(ylesanne, 
+          {
+            eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
+            
+            expect_true(vastus==3, 
+                        info = paste0(ylesanne, ".1: vale vastus"),
+                        label = paste0(ylesanne, ".1 vastuse kontroll"))
+  
+          })
 
 
 # Ülesanne 1.3.1 õige lahendus -----
@@ -79,6 +107,7 @@ yl = 3
 
 test_that(ylesanne, 
           { 
+            tmp_part = tmp_parts[[yl]]
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             #1
             expect_true(grep("^nrows$|^nrow\\(\\)$", argumendinimi) > 0,
@@ -86,14 +115,19 @@ test_that(ylesanne,
                         label = paste0(ylesanne, ".1 vastuse kontroll"))
             
             #2
-            expect_true(length(grep("list\\.files\\(\\)", tmp_file)) > 0, 
+            expect_true(length(grep("list\\.files\\(", tmp_file)) > 0, 
                         info = paste0(ylesanne, ".2: käsust on midagi puudu"),
                         label = paste0(ylesanne, ".2 käsu kontroll"))
             
             #3
-            expect_true(length(grep("read\\.csv2\\(.?(A\\.csv.+nrows).+\\)", tmp_file)) > 0, 
+            expect_true(length(grep("read\\.csv2\\(", tmp_part)) > 0, 
                         info = paste0(ylesanne, ".3: pole kasutatud nõutud funktsiooni"),
                         label = paste0(ylesanne, ".3 faili laadimise kontroll"))
+            
+            expect_true(length(grep("nrows=45", tmp_part)) > 0, 
+                        info = paste0(ylesanne, ".3: pole kasutatud argumenti 'nrows'"),
+                        label = paste0(ylesanne, ".3 argumendi kontroll"))
+            
             
             andmed_test = read.csv2("https://github.com/Rkursus/2020/raw/master/data/A.csv", nrows = 45)
             expect_equal(object = andmed4,
@@ -102,9 +136,9 @@ test_that(ylesanne,
                          label = paste0(ylesanne, ".3 andmestiku kontroll"))
             
             #4
-            valik_expected = andmed4[1:10, -(4:5)]
+            valik_test = andmed4[1:10, -(4:5)]
             expect_equal(object = valik,
-                         expected = valik_expected,
+                         expected = valik_test,
                          info = paste0(ylesanne, ".4: vale vastus, andmestik ei kattu"),
                          label = paste0(ylesanne, ".4 valiku kontroll"))
             
@@ -138,6 +172,7 @@ yl=4
 
 test_that(ylesanne, 
           {
+            tmp_part = tmp_parts[[yl]]
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             #1
             expect_true(length(grep("dim\\(andmed5a\\)", tmp_file)) > 0, 
@@ -148,7 +183,7 @@ test_that(ylesanne,
                         info = paste0(ylesanne, ".1: tunnuste käsust on midagi puudu"),
                         label = paste0(ylesanne, ".1 tunnuste käsu kontroll"))
             
-            expect_true(length(grep("^tail\\(andmed5a\\[.?(1\\:5)\\]\\)", tmp_file)) > 0, 
+            expect_true(length(grep("^tail\\(andmed5a\\[.+1\\:5.+\\)", tmp_file)) > 0, 
                         info = paste0(ylesanne, ".1: 'tail' käsust on midagi puudu"),
                         label = paste0(ylesanne, ".1 'tail' käsu kontroll"))
             
@@ -159,9 +194,16 @@ test_that(ylesanne,
             expect_equal(object = andmed5,
                          expected = andmed5_expected,
                          info = paste0(ylesanne, ".2: valesti sisse loetud andmestik"),
-                         label = paste0(ylesanne,".3 andmestiku kontroll"))
+                         label = paste0(ylesanne,".2 andmestiku kontroll"))
             # Ülesande teksti sooviti, et tekstilised väärtused oleksid kindlasti tekstid, mitte faktorid, seega peaks argument stringsAsFactors = FALSE.
             
+            expect_true(length(grep("nrows=160", tmp_part)) > 0, 
+                        info = paste0(ylesanne, ".2: vaatluste arv ei ole korrektselt täpsustatud, kasuta selleks argumenti 'nrows'"),
+                        label = paste0(ylesanne, ".2 read.csv2() argumendi kontroll"))
+            
+            expect_true(length(grep("stringsAsFactors=F", tmp_part)) > 0, 
+                        info = paste0(ylesanne, ".2: argumendi 'stringsAsFactors väärtus ei vasta oodatule"),
+                        label = paste0(ylesanne, ".2 read.csv2() argumendi kontroll"))
             
             #3
             valik_expected = andmed5[, substr(names(andmed5), 1, 5) %in% c("taust", "hinna")]
@@ -194,6 +236,7 @@ yl=5
 
 test_that(ylesanne, 
           {
+            tmp_part = tmp_parts[[yl]]
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             #1
             pojad_expected = read.table("https://github.com/Rkursus/2020/raw/master/data/pojad.txt", header = T)
@@ -202,19 +245,12 @@ test_that(ylesanne,
                          info = paste0(ylesanne, ".1: valesti sisse loetud andmestik"),
                          label = paste0(ylesanne,".1 andmestiku sisselugemise kontroll"))
             
-            expect_true(length(grep("^pojad$", tmp_file)) > 0, 
-                        info = paste0(ylesanne, ".1: pole andmestikku välja prinditud"),
-                        label = paste0(ylesanne, ".1 andmestiku väljarüki kontroll"))
             #2
             filter_expected = pojad$l1 > mean(pojad$l1)
             expect_equal(object = filter,
                          expected = filter_expected,
                          info = paste0(ylesanne, ".2: valesti defineeritud filter"),
                          label = paste0(ylesanne,".2 filtri kontroll"))
-            
-            expect_true(length(grep("^filter$", tmp_file)) > 0, 
-                        info = paste0(ylesanne, ".2: pole 'filtrit' välja prinditud"),
-                        label = paste0(ylesanne, ".2 filtri väljarüki kontroll"))
             
             #3
             pojad1_expected = pojad[filter, ]
@@ -224,7 +260,7 @@ test_that(ylesanne,
                          label = paste0(ylesanne,".3 filtreeritud andmete kontroll "))
             
             
-            expect_true(length(grep("^dim\\(pojad1\\)$", tmp_file)) > 0, 
+            expect_true(length(grep("^dim\\(pojad1\\)$", tmp_part)) > 0, 
                         info = paste0(ylesanne, ".3: andmestiku 'pojad1' dimensioone pole välja prinditud"),
                         label = paste0(ylesanne, ".3 andmestiku dimensiooni väljarüki kontroll"))
             
@@ -253,9 +289,8 @@ kapsad1 <- kapsad[filter1 & filter2, ]
 kapsad2 <- kapsad[filter1 | filter2, ]
 
 
-# Ülesanne 5: pane kirja suurema objektide arvuga andmetabeli nimi
-kumbsuurem <- "kapsad2"
-
+# Ülesanne 5: pane kirja suurema objektide arvuga andmetabeli nimetuses olev number
+vastus = 2
 
 }
 
@@ -304,6 +339,10 @@ test_that(ylesanne,
                          label = paste0(ylesanne, ".4 filtreeritud andmete kontroll"))
             
             #5
+            expect_true(vastus==2, 
+                        info = paste0(ylesanne, ".5: vale vastus"),
+                        label = paste0(ylesanne, ".5 vastuse kontroll"))
+            
             
           })
 
@@ -506,9 +545,9 @@ test_that(ylesanne,
             sugu2_expected = factor(uuring2$sugu, labels = c("Naine", "Mees"))
             expect_equivalent(object = uuring2$sugu2,
                          expected =  sugu2_expected,
-                         info = paste0(ylesanne, ".6: valesti lisatud tunnus 'sugu2'"),
+                         info = paste0(ylesanne, ".6: valesti lisatud tunnus 'sugu2', kasuta käsku factor()"),
                          label = paste0(ylesanne,".6 uue tunnuse kontroll"))
-            
+
             #7
             tabel1_expected = table(uuring2$grupp, uuring2$sugu2)
             expect_equal(object = tabel1,
@@ -516,23 +555,17 @@ test_that(ylesanne,
                          info = paste0(ylesanne, ".7: vale sagedustabel"),
                          label = paste0(ylesanne,".7 sagedustabeli kontroll"))
             
-            expect_true(length(grep("^tabel1$", tmp_parts[[yl]])) > 0, 
-                        info = paste0(ylesanne, ".7: tabelit pole välja prinditud"),
-                        label = paste0(ylesanne, ".7 tabeli väljatrüki kontroll"))
-            
             #8
             tabel2_expected = prop.table(tabel1, 1)
+            prop.table(tabel1)
             expect_equal(object = tabel2,
                          expected = tabel2_expected,
                          info = paste0(ylesanne, ".8: vale proportsioonide tabel"),
                          label = paste0(ylesanne, ".8 jaotustabeli kontroll"))
-            
-            expect_true(length(grep("^tabel2$", tmp_parts[[yl]])) > 0, 
-                        info = paste0(ylesanne, ".8: tabelit pole välja prinditud"),
-                        label = paste0(ylesanne, ".8 tabeli väljatrüki kontroll"))
             
             #9
             expect_true(object = c.naisi == 1,
                         info = paste0(ylesanne, ".9: vale vastus"),
                         label = paste0(ylesanne, ".9 naiste arvu kontroll grupis c"))
           })
+

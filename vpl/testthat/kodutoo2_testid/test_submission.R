@@ -13,6 +13,8 @@ summary(andmed2)
 
 #1
 #Õige on väide number 3
+vastus = 3
+vastus
 
 
 ###% ylesanne 1.3.1 lahendus
@@ -95,6 +97,7 @@ kapsad2 <- kapsad[filter1 | filter2, ]
 dim(kapsad1)
 dim(kapsad2)
  #Vaatlusi on rohkem objektis kapsad2
+vastus = 2
 
 
 ###% ylesanne 2.3.1 lahendus
