@@ -33,6 +33,9 @@ yl = 2
 
 test_that(ylesanne, 
   {
+    # First test if exercise code runs without errors
+    code_run_test(tmp_parts[[yl]])
+    
     # Evaluate submission exercise
     eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
     
