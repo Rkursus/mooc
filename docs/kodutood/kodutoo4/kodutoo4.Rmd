@@ -600,7 +600,7 @@ ggplot(jootraha, aes(x = ratio, y = ..density..)) +
 
 ## Ülesanded
 
-- **Ülesanne 1** Vali õige vastusevariant, kuidas muutub histogrammi värv?
+- **Ülesanne 1** Vali õige vastusevariant, kuidas muutub histogrammi värv? Omista muutujale `vastus` vastav number.
 
     1. Tulemuseks oleval joonisel on histogrammi tulbad rohelist tooni.
     1. Tulemuseks oleval joonisel on histogrammi tulbad ikka hallid, kuid tulbad on raamistatud rohelisega.
@@ -612,7 +612,8 @@ ggplot(jootraha, aes(x = ratio, y = ..density..)) +
 
 ```{r eval = F}
 # Ülesanne 1
-# Õige vastuse number kommentaarina
+# Õige vastuse number
+vastus <- ____
 
 ```
 
@@ -782,7 +783,7 @@ jootraha$_____ <- _______________
 
 # Ülesanne 2: Joondiagramm
 ggplot(jootraha, aes(x = _______, y = ____________)) + 
-      stat_summary(geom = "_______",  fun.y = _________)  + 
+      stat_summary(geom = "_______",  fun = _________)  + 
                     scale_x_continuous(breaks = 1:6)
 
 
@@ -791,7 +792,7 @@ ggplot(jootraha, aes(x = _______, y = ____________)) +
 **Vihjed**
 
 - Joondiagrammi saamiseks peab iga laudkonna suuruse kohta olema leitud keskmine inimesekohta antud jootraha suurus. 
-- Keskmise arvutamise funktsioon (`mean`) tuleb `stat_summary()` käsus anda `fun.y` väärtuseks.
+- Keskmise arvutamise funktsioon (`mean`) tuleb `stat_summary()` käsus anda `fun` väärtuseks.
 - Joondiagramm tekib, kui `stat_summary()` käsus argumendi `geom` väärtus õigesti valida.
 
 
@@ -805,7 +806,7 @@ jootraha$tip.per.person <- jootraha$tip/jootraha$size
 
 # Ülesanne 2: Joondiagramm
 ggplot(jootraha, aes(x = size, y = tip.per.person)) + 
-      stat_summary(geom = "line",  fun.y = mean) + 
+      stat_summary(geom = "line",  fun = mean) + 
                     scale_x_continuous(breaks = 1:6)
 
 ```
@@ -880,7 +881,7 @@ names(jootraha)
 
 # Ülesanne : Joondiagramm (soo kaupa)
 ggplot(jootraha, aes(x = _______, y = ____________, ________________)) + 
-        stat_summary(geom = "_______",  fun.y = _________)  + 
+        stat_summary(geom = "_______",  fun = _________)  + 
                     scale_x_continuous(breaks = 1:6)
 
 
@@ -900,7 +901,7 @@ names(jootraha)
 
 # Ülesanne : Joondiagramm (soo kaupa)
 ggplot(jootraha, aes(x = size, y = tip.per.person, color = sex)) +
-        stat_summary(geom = "line",  fun.y = mean) + 
+        stat_summary(geom = "line",  fun = mean) + 
                     scale_x_continuous(breaks = 1:6)
 
 ```
@@ -961,7 +962,7 @@ names(jootraha)
 
 # Ülesanne : Joondiagramm (soo kaupa)
 ggplot(jootraha, aes(x = _______, y = ____________, ________________)) + 
-        stat_summary(geom = "_______",  fun.y = _________)  + 
+        stat_summary(geom = "_______",  fun = _________)  + 
                     scale_x_continuous(breaks = 1:6)
 
 ```
@@ -977,7 +978,7 @@ names(jootraha)
 
 # Ülesanne : Joondiagramm (soo kaupa)
 ggplot(jootraha, aes(x = size, y = tip.per.person, linetype = sex)) + 
-        stat_summary(geom = "line",  fun.y = mean) +
+        stat_summary(geom = "line",  fun = mean) +
                     scale_x_continuous(breaks = 1:6)
 
 ```

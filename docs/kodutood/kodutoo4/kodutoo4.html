@@ -1,15 +1,14 @@
+<!DOCTYPE html>
 
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
 
@@ -65,7 +64,7 @@ library(reshape2)
 jootraha &lt;-tips
 jootraha$day &lt;- factor(jootraha$day, levels = c(&quot;Thur&quot;, &quot;Fri&quot;, &quot;Sat&quot;, &quot;Sun&quot;))</code></pre>
 <p>Ülesandeks on nende andmete iseloomustamine graafikute abil, kasutades paketi <strong>ggplot2</strong> vahendeid.</p>
-<div id="ulesanded" class="section level2">
+<div id="ülesanded" class="section level2">
 <h2><span class="header-section-number">1.1</span> Ülesanded</h2>
 <ul>
 <li><strong>Ülesanne 1</strong> Aktiveeri pakett <strong>ggplot2</strong>.</li>
@@ -100,7 +99,7 @@ j1</code></pre>
 <div id="tulpdiagamm-osakaaludega" class="section level1">
 <h1><span class="header-section-number">2</span> Tulpdiagamm osakaaludega</h1>
 <p>Selles ülesandes kasuta <em>y</em> telje sildistamiseks paketi <strong>scales</strong> abi. Kui pakett on aktiveeritud, siis saab <code>scales_</code> käskudes kasutada väärtuste sildistamiseks mõningaid eeldefineeritud vorme, näiteks protsendi kuvamiseks <code>labels = percent</code>, dollarimärgi lisamiseks summadele <code>labels = dollar</code> jne.</p>
-<div id="ulesanded-1" class="section level2">
+<div id="ülesanded-1" class="section level2">
 <h2><span class="header-section-number">2.1</span> Ülesanded</h2>
 <ul>
 <li><strong>Ülesanne</strong> Täienda antud koodi nii, et tulemuseks oleks tulpdiagramm, mis esitaks iga päeva kohta lõuna (<em>Lunch</em>) ja õhtusöökide (<em>Dinner</em>) osakaalud. St iga päeva kohta joonisel üks tulp, tulba sees jaotus lõuna ja õhtusöökide vahel antud erineva värviga ja tulba kõrgus summeeruks väärtuseks üks st esitaks tervikut. Muuda vaikimisi skaalasid joonisel järgnevalt:
@@ -129,7 +128,7 @@ j1</code></pre>
 </div>
 <div id="hajuvusdiagramm-1" class="section level1">
 <h1><span class="header-section-number">3</span> Hajuvusdiagramm 1</h1>
-<div id="ulesanded-2" class="section level2">
+<div id="ülesanded-2" class="section level2">
 <h2><span class="header-section-number">3.1</span> Ülesanded</h2>
 <ul>
 <li><strong>Ülesanne 1</strong> Täienda antud koodi nii, et tulemuseks oleks hajuvusdiagramm restoraniarve suuruse ja jootraha suuruse vahel. Siin vali <em>x</em>-teljele arve suuruse tunnus. Hajuvusdiagrammi punktid värvi vastavalt sellele, mis nädalapäevaga oli tegu, värv lisa <code>geom_</code> funktsiooni kaudu. Kasutades sobivat <code>scale_&lt;_&gt;_hue</code> funktsiooni määra värvilegendis õige päevade järjekord, päevade nimed jäta lühendatud kujule, ära muuda legendi pealkirja.</li>
@@ -156,7 +155,7 @@ suurim  &lt;- &quot;_____&quot;</code></pre>
 </div>
 <div id="hajuvusdiagramm-2" class="section level1">
 <h1><span class="header-section-number">4</span> Hajuvusdiagramm 2</h1>
-<div id="ulesanded-3" class="section level2">
+<div id="ülesanded-3" class="section level2">
 <h2><span class="header-section-number">4.1</span> Ülesanded</h2>
 <ul>
 <li><strong>Ülesanne 1</strong> Täienda antud koodi nii, et tulemuseks oleks hajuvusdiagramm restoraniarve suuruse ja jootraha suuruse vahel. Siin vali <em>x</em>-teljele arve suuruse tunnus. Hajuvusdiagrammi punktid värvi vastavalt sellele, mis soost arve maksjaga oli tegu, punkti kuju määra selle järgi kas laudkonnas oli suitsetaja või mitte. Värv ja punktikuju lisa <code>geom_</code> funktsiooni kaudu.</li>
@@ -182,7 +181,7 @@ j1 + ________________________________</code></pre>
 </div>
 <div id="histogramm-jaotuse-iseloomustamiseks" class="section level1">
 <h1><span class="header-section-number">5</span> Histogramm jaotuse iseloomustamiseks</h1>
-<div id="ulesanded-4" class="section level2">
+<div id="ülesanded-4" class="section level2">
 <h2><span class="header-section-number">5.1</span> Ülesanded</h2>
 <ul>
 <li><strong>Ülesanne 1</strong> Lisa andmestikku uus tunnus nimega <code>ratio</code>, mille väärtuseks oleks kelneri saadud jootraha ja makstud arve jagatis.</li>
@@ -209,15 +208,15 @@ erind &lt;- &quot;_______&quot;</code></pre>
 </ul>
 </div>
 </div>
-<div id="histogrammi-varvi-muutmine" class="section level1">
+<div id="histogrammi-värvi-muutmine" class="section level1">
 <h1><span class="header-section-number">6</span> Histogrammi värvi muutmine</h1>
 <p>Lisame histogrammi joonistamise käsku värvi järgmisel moel:</p>
 <pre class="r"><code>ggplot(jootraha, aes(x = ratio, y = ..density..)) + 
         geom_histogram(aes(fill = &quot;chartreuse&quot;))</code></pre>
-<div id="ulesanded-5" class="section level2">
+<div id="ülesanded-5" class="section level2">
 <h2><span class="header-section-number">6.1</span> Ülesanded</h2>
 <ul>
-<li><p><strong>Ülesanne 1</strong> Vali õige vastusevariant, kuidas muutub histogrammi värv?</p>
+<li><p><strong>Ülesanne 1</strong> Vali õige vastusevariant, kuidas muutub histogrammi värv? Omista muutujale <code>vastus</code> vastav number.</p>
 <ol style="list-style-type: decimal">
 <li>Tulemuseks oleval joonisel on histogrammi tulbad rohelist tooni.</li>
 <li>Tulemuseks oleval joonisel on histogrammi tulbad ikka hallid, kuid tulbad on raamistatud rohelisega.</li>
@@ -228,7 +227,8 @@ erind &lt;- &quot;_______&quot;</code></pre>
 </ol></li>
 </ul>
 <pre class="r"><code># Ülesanne 1
-# Õige vastuse number kommentaarina</code></pre>
+# Õige vastuse number
+vastus &lt;- ____</code></pre>
 
 <p><strong>Vihjed</strong></p>
 <ul>
@@ -238,7 +238,7 @@ erind &lt;- &quot;_______&quot;</code></pre>
 </div>
 <div id="karpdiagrammid" class="section level1">
 <h1><span class="header-section-number">7</span> Karpdiagrammid</h1>
-<div id="ulesanded-6" class="section level2">
+<div id="ülesanded-6" class="section level2">
 <h2><span class="header-section-number">7.1</span> Ülesanded</h2>
 <ul>
 <li><strong>Ülesanne 1</strong> Täienda antud koodi sobivalt, nii et tulemuseks oleks jootraha ja arve suuruse suhte karpdiagrammid laudkondade suuruse kaupa.</li>
@@ -267,7 +267,7 @@ tabel</code></pre>
 </div>
 <div id="joondiagramm-1" class="section level1">
 <h1><span class="header-section-number">8</span> Joondiagramm 1</h1>
-<div id="ulesanded-7" class="section level2">
+<div id="ülesanded-7" class="section level2">
 <h2><span class="header-section-number">8.1</span> Ülesanded</h2>
 <ul>
 <li><strong>Ülesanne 1</strong> Lisa andmestikku uus tunnus, mis näitaks kui suur on jootraha suurus ühe inimese kohta laudkonnas, st jaga jootraha suurus laudkonna inimeste arvuga. Uue tunnuse nimeks vali <code>tip.per.person</code></li>
@@ -282,12 +282,12 @@ jootraha$_____ &lt;- _______________
 
 # Ülesanne 2: Joondiagramm
 ggplot(jootraha, aes(x = _______, y = ____________)) + 
-      stat_summary(geom = &quot;_______&quot;,  fun.y = _________)  + 
+      stat_summary(geom = &quot;_______&quot;,  fun = _________)  + 
                     scale_x_continuous(breaks = 1:6)</code></pre>
 <p><strong>Vihjed</strong></p>
 <ul>
 <li>Joondiagrammi saamiseks peab iga laudkonna suuruse kohta olema leitud keskmine inimesekohta antud jootraha suurus.</li>
-<li>Keskmise arvutamise funktsioon (<code>mean</code>) tuleb <code>stat_summary()</code> käsus anda <code>fun.y</code> väärtuseks.</li>
+<li>Keskmise arvutamise funktsioon (<code>mean</code>) tuleb <code>stat_summary()</code> käsus anda <code>fun</code> väärtuseks.</li>
 <li>Joondiagramm tekib, kui <code>stat_summary()</code> käsus argumendi <code>geom</code> väärtus õigesti valida.</li>
 </ul>
 </div>
@@ -296,7 +296,7 @@ ggplot(jootraha, aes(x = _______, y = ____________)) +
 <h1><span class="header-section-number">9</span> Joondiagramm 2</h1>
 <p>Andmestikus peaks olema arvutatu tunnus, mis näitab jootraha suurust ühe inimese kohta laudkonnas. Tunnuse nimi olgu <code>tip.per.person</code>.</p>
 <p>Tee eelmise ülesandega sarnane joonis, kuid nüüd lisa soo tunnus nii, et graafikule tekiks kaks joont: üks meeste makstud jootraha kohta ja teine naiste jootraha kohta. Jooned olgu erinevat värvi.</p>
-<div id="ulesanded-8" class="section level2">
+<div id="ülesanded-8" class="section level2">
 <h2><span class="header-section-number">9.1</span> Ülesanded</h2>
 <ul>
 <li><strong>Ülesanne</strong> Täienda antud joonise koodi nii, et tulemuseks oleks joondiagramm, mille abil saaks näha kuidas muutub keskmine inimese kohta makstud jootraha vastavalt laudkonna suurusele grupeerituna soo järgi. Soo grupid olgu tähistatud erineva värviga.</li>
@@ -308,7 +308,7 @@ names(jootraha)
 
 # Ülesanne : Joondiagramm (soo kaupa)
 ggplot(jootraha, aes(x = _______, y = ____________, ________________)) + 
-        stat_summary(geom = &quot;_______&quot;,  fun.y = _________)  + 
+        stat_summary(geom = &quot;_______&quot;,  fun = _________)  + 
                     scale_x_continuous(breaks = 1:6)</code></pre>
 <p><strong>Vihjed</strong></p>
 <ul>
@@ -319,7 +319,7 @@ ggplot(jootraha, aes(x = _______, y = ____________, ________________)) +
 <div id="joondiagramm-3" class="section level1">
 <h1><span class="header-section-number">10</span> Joondiagramm 3</h1>
 <p>Tee eelmise ülesandega sarnane joonis, kuid nüüd lisa soo tunnus nii, et graafikule tekiks kaks sama värvi, kuid erinevat tüüpi joont. Joone tüübi määramiseks kasuta <code>linetype</code> argumenti.</p>
-<div id="ulesanded-9" class="section level2">
+<div id="ülesanded-9" class="section level2">
 <h2><span class="header-section-number">10.1</span> Ülesanded</h2>
 <ul>
 <li><strong>Ülesanne</strong> Täienda antud joonise koodi nii, et tulemuseks oleks joondiagramm, mille abil saaks näha kuidas muutub keskmine inimese kohta makstud jootraha vastavalt laudkonna suurusele grupeerituna soo järgi, soo grupid olgu tähistatud erineva joonetüübiga (aga sama värvi joon).</li>
@@ -331,7 +331,7 @@ names(jootraha)
 
 # Ülesanne : Joondiagramm (soo kaupa)
 ggplot(jootraha, aes(x = _______, y = ____________, ________________)) + 
-        stat_summary(geom = &quot;_______&quot;,  fun.y = _________)  + 
+        stat_summary(geom = &quot;_______&quot;,  fun = _________)  + 
                     scale_x_continuous(breaks = 1:6)</code></pre>
 <p><strong>Vihjed</strong></p>
 <ul>
