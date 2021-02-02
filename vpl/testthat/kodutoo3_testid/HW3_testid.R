@@ -16,7 +16,7 @@ if(FALSE){
   keskmised = by(iris$Petal.Length, iris$Species, mean)
   
   #2
-  #setosa
+  kroonlehed1 = "setosa"
   
   #3
   iris$sordinimi = factor(iris$Species, levels= c("versicolor","setosa","virginica"))
@@ -35,17 +35,23 @@ test_that(ylesanne,
             eval(parse(text = paste(tmp_part, collapse = '\n')))
             
             #1
-            keskmised_test = by(iris$Petal.Length, iris$Species, mean)
-            expect_equal(object = keskmised,
-                         expected = keskmised_test,
-                         info = paste0(ylesanne, ".1: tulemus ei vasta oodatule"))
+            esimene = keskmised[1]==1.462
+            teine = keskmised[2]==4.26
+            kolmas = keskmised[3]==5.552
+            expect_true(esimene&teine&kolmas,
+                         info = paste0(ylesanne, ".1: tulemus ei vasta oodatule"),
+                        label = paste0(ylesanne, ".1 'keskmised' kontroll"))
             
-            expect_true(length(grep("mean\\)", tmp_part)) > 0, 
+            expect_true(length(grep("mean", tmp_part)) > 0, 
                         info = paste0(ylesanne, ".1: by() funktsiooni kolmas argument peaks olema 'mean'"),
                         label = paste0(ylesanne, ".1 funktsiooni kontroll"))
             
             expect_equal(names(keskmised_test),names(keskmised), 
                         info = paste0(ylesanne, ".1: vaata üle by() funktsiooni teine argument ehk grupitunnus"))
+            
+            expect_true(kroonlehed1=="setosa", 
+                        info = paste0(ylesanne, ".2: muutuja 'kroonlehed1' väärtus ei ole korrektne"),
+                        label = paste0(ylesanne, ".2 vastuse kontroll"))
             
             #3
             expect_true("sordinimi"%in%names(iris),
@@ -95,26 +101,28 @@ test_that(ylesanne,
           {
             tmp_part = tmp_parts[[yl]]
             eval(parse(text = paste(tmp_part, collapse = '\n')))
-            
+            tyhjad
             #1
             intervallid_test = cut(iris$Petal.Length,breaks = seq(1,7,0.5),right=FALSE)
             expect_equal(object = intervallid,
                          expected = intervallid_test,
                          info = paste0(ylesanne, ".1: tulemus ei vasta oodatule"))
             
-            expect_true(length(grep("cut\\(.+,.+,.+\\)", tmp_part)) > 0, 
-                        info = paste0(ylesanne, ".1: funktsioonil cut() peab olema kolm argumenti"),
-                        label = paste0(ylesanne, ".1 funktsiooni argumentide kontroll"))
+            #??? kui käsk pole ühel real, siis ei toimi
+            #expect_true(length(grep("cut\\(.+,.+,.+\\)", tmp_part)) > 0, 
+            #            info = paste0(ylesanne, ".1: funktsioonil cut() peab olema kolm argumenti"),
+            #            label = paste0(ylesanne, ".1 funktsiooni argumentide kontroll"))
             
-            expect_true(length(grep("breaks=", tmp_part)) > 0, 
-                        info = paste0(ylesanne, ".1: lõikepunktide määramiseks pole kasutatud õiget argumenti"),
-                        label = paste0(ylesanne, ".1 funktsiooni argumendi kontroll"))
+            #??? käsk läheb ka siis läbi, kui argumendi väärtusele 'breaks=' ette ei kirjuta
+            #expect_true(length(grep("breaks=", tmp_part)) > 0, 
+            #            info = paste0(ylesanne, ".1: argument 'breaks' lõikepunktide määramiseks on täpsustamata"),
+            #            label = paste0(ylesanne, ".1 funktsiooni argumendi kontroll"))
             
             intervalle_kokku = length(levels(intervallid))==length(levels(intervallid_test))
             esimesed = substr(levels(intervallid)[1],2,6)==substr(levels(intervallid_test)[1],2,6)
             viimased = substr(levels(intervallid)[12],2,6)==substr(levels(intervallid_test)[12],2,6)
             expect_true(intervalle_kokku&esimesed&viimased, 
-                        info = paste0(ylesanne, ".1: lõikepunktide väärtused ei vasta oodatule"),
+                        info = paste0(ylesanne, ".1: Lõikepunktide väärtused ei vasta oodatule, kontrolli argumendi 'breaks' väärtust. Ära määra argumenti 'labels'."),
                         label = paste0(ylesanne, ".1 funktsiooni argumendi kontroll"))
             
             expect_true(length(grep("right=(F|FALSE)", tmp_part)) > 0, 
@@ -212,7 +220,7 @@ if(FALSE){
   iris.sort1 = iris[order(iris$Sepal.Width, iris$Sepal.Length,iris$Petal.Width),]
   
   #2
-  #eelviimane (?) = iris.sort1$sordinimi[nrow(iris)-1] 
+  eelviimane = "setosa" #iris.sort1$sordinimi[nrow(iris)-1] 
 }
 
 ylesanne = "Ülesanne 2.2.1"
@@ -238,7 +246,10 @@ test_that(ylesanne,
                         label = paste0(ylesanne, ".1 funktsiooni argumentide kontroll"))
             
             #2
-            #eelviimane ? 
+            expect_true(eelviimane=="setosa", 
+                        info = paste0(ylesanne, ".2: muutuja 'eelviimane' väärtus ei ole korrektne"),
+                        label = paste0(ylesanne, ".2 vastuse kontroll"))
+            
             
           })
 
@@ -249,7 +260,7 @@ if(FALSE){
   iris.sort2 = iris[order(iris$Sepal.Width,-iris$Sepal.Length),]
   
   #2
-  #kolmekymnes (?) = iris.sort2$sordinimi[30]
+  kolmekymnes = "virginica" #iris.sort2$sordinimi[30]
 }
 
 ylesanne = "Ülesanne 2.3.1"
@@ -275,7 +286,10 @@ test_that(ylesanne,
                         label = paste0(ylesanne, ".1 funktsiooni argumentide kontroll"))
             
             #2
-            #kolmekymnes?
+            expect_true(kolmekymnes=="virginica", 
+                        info = paste0(ylesanne, ".2: muutuja 'kolmekymnes' väärtus ei ole korrektne"),
+                        label = paste0(ylesanne, ".2 vastuse kontroll"))
+            
             
           })
 
@@ -404,7 +418,7 @@ if(FALSE){
   tabel2
   
   #3
-  #katkestajaid(?)=3
+  katkestajaid = 3
 }
 
 ylesanne = "Ülesanne 3.3.1"
@@ -431,7 +445,7 @@ test_that(ylesanne,
                          expected = tabel2_test,
                          info = paste0(ylesanne, ".2: 'tabel2' sisu ei vasta oodatule"))
             
-            expect_true(length(grep("dcast.+rotid.+\\)", tmp_part)) >0, 
+            expect_true(length(grep("dcast.+rotid", tmp_part)) >0, 
                         info = paste0(ylesanne, ".2: 'dcast' käsu ühe argumendina on vaja täpsustada andmestik 'rotid'"),
                         label = paste0(ylesanne, ".2 funktsiooni argumendi kontroll"))
             
@@ -444,7 +458,9 @@ test_that(ylesanne,
                         label = paste0(ylesanne, ".2 valemi kontroll"))
             
             #3
-            #katkestajaid?
+            expect_true(katkestajaid==3, 
+                        info = paste0(ylesanne, ".3: muutuja 'katkestajaid' väärtus ei ole korrektne"),
+                        label = paste0(ylesanne, ".3 vastuse kontroll"))
             
             
           })
@@ -468,16 +484,26 @@ test_that(ylesanne,
             eval(parse(text = paste(tmp_part, collapse = '\n')))
             
             #1
-            tabel3_test = dcast(rotid, Diet+Rat~"kaalumediaan",value.var = "weight", fun.aggregate = median)
-            expect_equal(object = tabel3,
-                         expected = tabel3_test,
-                         info = paste0(ylesanne, ".1: 'tabel3' sisu ei vasta oodatule"))
+            expect_true("kaalumediaan"%in%colnames(tabel3),
+                        info = paste0(ylesanne, ".1: puudub veerg nimega 'kaalu mediaan'"),
+                        label = paste0(ylesanne, ".1 'tabel3' kontroll"))
+            
+            if("kaalumediaan"%in%colnames(tabel3)){
+            expect_true(tabel3$kaalumediaan[1]==262.0,
+                        info = paste0(ylesanne, ".1: veeru 'kaalu mediaan' väärtused ei ole korrektsed"),
+                        label = paste0(ylesanne, ".1 'tabel3' kontroll"))
+            }
+              
+            
+            expect_true(sum(dim(tabel3)==c(16,3))==2,
+                        info = paste0(ylesanne, ".1: tabelis peaks olema 3 veergu ja 16 rida"),
+                        label = paste0(ylesanne, ".1 'tabel3' kontroll"))
             
             expect_true(length(grep("dcast\\(", tmp_part)) >0, 
                         info = paste0(ylesanne, ".1: pole kasutatud funktsiooni 'dcast'"),
                         label = paste0(ylesanne, ".1 dcast() funktsiooni kontroll"))
             
-            expect_true(length(grep("Diet\\+Rat~\"kaalumediaan\"", tmp_part)) >0, 
+            expect_true(length(grep("(Diet\\+Rat|Rat\\+Diet)~\"kaalumediaan\"", tmp_part)) >0, 
                         info = paste0(ylesanne, ".1: Argument 'formula' on valesti määratud. Tabelis võiks reas esimene väärtus olla dieedi number, teine roti number ja kolmas leitud mediaan veerus 'kaalu mediaan'."),
                         label = paste0(ylesanne, ".1 valemi kontroll"))
             

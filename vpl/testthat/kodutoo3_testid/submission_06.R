@@ -74,8 +74,8 @@ testid.pikk <- melt(B, id.vars=1, measure.vars=3:42)
 str(testid.pikk)
 
 ###%Ülesanne 3.2.1.1 lahendus
-rotid <- read.csv(file.choose(), header = T, stringsAsFactors = F, 
-                  colClasses = c("numeric", "character", "character", "factor"))
+#rotid <- read.csv(file.choose(), header = T, stringsAsFactors = F, 
+#                  colClasses = c("numeric", "character", "character", "factor"))
 library(reshape2)
 
 #Ülesanne 3.2.1.2 lahendus

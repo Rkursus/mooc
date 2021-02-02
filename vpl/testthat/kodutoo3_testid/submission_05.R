@@ -109,8 +109,8 @@ str(testid.pikk)
 
 ###% Ülesanne 3.2.1.1 
 
-rotid <- read.csv(file.choose(), header = T, stringsAsFactors = F, 
-                  colClasses = c("numeric", "character", "character", "factor"))
+#rotid <- read.csv(file.choose(), header = T, stringsAsFactors = F, 
+#                  colClasses = c("numeric", "character", "character", "factor"))
 
 summary(rotid)
 
@@ -150,7 +150,7 @@ tabel3
 
 # Ülesanne 3.4.1.2
 
-rott2mediaan <- 
+#rott2mediaan <- 
   
   
 ###% Ülesanne 3.5.1.1
