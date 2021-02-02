@@ -11,7 +11,18 @@ context("Kodutöö 5 kontroll")
 
 # Ülesanne 1.1 õige lahendus -----
 if(FALSE){
+  A <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/A.csv", nrows = 45)
+  head(A)
   
+  #1
+  library(dplyr)
+  
+  #2
+  A1 <- mutate(A, kmi=(kaal)/(kasv/100)**2,
+               kaalugrupp=ifelse(kmi<=25, "ala voi normkaal","ylekaal"))
+  
+  #3
+  str(A1)
 }
 
 ylesanne = "Ülesanne 1.1"
@@ -19,8 +30,39 @@ yl = 1
 
 test_that(ylesanne, 
           {
+            tmp_part = tmp_parts[[yl]]
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
+            #1
+            expect_true(length(grep("library\\(", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".1: vaja kasutada funktsiooni 'library'"),
+                        label = paste0(ylesanne, ".1 library() funktsiooni kontroll"))
+            # expect_true(length(grep('library\\("dplyr"\\).*?', tmp_part)) == "dplyr", 
+            #             info = paste0(ylesanne, ".1: paketinimi kirjutatakse ilma jutumärkideta"),
+            #             label = paste0(ylesanne, ".1 library() funktsiooni sisendi kontroll"))
+            # expect_true(length(grep("library\\('dplyr'\\).*?", tmp_part)) == 'dplyr', 
+            #             info = paste0(ylesanne, ".1: paketinimi kirjutatakse ilma jutumärkideta"),
+            #             label = paste0(ylesanne, ".1 library() funktsiooni sisendi kontroll"))
+            
+            #2
+            expect_true(ncol(A1)==10,
+                        info = paste0(ylesanne,".2: tabelisse pole lisatud 2 uut veergu"),
+                        label = paste0(ylesanne, ".2 veergude arvu kontroll"))
+            
+            expect_true(sum(colnames(A1)[9:10] == c("kmi","kaalugrupp"))==2,
+                        info = paste0(ylesanne,".2: ei leia veerge 'kmi' ja 'kaalugrupp'"),
+                        label = paste0(ylesanne, ".2 veergude nimede kontroll"))
+            
+            expect_true(round(sum(A1$kmi),2)==1195.78,
+                        info = paste0(ylesanne,".2: veeru 'kmi' väärtused valesti leitud"),
+                        label = paste0(ylesanne,".2: veeru 'kmi' väärtuste kontroll"))
+            expect_true(sum(A1$kaalugrupp=="ylekaal")==39,
+                        info = paste0(ylesanne,".2: veeru 'kaalugrupp' väärtused valesti leitud"),
+                        label = paste0(ylesanne,".2: veeru 'kaalugrupp' väärtuste kontroll"))
+            #3
+            expect_true(length(grep("str\\(", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".3: vaja kasutada funktsiooni 'str'"),
+                        label = paste0(ylesanne, ".3 str() funktsiooni kontroll"))
           })
 
 
