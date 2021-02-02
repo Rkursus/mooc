@@ -23,9 +23,11 @@ tabel <- A1 %>% group_by(sugu, elukoht) %>%
 # 2
 # sugu = 1, elukoht = 0
 
-B <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/B.csv", nrows = 160)
+
 
 ###% ylesanne3.1 lahendus ---
+
+B <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/B.csv", nrows = 160)
 
 # 1
 B1 <- B %>% select( , starts_with("test"))
@@ -52,7 +54,7 @@ uus_funktsioon <- function(x) x/10
 antropo_cm_kg <- antropo %>% mutate_at(.vars = vars(-SEX), 
                 .funs = uus_funktsioon)
 
-###% ylesanne lahendus ---
+###% ylesanne5.1 lahendus ---
 
 A <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/A.csv", nrows = 45)
 B <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/B.csv", nrows = 160)
