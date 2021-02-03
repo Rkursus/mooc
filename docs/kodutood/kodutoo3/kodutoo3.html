@@ -1,15 +1,14 @@
+<!DOCTYPE html>
 
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
 
@@ -47,17 +46,17 @@ if (window.hljs) {
 
 
 
-<div id="faktor-tuupi-tunnuse-kasutamine" class="section level1">
+<div id="faktor-tüüpi-tunnuse-kasutamine" class="section level1">
 <h1><span class="header-section-number">1</span> Faktor-tüüpi tunnuse kasutamine</h1>
-<div id="faktori-tasemete-jarjestamine" class="section level2">
+<div id="faktori-tasemete-järjestamine" class="section level2">
 <h2><span class="header-section-number">1.1</span> Faktori tasemete järjestamine</h2>
 <p>R-s on vaikimisi saadval andmestik <code>iris</code> (proovi konsooli kirjutada <code>iris</code>). Andmed on kolme sort iiriste(lilled mitte kommid!) õie mõõtmete kohta. Mõõdetud on õielehtede (kroonlehed - ik <em>petal</em>, tupplehed - ik <em>sepal</em>) pikkus ja laius sentimeetrites.</p>
 <p>Vaata kõigepealt käsuga <code>summary(iris)</code> andmestiku ülevaadet. Tunnus <code>Species</code> näitab iirise sorti.</p>
-<div id="ulesanded" class="section level3">
+<div id="ülesanded" class="section level3">
 <h3><span class="header-section-number">1.1.1</span> Ülesanded</h3>
 <ul>
 <li><strong>Ülesanne 1</strong> Käsu <code>by</code> abil leia kõigi kolme iirisesordi kroonlehe keskmine pikkus (kroonlehe pikkus <code>Petal.Length</code>), omista saadud vastus muutujale <code>keskmised</code>, prindi selle väärtus ekraanile.</li>
-<li><strong>Ülesanne 2</strong> Millise sordi kroonlehed on keskmiselt kõige lühemad?</li>
+<li><strong>Ülesanne 2</strong> Millise sordi kroonlehed on keskmiselt kõige lühemad? Omista selle sordi nimi muutujale <code>kroonlehed1</code>.</li>
 <li><strong>Ülesanne 3</strong> Kasutades <code>factor</code> käsku lisa andmestikku tunnus nimega <code>sordinimi</code>, mis oleks sama sisuga kui <code>Species</code>, kuid mille väärtuste järjekord oleks: <code>versicolor</code>, <code>setosa</code>, <code>virginica</code>.</li>
 <li><strong>Ülesanne 4</strong> Kasutades <code>tapply</code> käsku leia maksimaalsed kroonlehe pikkused igal sordil, tulemuste järjestus muutujas <code>maksimumid</code> olgu järgmine: <code>versicolor</code>, <code>setosa</code>, <code>virginica</code>. Prindi muutuja väärtus ekraanile. Käsu <code>tapply</code> kirjapilt <code>tapply(uuritavtunnus, grupitunnus, funktsioon)</code>.</li>
 </ul>
@@ -71,7 +70,7 @@ keskmised
 
 
 # Ülesanne 2: Mis sordil keskmiselt kõige lühemad kroonlehed
-#&quot;_________&quot;
+kroonlehed1 &lt;- &quot;_________&quot;
 
 
 # Ülesanne 3: Muuda sordinimede järjestust, tekita selleks uus tunnus
@@ -91,7 +90,7 @@ maksimumid</code></pre>
 <div id="faktor-tunnuse-loomine-arvtunnusest" class="section level2">
 <h2><span class="header-section-number">1.2</span> Faktor-tunnuse loomine arvtunnusest</h2>
 <p>Kasutame jällegi andmestikku <code>iris</code>. Kui arvtunnuse väärtused on vaja jagada intervallidesse, siis saab kasutada käsku <code>cut</code>. Loodav tunnus on faktor-tüüpi.</p>
-<div id="ulesanded-1" class="section level3">
+<div id="ülesanded-1" class="section level3">
 <h3><span class="header-section-number">1.2.1</span> Ülesanded</h3>
 <ul>
 <li><strong>Ülesanne 1</strong> Jaga kroonlehtede pikkuse tunnus <code>Petal.Length</code> intervallidesse, selleks tekita töölauale vektor <code>intervallid</code>. Intervallid olgu pikkusega 0.5 sentimeetrit ja kujul: <code>[1, 1.5)</code>, <code>[1.5, 2)</code> jne kuni <code>[6.7, 7)</code>. Ära unusta tekkivate faktoritasemete silte muuda.</li>
@@ -133,7 +132,7 @@ tyhjad &lt;- __</code></pre>
 <pre class="r"><code>x &lt;- c(2:1, 2:1, 2:1, 4)
 y &lt;- c(7, 1, 5, 2, 6, 3, 4)
 xy &lt;- data.frame(x, y)</code></pre>
-<div id="ulesanded-2" class="section level3">
+<div id="ülesanded-2" class="section level3">
 <h3><span class="header-section-number">2.1.1</span> Ülesanded</h3>
 <ul>
 <li><strong>Ülesanne 1</strong> Sorteeri andmestik <code>xy</code> kasvavalt <code>x</code> ja <code>y</code> järgi, kasuta selleks <code>order</code> käsku. Omista sorteeritud andmestik muuutujale <code>xy1</code>, prindi ekraanile.</li>
@@ -160,11 +159,11 @@ xy2
 <div id="andmestiku-sorteerimine-kasvavalt" class="section level2">
 <h2><span class="header-section-number">2.2</span> Andmestiku sorteerimine kasvavalt</h2>
 <p>Töölaual on andmestik <code>iris</code>. Andmestik tuleb erinevate tunnuste järgi kasvavalt sorteerida.</p>
-<div id="ulesanded-3" class="section level3">
+<div id="ülesanded-3" class="section level3">
 <h3><span class="header-section-number">2.2.1</span> Ülesanded</h3>
 <ul>
 <li><strong>Ülesanne 1</strong> Järjesta andmestik <code>iris</code> kasvavasse järjestusse tunnuste <code>Sepal.Width</code>, <code>Sepal.Length</code> ja <code>Petal.Width</code> järgi. Omista tulemus muutujale <code>iris.sort1</code>.</li>
-<li><strong>Ülesanne 2</strong> Mis sorti iiris on eelviimasel kohal? Kuidas leidsid</li>
+<li><strong>Ülesanne 2</strong> Mis sorti iiris on eelviimasel kohal? Omista sordi nimi muuutujale <code>eelviimane</code>.</li>
 </ul>
 <pre class="r"><code># vaata andmestikku
 head(iris)
@@ -173,7 +172,7 @@ head(iris)
 iris.sort1 &lt;- iris[____, ]
 
 # ülesanne 2: eelviimase lille sort
-# &quot;_______&quot;</code></pre>
+eelviimane &lt;- &quot;_______&quot;</code></pre>
 <p><strong>Vihjed</strong></p>
 <ul>
 <li>Andmestiku lõpu vaatamiseks kasuta näiteks funktsiooni <code>tail</code>.</li>
@@ -183,11 +182,11 @@ iris.sort1 &lt;- iris[____, ]
 <div id="andmestiku-sorteerimine-1" class="section level2">
 <h2><span class="header-section-number">2.3</span> Andmestiku sorteerimine</h2>
 <p>Siin ülesandes tuleb kombineerida kasvavalt ja kahanevalt sorteerimist.</p>
-<div id="ulesanded-4" class="section level3">
+<div id="ülesanded-4" class="section level3">
 <h3><span class="header-section-number">2.3.1</span> Ülesanded</h3>
 <ul>
 <li><strong>Ülesanne 1</strong> Järjesta andmestik <code>iris</code> nii, et vaatlused oleks tunnuse <code>Sepal.Width</code> järgi järjestatud kasvavalt ning need vaatlused, mil on kroonlehe laius sama, oleksid tunnuse <code>Sepal.Length</code> järgi järjestatud kahanevasse järjestusse. Omista sorteeritud andmestik muutujale <code>iris.sort2</code>.</li>
-<li><strong>Ülesanne 2</strong> Mis sorti iiris on sorteeritud andmestikus 30 kohal?.</li>
+<li><strong>Ülesanne 2</strong> Mis sorti iiris on sorteeritud andmestikus 30 kohal? Omista selle sordi nimi muutujale <code>kolmekymnes</code>.</li>
 </ul>
 <pre class="r"><code># vaata andmestikku
 head(iris)
@@ -196,7 +195,7 @@ head(iris)
 iris.sort2 &lt;- iris[____, ]
 
 # ülesanne 2: kolmekümnenda lille sort
-# &quot;_______&quot;</code></pre>
+kolmekymnes &lt;- &quot;_______&quot;</code></pre>
 <p><strong>Vihjed</strong></p>
 <ul>
 <li>Kui andmestikku on vaja sorteerida ühe tunnuse järgi kasvavalt ja teise järgi kahanevalt, siis saad <code>order</code> käsus lisada miinusmärgi selle tunnuse nime ette, mille järgi tuleb sorteerida kahanevalt (tingimusel, et <code>decreasing = FALSE</code>). See abinõu sobib aga ainult siis kui tegu on arvtunnustega!</li>
@@ -212,7 +211,7 @@ iris.sort2 &lt;- iris[____, ]
 <p>Loe töölauale andmestik <code>B</code>. Andmestikus on 160 inimese kohta mitmete testide (40 testi) tulemused.</p>
 <pre class="r"><code>B &lt;-  read.csv2(file = &quot;https://github.com/Rkursus/sygis2019/raw/master/data/B.csv&quot;,   nrows = 160, stringsAsFactors = T)
 B &lt;- B[, substr(names(B), 1, 3) %in% c(&quot;id&quot;, &quot;gru&quot;, &quot;tes&quot;) ]</code></pre>
-<div id="ulesanded-5" class="section level3">
+<div id="ülesanded-5" class="section level3">
 <h3><span class="header-section-number">3.1.1</span> Ülesanded</h3>
 <ul>
 <li><strong>Ülesanne 1</strong> Aktiveeri pakett <code>reshape2</code>.</li>
@@ -245,7 +244,7 @@ _____(testid.pikk)</code></pre>
 rotid &lt;- read.csv(file.choose(), header = T, stringsAsFactors = F, 
                   colClasses = c(&quot;numeric&quot;, &quot;character&quot;, &quot;character&quot;, &quot;factor&quot;))</code></pre>
 <p>Rotid on jagatud 3 gruppi, iga grupp sai erinevat toitu (<code>Diet</code>). Sööda mõju uurimiseks kaaluti rotid korduvalt, mõõtmisajad on kirjas tunnuses <code>Time</code> (aeg päevades katse algusest) kaal grammides on toodud veerus <code>weight</code>.</p>
-<div id="ulesanded-6" class="section level3">
+<div id="ülesanded-6" class="section level3">
 <h3><span class="header-section-number">3.2.1</span> Ülesanded</h3>
 <ul>
 <li><strong>Ülesanne 1</strong> Kui sul veel ei ole, siis aktiveeri pakett <code>reshape2</code>.</li>
@@ -274,12 +273,12 @@ ____________</code></pre>
 <div id="andmestiku-agregeerimine-1" class="section level2">
 <h2><span class="header-section-number">3.3</span> Andmestiku agregeerimine 1</h2>
 <p>Kasuta sama andmestikku <code>rotid</code>. Pakett <code>reshape2</code> peaks olema juba aktiveeritud</p>
-<div id="ulesanded-7" class="section level3">
+<div id="ülesanded-7" class="section level3">
 <h3><span class="header-section-number">3.3.1</span> Ülesanded</h3>
 <ul>
 <li><strong>Ülesanne 1</strong> Mitu korda on iga rotti kaalutud? Leia sagedustabel tunnusele <code>rotid$Rat</code>, omista tabel muutujale <code>tabel1</code>, prindi see ekraanile.</li>
 <li><strong>Ülesanne 2</strong> Kasutades funktsiooni <code>dcast</code> leia samad näitajad andmetabelisse st teisenda andmestikku <code>rotid</code> nii, et tulemuseks olevas andmetabelis oleks ühes veerus rottide indikaatorid ja teises igal rotil tehtud mõõtmiste arv (selle veeru nimi olgu <code>&quot;mootmisi&quot;</code>). Omista saadud tulemus muutujale <code>tabel2</code>, prindi see ekraanile.</li>
-<li><strong>Ülesanne 3</strong> Mitu rotti on enne katse lõppu katkestanud, st mitmel pole kõiki 11 mõõtmist? Kirjuta vastus kommentaarina.</li>
+<li><strong>Ülesanne 3</strong> Mitu rotti on enne katse lõppu katkestanud, st mitmel pole kõiki 11 mõõtmist? Omista nende rottide arv muutujale <code>katkestajaid</code>.</li>
 </ul>
 <pre class="r"><code># vaata andmestikku
 summary(rotid)
@@ -295,7 +294,7 @@ tabel2
 
 
 # Ülesanne 3: Kui palju on katkestajaid
-# _______</code></pre>
+katkestajaid &lt;- _______</code></pre>
 <p><strong>Vihjed</strong></p>
 <ul>
 <li>Käsus <code>dcast</code> käsus saad arvutatavale veerule nime panemiseks käsu argumendi <code>formula</code> kirja panna nii <code>reatunus1 + reatunnus2 ~ &quot;uustunnus&quot;</code>.</li>
@@ -306,7 +305,7 @@ tabel2
 <div id="andmestiku-agregeerimine-2" class="section level2">
 <h2><span class="header-section-number">3.4</span> Andmestiku agregeerimine 2</h2>
 <p>Kasutame sama andmestikku <code>rotid</code>.</p>
-<div id="ulesanded-8" class="section level3">
+<div id="ülesanded-8" class="section level3">
 <h3><span class="header-section-number">3.4.1</span> Ülesanded</h3>
 <ul>
 <li><strong>Ülesanne 1</strong> Kasutades funktsiooni <code>dcast</code> leia tabel, kus rotid on grupeeritud vastavalt dieedile ja igale rotile on leitud tema kaalude mediaan. Kaalu mediaani veerule määra nimeks <code>&quot;kaalu mediaan&quot;</code>. Omista saadud tabel muutujale <code>tabel3</code>, prindi see eraanile.</li>
@@ -325,7 +324,7 @@ rott2mediaan &lt;- _______</code></pre>
 </ul>
 </div>
 </div>
-<div id="tabeli-pooramine" class="section level2">
+<div id="tabeli-pööramine" class="section level2">
 <h2><span class="header-section-number">3.5</span> Tabeli pööramine</h2>
 <p>Kasutades teisendusi pika ja laia kuju vahel saab läbi viia ka andmetabeli pööramist ehk transponeerimist. Sellist tabeli ridade ja veergude vahetust võib vaja minna sel juhul kui tegu on juba mingi koondandmete tabeliga.</p>
 <p>Näiteks kui on tegu tabeliga, kus on kirjas keskmine brutotunnitasu (eurot) vanusgruppides kahel eri aastal:</p>
@@ -402,7 +401,7 @@ Siis pööratud tabelis oleks aastad ridadeks ja vanusgrupid veergudeks:</p>
 Loe töölauale tabel nimega <code>arstiabita</code>, kus on kirjas eri aastatel arsiabi mittesaanud inimeste osakaalud (Eesti sotsiaaluuringu andmete põhjal). Aktiveeri pakett <strong>reshape2</strong> kui seda pole seni tehtud. Ülesandeks on antud tabeli pööramine.</p>
 <pre class="r"><code>arstiabita &lt;- read.table(&quot;https://github.com/Rkursus/sygis2019/raw/master/data/eisaanud-arstiabi.txt&quot;, 
                          sep = &quot;\t&quot;, dec = &quot;,&quot;, header = T, check.names = FALSE)</code></pre>
-<div id="ulesanded-9" class="section level3">
+<div id="ülesanded-9" class="section level3">
 <h3><span class="header-section-number">3.5.1</span> Ülesanded</h3>
 <ul>
 <li><strong>Ülesanne 1</strong> Prindi ekraanile andmestik <code>arstiabita</code>.</li>
@@ -425,11 +424,11 @@ ___________</code></pre>
 </ul>
 </div>
 </div>
-<div id="tabeli-pooramine-uhe-sammuga" class="section level2">
+<div id="tabeli-pööramine-ühe-sammuga" class="section level2">
 <h2><span class="header-section-number">3.6</span> Tabeli pööramine ühe sammuga</h2>
 <p>Eelmises ülesandes vaadatud tabeli pööramise, mis oli läbi viidud kahe sammuna: esmalt tabel pikale kujule käsuga <code>melt</code> ja siis laiale kujule käsuga <code>dcast</code>, saab läbi viia ka ühe käsuga. Käsk <code>recast</code> võimaldab kombineerida järjestikused pikk -&gt; lai teisendused. Enne ülesande lahendamist vaata käsu abilehte <code>?recast</code>.</p>
 <p>Kasuta eelmisest ülesandest tabelit <code>arstiabita</code>. Ülesandeks on jälle antud tabeli pööramine, aga nüüd ühe käsu abil.</p>
-<div id="ulesanded-10" class="section level3">
+<div id="ülesanded-10" class="section level3">
 <h3><span class="header-section-number">3.6.1</span> Ülesanded</h3>
 <ul>
 <li><strong>Ülesanne 1</strong> Pööra andmestik nagu eelmises ülesandes, aga nüüd käsuga <code>recast</code>. Käsus tuleb määrata kaks argumenti. Prindi tulemus ekraanile.</li>

@@ -159,8 +159,8 @@ str(testid.pikk)
 
 # file.choose() avab akna, kus saad andmestiku 'rotid.csv' üles otsida:
 
-rotid <- read.csv(file.choose(), header = T, stringsAsFactors = F, 
-                  colClasses = c("numeric", "character", "character", "factor"))
+#rotid <- read.csv(file.choose(), header = T, stringsAsFactors = F, 
+#                  colClasses = c("numeric", "character", "character", "factor"))
 
 # Vaata andmestikku:
 

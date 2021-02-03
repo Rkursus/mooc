@@ -20,7 +20,7 @@ Vaata kõigepealt käsuga `summary(iris)` andmestiku ülevaadet. Tunnus `Species
 ### Ülesanded
 
 - **Ülesanne 1** Käsu `by` abil leia kõigi kolme iirisesordi kroonlehe keskmine pikkus (kroonlehe pikkus `Petal.Length`), omista saadud vastus muutujale `keskmised`, prindi selle väärtus ekraanile.
-- **Ülesanne 2** Millise sordi kroonlehed on keskmiselt kõige lühemad?
+- **Ülesanne 2** Millise sordi kroonlehed on keskmiselt kõige lühemad? Omista selle sordi nimi muutujale `kroonlehed1`.
 - **Ülesanne 3** Kasutades `factor` käsku lisa andmestikku tunnus nimega `sordinimi`, mis oleks sama sisuga kui `Species`, kuid mille väärtuste järjekord oleks: `versicolor`, `setosa`, `virginica`.
 - **Ülesanne 4** Kasutades `tapply` käsku leia maksimaalsed kroonlehe pikkused igal sordil, tulemuste järjestus muutujas `maksimumid` olgu järgmine: `versicolor`, `setosa`, `virginica`. Prindi muutuja väärtus ekraanile. Käsu `tapply` kirjapilt `tapply(uuritavtunnus, grupitunnus, funktsioon)`.
 
@@ -35,7 +35,7 @@ keskmised
 
 
 # Ülesanne 2: Mis sordil keskmiselt kõige lühemad kroonlehed
-#"_________"
+kroonlehed1 <- "_________"
 
 
 # Ülesanne 3: Muuda sordinimede järjestust, tekita selleks uus tunnus
@@ -150,7 +150,7 @@ Töölaual on andmestik `iris`. Andmestik tuleb erinevate tunnuste järgi kasvav
 ### Ülesanded
 
 - **Ülesanne 1** Järjesta andmestik `iris` kasvavasse järjestusse tunnuste `Sepal.Width`, `Sepal.Length` ja `Petal.Width` järgi.  Omista tulemus muutujale `iris.sort1`.
-- **Ülesanne 2** Mis sorti iiris on eelviimasel kohal? Kuidas leidsid
+- **Ülesanne 2** Mis sorti iiris on eelviimasel kohal? Omista sordi nimi muuutujale `eelviimane`.
 
 ```{r eval = F}
 # vaata andmestikku
@@ -160,7 +160,7 @@ head(iris)
 iris.sort1 <- iris[____, ]
 
 # ülesanne 2: eelviimase lille sort
-# "_______"
+eelviimane <- "_______"
 
 
 ```
@@ -179,7 +179,7 @@ Siin ülesandes tuleb kombineerida kasvavalt ja kahanevalt sorteerimist.
 ### Ülesanded
 
 - **Ülesanne 1** Järjesta andmestik `iris`  nii, et vaatlused oleks tunnuse `Sepal.Width` järgi järjestatud kasvavalt ning need vaatlused, mil on kroonlehe laius sama, oleksid tunnuse `Sepal.Length` järgi järjestatud kahanevasse järjestusse. Omista sorteeritud andmestik muutujale `iris.sort2`. 
-- **Ülesanne 2** Mis sorti iiris on sorteeritud andmestikus 30 kohal?.
+- **Ülesanne 2** Mis sorti iiris on sorteeritud andmestikus 30 kohal? Omista selle sordi nimi muutujale `kolmekymnes`.
 
 ```{r eval = F}
 # vaata andmestikku
@@ -189,7 +189,7 @@ head(iris)
 iris.sort2 <- iris[____, ]
 
 # ülesanne 2: kolmekümnenda lille sort
-# "_______"
+kolmekymnes <- "_______"
 
 ```
 
@@ -291,7 +291,7 @@ Kasuta sama andmestikku `rotid`.  Pakett `reshape2` peaks olema juba aktiveeritu
 
 - **Ülesanne 1** Mitu korda on iga rotti kaalutud? Leia sagedustabel tunnusele `rotid$Rat`, omista tabel muutujale `tabel1`, prindi see ekraanile.
 - **Ülesanne 2** Kasutades funktsiooni `dcast` leia samad näitajad andmetabelisse st teisenda andmestikku `rotid` nii, et  tulemuseks olevas andmetabelis oleks ühes veerus rottide indikaatorid ja teises igal rotil tehtud mõõtmiste arv (selle veeru nimi olgu `"mootmisi"`). Omista saadud tulemus muutujale `tabel2`, prindi see ekraanile.
-- **Ülesanne 3** Mitu rotti on enne katse lõppu katkestanud, st mitmel pole kõiki 11 mõõtmist? Kirjuta vastus kommentaarina.
+- **Ülesanne 3** Mitu rotti on enne katse lõppu katkestanud, st mitmel pole kõiki 11 mõõtmist? Omista nende rottide arv muutujale `katkestajaid`.
 
 ```{r eval = F}
 # vaata andmestikku
@@ -308,7 +308,8 @@ tabel2
 
 
 # Ülesanne 3: Kui palju on katkestajaid
-# _______
+katkestajaid <- _______
+
 
 ```
 

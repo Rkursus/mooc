@@ -6,7 +6,7 @@ keskmised = by(iris$Petal.Length, iris$Species, mean)
 keskmised
 
 #2
-#setosa
+kroonlehed1 = "setosa"
 
 #3
 iris$sordinimi = factor(iris$Species, levels= c("versicolor","setosa","virginica"))
@@ -56,7 +56,7 @@ head(iris)
 iris.sort1 = iris[order(iris$Sepal.Width, iris$Sepal.Length,iris$Petal.Width),]
 
 #2
-iris.sort1$sordinimi[nrow(iris)-1]
+eelviimane = "setosa" #iris.sort1$sordinimi[nrow(iris)-1]
 
 ###% ylesanne 2.3.1 lahendus
 
@@ -64,7 +64,7 @@ iris.sort1$sordinimi[nrow(iris)-1]
 iris.sort2 = iris[order(iris$Sepal.Width,-iris$Sepal.Length),]
 
 #2
-iris.sort2$sordinimi[30]
+kolmekymnes = "virginica" #iris.sort2$sordinimi[30]
 
 ###% ylesanne 3.1.1 lahendus
 
@@ -106,7 +106,7 @@ tabel2 = dcast(rotid, Rat~"mootmisi")
 tabel2
 
 #3
-# 3
+katkestajaid = 3
 
 ###% ylesanne 3.4.1 lahendus
 

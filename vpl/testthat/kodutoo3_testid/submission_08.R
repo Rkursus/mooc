@@ -1,9 +1,10 @@
+###%Ülesanne 1.1.1 lahendus
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 list.files()
 
 summary(iris)
 
-# Ülesanne 1.1.1 lahendus
+
 # 1.
 keskmised <- by(iris$Petal.Length, iris$Species, mean)
 keskmised
@@ -21,7 +22,7 @@ maksimumid
 
 
 
-# Ülesanne 1.2.1 lahendus
+###%Ülesanne 1.2.1 lahendus
 # 1.
 intervallid <- cut(iris$Petal.Length, breaks=c(seq(1,7,0.5)), right = FALSE)
 intervallid
@@ -42,7 +43,7 @@ x <- c(2:1, 2:1, 2:1, 4)
 y <- c(7, 1, 5, 2, 6, 3, 4)
 xy <- data.frame(x, y)
 
-# Ülesanne 2.1.1 lahendus
+###%Ülesanne 2.1.1 lahendus
 x; y; xy
 # 1. 
 xy1 <- xy[order(x,y), ]
@@ -58,7 +59,7 @@ xy2
 
 
 
-# Ülesanne 2.2.1 lahendus
+###%Ülesanne 2.2.1 lahendus
 head(iris)
 
 # 1.
@@ -73,7 +74,7 @@ tail(iris.sort1) # Sorteeritud andmestikus on eelviimasel kohal setosa sordist l
 
 
 head(iris)
-# Ülesanne 2.3.1 lahendus
+###%Ülesanne 2.3.1 lahendus
 # 1.
 iris.sort2 <- iris[order(iris$Sepal.Width, -iris$Sepal.Length), ]
 iris.sort2
@@ -87,7 +88,7 @@ B <-  read.csv2(file = "https://github.com/Rkursus/sygis2019/raw/master/data/B.c
 B <- B[, substr(names(B), 1, 3) %in% c("id", "gru", "tes") ]
 
 
-# Ülesanne 3.1.1 lahendus
+###%Ülesanne 3.1.1 lahendus
 str(B)
 
 
@@ -104,10 +105,10 @@ str(testid.pikk)
 
 
 
-# Ülesanne 3.2.1 lahendus
+###%Ülesanne 3.2.1 lahendus
 # file.choose() avab akna, kus saad andmestiku 'rotid.csv' üles otsida
-rotid <- read.csv(file.choose(), header = T, stringsAsFactors = F, 
-                  colClasses = c("numeric", "character", "character", "factor"))
+#rotid <- read.csv(file.choose(), header = T, stringsAsFactors = F, 
+#                  colClasses = c("numeric", "character", "character", "factor"))
 head(rotid)
 summary(rotid)
 
@@ -119,7 +120,7 @@ rotid.lai <- dcast(rotid, formula = Rat + Diet ~ Time, value.var = "weight")
 rotid.lai
 
 
-# Ülesanne 3.3.1 lahendus
+###%Ülesanne 3.3.1 lahendus
 summary(rotid)
 
 
@@ -136,7 +137,7 @@ tabel2[ which(tabel2$mootmisi!=11) ,]
 # Katkestanud on 3 rotti.
 
 
-# Ülesanne 3.4.1 lahendus
+###%Ülesanne 3.4.1 lahendus
 # 1.
 
 tabel3 <- dcast(rotid, formula = Diet + Rat ~ "kaalu mediaan", value.var = "weight", fun.aggregate = median)
@@ -146,7 +147,7 @@ tabel3
 rott2mediaan <- tabel3[tabel3$Rat =="no02", "kaalu mediaan"]
 
 
-# Ülesanne 3.5.1 lahendus
+###%Ülesanne 3.5.1 lahendus
 library(reshape2)
 arstiabita <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/eisaanud-arstiabi.txt", 
                          sep = "\t", dec = ",", header = T, check.names = FALSE)
@@ -163,7 +164,7 @@ transponeeritud <- dcast(pikk, Aasta ~ Arstiabiliik)
 transponeeritud
 
 
-# Ülesanne 3.6.1 lahendus
+###%Ülesanne 3.6.1 lahendus
 ?recast
 transponeeritud <- recast(arstiabita, formula = variable ~ Arstiabiliik, id.var = "Arstiabiliik")
 transponeeritud

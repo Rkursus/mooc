@@ -47,7 +47,7 @@ test_that(ylesanne,
                         info = paste0(ylesanne, ".2: pole kasutatud õiget geom_<...> funktsiooni"),
                         label = paste0(ylesanne, ".2 geom_<...> funktsiooni kontroll"))
             
-            expect_true(length(grep("geom_.+\\(fill=\"royalblue\"\\)", tmp_part)) > 0, 
+            expect_true(length(grep("geom_.+\\(fill=(\"|\')royalblue(\"|\')\\)", tmp_part)) > 0, 
                         info = paste0(ylesanne, ".2: geom_<...> funktsiooni argument ei vasta oodatule"),
                         label = paste0(ylesanne, ".2 geom_<...> funktsiooni argumendi kontroll"))
             
@@ -58,21 +58,21 @@ test_that(ylesanne,
                         info = paste0(ylesanne, ".2: pole kasutatud õiget scale_x_<...> funktsiooni"),
                         label = paste0(ylesanne, ".2 scale_x_<...> funktsiooni kontroll"))
             
-            expect_true(length(grep("name=\"[Dd]ayofweek\"", tmp_part)) > 0, 
+            expect_true(length(grep("name=(\"|\')[Dd]ayofweek(\"|\')", tmp_part)) > 0, 
                         info = paste0(ylesanne, ".2: scale_<...> funktsiooni argument 'name' ei vasta oodatule"),
                         label = paste0(ylesanne, ".2 scale_<...> funktsiooni argumendi kontroll"))
             
                                     #limits = c("Thur", "Fri", "Sat", "Sun") or =levels(jootraha$day) or =levels(jootraha[,5])
-            expect_true(length(grep("limits.+(c\\(\"[Tt]hur\",\"[Ff]ri\",\"[Ss]at\",\"[Ss]un\"\\)|levels\\(jootraha$day\\)|levels\\(jootraha[,5]\\))", tmp_part)) > 0, 
+            expect_true(length(grep("limits.+(c\\((\"|\')[Tt]hur(\"|\'),(\"|\')[Ff]ri(\"|\'),(\"|\')[Ss]at(\"|\'),(\"|\')[Ss]un(\"|\')\\)|levels\\(jootraha$day\\)|levels\\(jootraha[,5]\\))", tmp_part)) > 0, 
                         info = paste0(ylesanne, ".2: scale_<...> funktsiooni argument 'limits' ei vasta oodatule"),
                         label = paste0(ylesanne, ".2 scale_<...> funktsiooni argumendi kontroll"))
             
-            expect_true(length(grep("labels=c\\(\"thursday\",\"friday\",\"saturday\",\"sunday\"\\)", tmp_part)) > 0, 
+            expect_true(length(grep("labels=c\\((\"|\')thursday(\"|\'),(\"|\')friday(\"|\'),(\"|\')saturday(\"|\'),(\"|\')sunday(\"|\')\\)", tmp_part)) > 0, 
                         info = paste0(ylesanne, ".2: scale_<...> funktsiooni argument 'labels' ei vasta oodatule"),
                         label = paste0(ylesanne, ".2 scale_<...> funktsiooni argumendi kontroll"))          
             
             #ylab(label = "Counts")
-            expect_true(length(grep("ylab\\(label=\"[Cc]ounts\"\\)", tmp_part)) > 0, 
+            expect_true(length(grep("ylab\\(label=(\"|\')[Cc]ounts(\"|\')\\)", tmp_part)) > 0, 
                         info = paste0(ylesanne, ".2: ylab() funktsiooni argumendi 'label' väärtus ei vasta oodatule"),
                         label = paste0(ylesanne, ".2 ylab() funktsiooni argumendi kontroll"))
           })
@@ -120,7 +120,7 @@ test_that(ylesanne,
                         info = paste0(ylesanne, ": y-telge kirjeldav scale_<...> funktsioon ei vasta oodatule"),
                         label = paste0(ylesanne, " scale_<...> funktsiooni kontroll"))
            
-            expect_true(length(grep("scale.+name=\"[Pp]ercentage\"", tmp_part)) > 0, 
+            expect_true(length(grep("scale.+name=(\"|\')[Pp]ercentage(\"|\')", tmp_part)) > 0, 
                         info = paste0(ylesanne, ": y-telje nimi pole scale_<...> funktsioonis korrektselt määratud"),
                         label = paste0(ylesanne, " y-telje nime kontroll"))
             
@@ -128,17 +128,17 @@ test_that(ylesanne,
                         info = paste0(ylesanne, ": scale_<...> funktsiooni argument y-telje väärtuste sildistamiseks (%) ei vasta oodatule"),
                         label = paste0(ylesanne, " scale<...> funktsiooni argumendi kontroll"))
             
-            #scale_fill_hue(name = "Time")
-            expect_true(length(grep("scale_fill_hue", tmp_part)) > 0, 
+            #scale_fill_hue(name = "Time") või scale_color_hue või scale_colour_hue
+            expect_true(length(grep("scale_(fill|color|colour)_hue", tmp_part)) > 0, 
                         info = paste0(ylesanne, ": värvilegendi kirjeldav scale_<...>_hue funktsioon ei vasta oodatule"),
                         label = paste0(ylesanne, " scale_<...>_hue funktsiooni kontroll"))
             
-            expect_true(length(grep("scale_.+_hue\\(name=\"[Tt]ime\"\\)", tmp_part)) > 0, 
+            expect_true(length(grep("scale_.+_hue\\(name=(\"|\')[Tt]ime(\"|\')\\)", tmp_part)) > 0, 
                         info = paste0(ylesanne, ": funktsiooni scale_<...>_hue argument ei vasta oodatule"),
                         label = paste0(ylesanne, " värvilegendi pealkirja  kontroll"))
             
             #xlab(label = "Day")
-            expect_true(length(grep("xlab\\(label=\"[Dd]ay\"\\)", tmp_part)) > 0, 
+            expect_true(length(grep("xlab\\(label=(\"|\')[Dd]ay(\"|\')\\)", tmp_part)) > 0, 
                         info = paste0(ylesanne, ": xlab funktsiooni argument ei vasta oodatule"),
                         label = paste0(ylesanne, " xlab funktsiooni argumendi kontroll"))
           })
@@ -184,7 +184,7 @@ test_that(ylesanne,
                         info = paste0(ylesanne, ".1: geom_<...> funktsiooni argumendina pole aes() funktsiooni kasutatud"),
                         label = paste0(ylesanne, ".1 geom_<...> funktsiooni argumendi kontroll"))
             
-            expect_true(length(grep("\\(color=day\\)", tmp_part)) > 0, 
+            expect_true(length(grep("\\((color|colour)=day\\)", tmp_part)) > 0, 
                         info = paste0(ylesanne, ".1: geom_<...> argumendiks oleva funktsiooni aes() argument ei vasta oodatule"),
                         label = paste0(ylesanne, ".1 geom_<...> funktsiooni aes() argumendi kontroll"))
             
@@ -198,7 +198,7 @@ test_that(ylesanne,
                         label = paste0(ylesanne, ".1 scale_<...>_hue funktsiooni argumendi kontroll"))
             
                                     #limits = c("Thur", "Fri", "Sat", "Sun") or =levels(jootraha$day) or =levels(jootraha[,5])
-            expect_true(length(grep("limits.+(c\\(\"[Tt]hur\",\"[Ff]ri\",\"[Ss]at\",\"[Ss]un\"\\)|levels\\(jootraha$day\\)|levels\\(jootraha[,5]\\))", tmp_part)) > 0, 
+            expect_true(length(grep("limits.+(c\\((\"|\')[Tt]hur(\"|\'),(\"|\')[Ff]ri(\"|\'),(\"|\')[Ss]at(\"|\'),(\"|\')[Ss]un(\"|\')\\)|levels\\(jootraha$day\\)|levels\\(jootraha[,5]\\))", tmp_part)) > 0, 
                         info = paste0(ylesanne, ".1: scale_<...>_hue funktsiooni argument 'limits' ei vasta oodatule"),
                         label = paste0(ylesanne, ".1 scale_<...>_hue funktsiooni argumendi kontroll"))
             
@@ -249,7 +249,7 @@ test_that(ylesanne,
                         info = paste0(ylesanne, ".1: geom_<...> funktsiooni argumendina pole aes() funktsiooni kasutatud"),
                         label = paste0(ylesanne, ".1 geom_<...> funktsiooni argumendi kontroll"))
             
-            expect_true(length(grep("color=sex", tmp_part)) > 0, 
+            expect_true(length(grep("(color|colour)=sex", tmp_part)) > 0, 
                         info = paste0(ylesanne, ".1: geom_<...> argumendiks oleva funktsiooni aes() argument, mis määrab punktide värvi, ei vasta oodatule"),
                         label = paste0(ylesanne, ".1 geom_<...> funktsiooni aes() argumendi kontroll"))
             
@@ -326,7 +326,7 @@ test_that(ylesanne,
 
 # Ülesanne 6.1 õige lahendus -----
 if(FALSE){
-  
+  vastus = 3
 }
 
 ylesanne = "Ülesanne 6.1"
@@ -336,6 +336,10 @@ test_that(ylesanne,
           {
             tmp_part = tmp_parts[[yl]]
             eval(parse(text = paste(tmp_part, collapse = '\n')))
+            
+            expect_true(vastus==3,
+                        info = paste0(ylesanne, ".1: muutuja 'vastus' väärtus ei vasta oodatule"),
+                        label = paste0(ylesanne, ".1 vastuse kontroll"))
           })
 
 
@@ -390,7 +394,7 @@ test_that(ylesanne,
                         info = paste0(ylesanne, ".2: x-telje nimi ei vasta oodatule "),
                         label = paste0(ylesanne, ".2 x-telje nime kontroll"))
             
-            expect_true(length(grep("labs.+y=\"jootrahajaarvesuhe\"", tmp_part)) > 0, 
+            expect_true(length(grep("y=\"jootrahajaarvesuhe\"", tmp_part)) > 0, 
                         info = paste0(ylesanne, ".2: y-telje nimi ei vasta oodatule "),
                         label = paste0(ylesanne, ".2 y-telje nime kontroll"))
             
@@ -410,7 +414,7 @@ if(FALSE){
   
   #2
   ggplot(jootraha, aes(x = size, y = tip.per.person)) + 
-    stat_summary(geom = "line",  fun.y = mean) + 
+    stat_summary(geom = "line",  fun = mean) + 
     scale_x_continuous(breaks = 1:6)
 }
 
@@ -442,14 +446,14 @@ test_that(ylesanne,
                         info = paste0(ylesanne, ".2: aes() funktsiooni argumendi 'y' väärtus ei vasta oodatule"),
                         label = paste0(ylesanne, ".2 aes() funktsiooni argumendi 'y' kontroll"))
             
-            #stat_summary(geom = "line",  fun.y = mean) 
-            expect_true(length(grep("geom=\"line\"", tmp_part)) > 0, 
+            #stat_summary(geom = "line",  fun = mean) 
+            expect_true(length(grep("geom=(\"|\')line(\"|\')", tmp_part)) > 0, 
                         info = paste0(ylesanne, ".2: funktsiooni stat_summary() argumendi 'geom' väärtus ei vasta oodatule"),
                         label = paste0(ylesanne, ".2 funktsiooni argumendi 'geom' kontroll"))
             
-            expect_true(length(grep("fun\\.y=mean", tmp_part)) > 0, 
-                        info = paste0(ylesanne, ".2: funktsiooni stat_summary() argumendi 'fun.y' väärtus ei vasta oodatule"),
-                        label = paste0(ylesanne, ".2 funktsiooni argumendi 'fun.y' kontroll"))
+            expect_true(length(grep("fun=mean", tmp_part)) > 0, 
+                        info = paste0(ylesanne, ".2: funktsiooni stat_summary() argumendi 'fun' väärtus ei vasta oodatule"),
+                        label = paste0(ylesanne, ".2 funktsiooni argumendi 'fun' kontroll"))
             
           })
 
@@ -457,7 +461,7 @@ test_that(ylesanne,
 # Ülesanne 9.1 õige lahendus -----
 if(FALSE){
   ggplot(jootraha, aes(x = size, y = tip.per.person, color = sex)) +
-    stat_summary(geom = "line",  fun.y = mean) + 
+    stat_summary(geom = "line",  fun = mean) + 
     scale_x_continuous(breaks = 1:6)
 }
 
@@ -478,7 +482,7 @@ test_that(ylesanne,
                         info = paste0(ylesanne, ": aes() funktsiooni argumendi 'y' väärtus ei vasta oodatule"),
                         label = paste0(ylesanne, " aes() funktsiooni argumendi 'y' kontroll"))
             
-            expect_true(length(grep("aes.+,color.+\\)", tmp_part)) > 0, 
+            expect_true(length(grep("aes.+,(color|colour).+\\)", tmp_part)) > 0, 
                         info = paste0(ylesanne, ": aes() funktsioonis pole kasutatud argumenti 'color'"),
                         label = paste0(ylesanne, " aes() funktsiooni argumendi kontroll"))
             
@@ -486,14 +490,14 @@ test_that(ylesanne,
                         info = paste0(ylesanne, ": aes() funktsiooni viimase argumendi väärtus ei vasta oodatule"),
                         label = paste0(ylesanne, " aes() funktsiooni viimase argumendi kontroll"))
             
-            #stat_summary(geom = "line",  fun.y = mean) 
-            expect_true(length(grep("geom=\"line\"", tmp_part)) > 0, 
+            #stat_summary(geom = "line",  fun = mean) 
+            expect_true(length(grep("geom=(\"|\')line(\"|\')", tmp_part)) > 0, 
                         info = paste0(ylesanne, ": funktsiooni stat_summary() argumendi 'geom' väärtus ei vasta oodatule"),
                         label = paste0(ylesanne, " funktsiooni argumendi 'geom' kontroll"))
             
-            expect_true(length(grep("fun\\.y=mean", tmp_part)) > 0, 
-                        info = paste0(ylesanne, ": funktsiooni stat_summary() argumendi 'fun.y' väärtus ei vasta oodatule"),
-                        label = paste0(ylesanne, " funktsiooni argumendi 'fun.y' kontroll"))
+            expect_true(length(grep("fun=mean", tmp_part)) > 0, 
+                        info = paste0(ylesanne, ": funktsiooni stat_summary() argumendi 'fun' väärtus ei vasta oodatule"),
+                        label = paste0(ylesanne, " funktsiooni argumendi 'fun' kontroll"))
             
           })
 
@@ -501,7 +505,7 @@ test_that(ylesanne,
 # Ülesanne 10.1 õige lahendus -----
 if(FALSE){
   ggplot(jootraha, aes(x = size, y = tip.per.person, linetype = sex)) + 
-    stat_summary(geom = "line",  fun.y = mean) +
+    stat_summary(geom = "line",  fun = mean) +
     scale_x_continuous(breaks = 1:6)
 }
 
@@ -530,13 +534,13 @@ test_that(ylesanne,
                         info = paste0(ylesanne, ": aes() funktsiooni viimase argumendi väärtus ei vasta oodatule"),
                         label = paste0(ylesanne, " aes() funktsiooni viimase argumendi kontroll"))
             
-            #stat_summary(geom = "line",  fun.y = mean) 
-            expect_true(length(grep("geom=\"line\"", tmp_part)) > 0, 
+            #stat_summary(geom = "line",  fun = mean) 
+            expect_true(length(grep("geom=(\"|\')line(\"|\')", tmp_part)) > 0, 
                         info = paste0(ylesanne, ": funktsiooni stat_summary() argumendi 'geom' väärtus ei vasta oodatule"),
                         label = paste0(ylesanne, " funktsiooni argumendi 'geom' kontroll"))
             
-            expect_true(length(grep("fun\\.y=mean", tmp_part)) > 0, 
-                        info = paste0(ylesanne, ": funktsiooni stat_summary() argumendi 'fun.y' väärtus ei vasta oodatule"),
-                        label = paste0(ylesanne, " funktsiooni argumendi 'fun.y' kontroll"))
+            expect_true(length(grep("fun=mean", tmp_part)) > 0, 
+                        info = paste0(ylesanne, ": funktsiooni stat_summary() argumendi 'fun' väärtus ei vasta oodatule"),
+                        label = paste0(ylesanne, " funktsiooni argumendi 'fun' kontroll"))
             
           })

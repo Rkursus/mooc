@@ -64,7 +64,7 @@ erind <- "Dinner"
 
 ###% ylesanne 6.1 lahendus
 
-# 3
+vastus = 3
 
 ###% ylesanne 7.1 lahendus
 
@@ -86,17 +86,17 @@ jootraha$tip.per.person <- jootraha$tip/jootraha$size
 
 #2
 ggplot(jootraha, aes(x = size, y = tip.per.person)) + 
-  stat_summary(geom = "line",  fun.y = mean) + 
+  stat_summary(geom = "line",  fun = mean) + 
   scale_x_continuous(breaks = 1:6)
 
 ###% ylesanne 9.1 lahendus
 
 ggplot(jootraha, aes(x = size, y = tip.per.person, color = sex)) +
-  stat_summary(geom = "line",  fun.y = mean) + 
+  stat_summary(geom = "line",  fun = mean) + 
   scale_x_continuous(breaks = 1:6)
 
 ###% ylesanne 10.1 lahendus
 
 ggplot(jootraha, aes(x = size, y = tip.per.person, linetype = sex)) + 
-  stat_summary(geom = "line",  fun.y = mean) +
+  stat_summary(geom = "line",  fun = mean) +
   scale_x_continuous(breaks = 1:6)
