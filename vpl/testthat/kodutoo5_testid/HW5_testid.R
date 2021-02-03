@@ -49,6 +49,10 @@ test_that(ylesanne,
                         info = paste0(ylesanne,".2: tabelisse pole lisatud 2 uut veergu"),
                         label = paste0(ylesanne, ".2 veergude arvu kontroll"))
             
+            expect_true(length(grep("ifelse\\(", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".2: vaja kasutada funktsiooni 'ifelse'"),
+                        label = paste0(ylesanne, ".2 ifelse() funktsiooni kontroll"))
+            
             expect_true(sum(colnames(A1)[9:10] == c("kmi","kaalugrupp"))==2,
                         info = paste0(ylesanne,".2: ei leia veerge 'kmi' ja 'kaalugrupp'"),
                         label = paste0(ylesanne, ".2 veergude nimede kontroll"))
@@ -56,6 +60,7 @@ test_that(ylesanne,
             expect_true(round(sum(A1$kmi),2)==1195.78,
                         info = paste0(ylesanne,".2: veeru 'kmi' väärtused valesti leitud"),
                         label = paste0(ylesanne,".2: veeru 'kmi' väärtuste kontroll"))
+            
             expect_true(sum(A1$kaalugrupp=="ylekaal")==39,
                         info = paste0(ylesanne,".2: veeru 'kaalugrupp' väärtused valesti leitud"),
                         label = paste0(ylesanne,".2: veeru 'kaalugrupp' väärtuste kontroll"))
@@ -68,6 +73,13 @@ test_that(ylesanne,
 
 # Ülesanne 2.1 õige lahendus -----
 if(FALSE){
+  # 1
+  tabel <- A1 %>% group_by(sugu, elukoht) %>%
+    summarise(n = n(), kesk.vanus = mean(vanus), 
+              kesk.kmi = mean(kmi), visiit.osak = sum(visiit) / length(visiit))
+  
+  # 2
+  # sugu = 1, elukoht = 0
   
 }
 
@@ -76,7 +88,58 @@ yl = 2
 
 test_that(ylesanne, 
           {
+            
+            tmp_part = tmp_parts[[yl]]
+            # 1
+            #A1 tabel 2. ülesande kontrolliks
+            library(stringr)
+            A <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/A.csv", nrows = 45)
+            A1 <- mutate(A, kmi=(kaal)/(kasv/100)**2,
+                         kaalugrupp=ifelse(kmi<=25, "ala voi normkaal","ylekaal"))
+            
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
+            
+            expect_true(ncol(tabel)==6,
+                        info = paste0(ylesanne,".1: tabelis ei ole 6 veergu"),
+                        label = paste0(ylesanne, ".1 veergude arvu kontroll"))
+            
+            expect_true(length(grep("group_by\\(", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".1: Esimeses ülesandes peab andmestiku grupeerima enne kui hakata arvutusi tegeama."),
+                        label = paste0(ylesanne, ".1 group_by() funktsiooni kontroll"))
+            
+            expect_true(length(grep("summarise\\(", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".1: vaja kasutada funktsiooni 'summarise' "),
+                        label = paste0(ylesanne, ".1 summarise() funktsiooni kontroll"))
+            
+            expect_true(sum(str_count(tmp_part,"%>%")) > 1 , 
+                        info = paste0(ylesanne, ".1: vaja kasutada funktsiooni %>% vähemalt kaks korda "),
+                        label = paste0(ylesanne, ".1 %>% funktsiooni kontroll"))
+            
+            expect_true(colnames(tabel) == c("sugu","elukoht","n","kesk.vanus","kesk.kmi","visiit.osak"),
+                        info = paste0(ylesanne, ".1: veerunimed erinevad oodatust või puuduvad"),
+                        label = paste0(ylesanne, ".1 veerunimede kontroll"))
+            
+            expect_true(sum(tabel$n==45),
+                        info = paste0(ylesanne,".1: veerg 'n' valesti leitud"),
+                        label = paste0(ylesanne,".1: veeru 'n' väärtuste kontroll"))
+            
+            expect_true(round(sum(tabel$kesk.vanus),2)==197.01,
+                        info = paste0(ylesanne,".1: veeru 'kesk.vanus' väärtused valesti leitud"),
+                        label = paste0(ylesanne,".1: veeru 'kesk.vanus' väärtuste kontroll"))
+            
+            expect_true(round(sum(tabel$kesk.kmi),2)==197.01,
+                        info = paste0(ylesanne,".1: veeru 'kesk.kmi' väärtused valesti leitud"),
+                        label = paste0(ylesanne,".1: veeru 'kesk.kmi' väärtuste kontroll"))
+            
+            expect_true(round(sum(tabel$visiit.osak),2)==2.38,
+                        info = paste0(ylesanne,".1: veeru 'visiit.osak' väärtused valesti leitud"),
+                        label = paste0(ylesanne,".1: veeru 'visiit.osak' väärtuste kontroll"))
+            
+            #2
+            
+            expect_true(length(grep("sugu=1,elukoht=1", tmp_part))>0,
+                        info = paste0(ylesanne,".2: leitud vale grupp"),
+                        label = paste0(ylesanne,".2: vastuse grupi kontroll"))
             
           })
 
