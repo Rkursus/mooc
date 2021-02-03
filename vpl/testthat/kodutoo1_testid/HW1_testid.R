@@ -17,7 +17,7 @@ yl = 1
 
 test_that(ylesanne, 
           {
-            # TO BE WRITTEN
+            succeed()
           })
 
 # Ülesanne 2.2.1 õige lahendus -----
@@ -34,7 +34,7 @@ yl = 2
 test_that(ylesanne, 
   {
     # First test if exercise code runs without errors
-    code_run_test(tmp_parts[[yl]])
+    code_run_test(tmp_parts[[yl]], ylesanne)
     
     # Evaluate submission exercise
     eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
@@ -66,6 +66,9 @@ yl = 3
 
 test_that(ylesanne, 
           {
+            # First test if exercise code runs without errors
+            code_run_test(tmp_parts[[yl]], ylesanne)
+            
             # Evaluate submission exercise
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
@@ -115,6 +118,9 @@ yl = 4
 
 test_that(ylesanne, 
           {
+            # First test if exercise code runs without errors
+            code_run_test(tmp_parts[[yl]], ylesanne)
+            
             # Evaluate submission exercise
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
@@ -148,6 +154,9 @@ yl = 5
 
 test_that(ylesanne, 
           {
+            # First test if exercise code runs without errors
+            code_run_test(tmp_parts[[yl]], ylesanne)
+            
             # Kontrolliks vajalikud arvutused
             temp_x <- c(-6.2, -12.9, -13.0, -15.4, -16.1, -16.9, -17.0, -19.6, -19.9)
             names(temp_x) <- c("Ruhnu", "Kihnu", "Pakri", "Tallinn", "Pärnu", "Kunda", "Kuusiku", "Võru", "Jõgeva")
@@ -220,6 +229,9 @@ yl = 6
 
 test_that(ylesanne, 
           {
+            # First test if exercise code runs without errors
+            code_run_test(tmp_parts[[yl]], ylesanne)
+            
             # Evaluate submission exercise
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
@@ -278,7 +290,11 @@ ylesanne = "Ülesanne 2.07.1"
 yl = 7
 
 test_that(ylesanne, 
-          { # Algandmete uuesti defineerimine, et tudeng pole neid üle kirjutanud
+          { 
+            # First test if exercise code runs without errors
+            code_run_test(tmp_parts[[yl]], ylesanne)
+            
+            # Algandmete uuesti defineerimine, et tudeng pole neid üle kirjutanud
             temp_x <- c(-6.2, -12.9, -13.0, -15.4, -16.1, -16.9, -17.0, -19.6, -19.9)
             names(temp_x) <- c("Ruhnu", "Kihnu", "Pakri", "Tallinn", "Pärnu", "Kunda", "Kuusiku", "Võru", "Jõgeva")
             
@@ -309,7 +325,8 @@ test_that(ylesanne,
             vastus2_test = jaam[temp_x <= -17]
             expect_equal(object = vastus2,
                          expected = vastus2_test,
-                         info = paste0(ylesanne, ".3: muutujale 'vastus2' on antud vale väärtus "))
+                         info = paste0(ylesanne, ".3: muutujale 'vastus2' on antud vale väärtus "),
+                         label = paste0(ylesanne, ".3 väärtuse kontroll"))
             
             expect_true(length(grep("^vastus2$", tmp_parts[[yl]])) > 0, 
                         info = paste0(ylesanne, ".3: muutujat 'vastus2' pole välja prinditud"),
@@ -344,6 +361,9 @@ yl = 8
 
 test_that(ylesanne, 
           { 
+            # First test if exercise code runs without errors
+            code_run_test(tmp_parts[[yl]], ylesanne)
+            
             testi_muutuja3 <- 1:6
             is.na(testi_muutuja3)[1] <- T
             
@@ -422,6 +442,9 @@ yl = 9
 
 test_that(ylesanne, 
           {
+            # First test if exercise code runs without errors
+            code_run_test(tmp_parts[[yl]], ylesanne)
+            
             x_test <- c(34, 23, 45, 67, 10, 21, 37)
             x_test4 = x_test > 30
             x_test5 = x_test < 40
@@ -492,6 +515,9 @@ yl = 10
 
 test_that(ylesanne, 
           {
+            # First test if exercise code runs without errors
+            code_run_test(tmp_parts[[yl]], ylesanne)
+            
             # Evaluate submission exercise
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
