@@ -516,12 +516,72 @@ test_that(ylesanne,
                         info = paste0(ylesanne, ".2: Andmestikus `tabel1` on mõni veerg ja/või rida puudu!"),
                         label = paste0(ylesanne, ".2 Andmestiku tabel1 dimensioonide kontroll"))
             
+            expect_true(sum(colnames(tabel1)==c("kmi","sirutus"))==2,
+                        info = paste0(ylesanne, ".2: Andmestikus `tabel1` on mõni veerg valesti nimetatud"),
+                        label = paste0(ylesanne, ".2 Andmestiku tabel1 veerunimede kontroll"))
+            
+            expect_true(round(sum(tabel1$kmi))==294,
+                        info = paste0(ylesanne, ".2: Andmestikus `tabel1` on veerg `kmi` valesti leitud"),
+                        label = paste0(ylesanne, ".2 Andmestiku tabel1 veeru kmi kontroll"))
+            
+            expect_true(round(sum(tabel1$sirutus))==1991,
+                        info = paste0(ylesanne, ".2: Andmestikus `tabel1` on veerg `sirutus` valesti leitud"),
+                        label = paste0(ylesanne, ".2 Andmestiku tabel1 veeru sirutus kontroll"))
+            
+            expect_true(length(grep("^tabel1$", tmp_parts[[yl]])) > 0 | 
+                          length(grep("^print(tabel1)$", tmp_parts[[yl]])) > 0 |
+                          length(grep("^;print(tabel1)$", tmp_parts[[yl]])) > 0 | 
+                          length(grep("^; print(tabel1)$", tmp_parts[[yl]])) > 0, 
+                        info = paste0(ylesanne, ".2: muutujat 'tabel1' pole välja prinditud"),
+                        label = paste0(ylesanne, ".2 muutuja 'tabel1' väljatrüki kontroll"))
+            
+            # 3
+            
+            expect_true(exists("tabel2"),
+                        info = paste0(ylesanne, ".3 Andmestikku `tabel2` pole tekitatud!"),
+                        label = paste0(ylesanne, ".3 Andmestiku tabel2 nime kontroll"))
+            
+            expect_true(sum(dim(tabel2)==c(4,4))==2,
+                        info = paste0(ylesanne, ".3: Andmestikus `tabel2` on mõni veerg ja/või rida puudu!"),
+                        label = paste0(ylesanne, ".3 Andmestiku tabel2 dimensioonide kontroll"))
+            
+            expect_true(sum(colnames(tabel2)==c("sugu","elukoht","kesk.vanus","kesk.pikkus"))==4,
+                        info = paste0(ylesanne, ".3: Andmestikus `tabel2` on mõni veerg valesti nimetatud"),
+                        label = paste0(ylesanne, ".3 Andmestiku tabel2 veerunimede kontroll"))
+            
+            expect_true(round(sum(tabel2$kesk.vanus),2)==194.16,
+                        info = paste0(ylesanne, ".3: Andmestikus `tabel2` on veerg `kesk.vanus` valesti leitud"),
+                        label = paste0(ylesanne, ".3 Andmestiku tabel2 veeru kesk.vanus kontroll"))
+            
+            expect_true(round(sum(tabel2$kesk.pikkus),2)==721.33,
+                        info = paste0(ylesanne, ".3: Andmestikus `tabel2` on veerg `kesk.pikkus` valesti leitud"),
+                        label = paste0(ylesanne, ".3 Andmestiku tabel2 veeru kesk.pikkus kontroll"))
+            
+            expect_true(length(grep("^tabel2$", tmp_parts[[yl]])) > 0 | 
+                          length(grep("^print(tabel2)$", tmp_parts[[yl]])) > 0 |
+                          length(grep("^;print(tabel2)$", tmp_parts[[yl]])) > 0 | 
+                          length(grep("^; print(tabel2)$", tmp_parts[[yl]])) > 0, 
+                        info = paste0(ylesanne, ".3: muutujat 'tabel2' pole välja prinditud"),
+                        label = paste0(ylesanne, ".3 muutuja 'tabel2' väljatrüki kontroll"))
+            
           })
 
 
 # Ülesanne 7.1 õige lahendus -----
 if(FALSE){
+  tekstid <- fread("https://github.com/Rkursus/sygis2019/raw/master/data/tekstid.csv", nrow = 1000, encoding = "UTF-8", 
+                   col.names = c("rubriik", "loigunr", "hinnang", "tekst"), select = c(1,3:5))
+  tekstid <- tekstid[loigunr != "None", ]
   
+  # 1
+  is.data.table(tekstid)
+  
+  # 2
+  tekstid[, loigunr := as.integer(loigunr)]
+  
+  # 3
+  valik <- tekstid[loigunr > 2 & startsWith(tekst, "A"), 
+                   .(mitu = length(loigunr)), by = hinnang]
 }
 
 ylesanne = "Ülesanne 7.1"
@@ -529,7 +589,14 @@ yl = 7
 
 test_that(ylesanne, 
           {
+            tmp_part = tmp_parts[[yl]]
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
+            
+            # 1 
+            
+            expect_true(length(grep("is\\.data\\.table", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".1: vaja kasutada funktsiooni 'is.data.table'"),
+                        label = paste0(ylesanne, ".1 is.data.table() funktsiooni kontroll"))
             
           })
 
