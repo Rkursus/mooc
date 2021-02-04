@@ -581,7 +581,7 @@ if(FALSE){
   
   # 3
   valik <- tekstid[loigunr > 2 & startsWith(tekst, "A"), 
-                   .(mitu = length(loigunr)), by = hinnang]
+                   .(mitu = length(loigunr)), by = hinnang];valik
 }
 
 ylesanne = "Ülesanne 7.1"
@@ -594,10 +594,73 @@ test_that(ylesanne,
             
             # 1 
             
-            expect_true(length(grep("is\\.data\\.table", tmp_part)) >0, 
+            expect_true(length(grep("is\\.data\\.table\\(", tmp_part)) >0, 
                         info = paste0(ylesanne, ".1: vaja kasutada funktsiooni 'is.data.table'"),
                         label = paste0(ylesanne, ".1 is.data.table() funktsiooni kontroll"))
             
+            expect_true(length(grep("is\\.data\\.table\\(tekstid", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".1: Funktsiooni `is.data.table()` argumendiks on vale andmestik."),
+                        label = paste0(ylesanne, ".1 is.data.table() argumendi kontroll"))
+            
+            expect_true(length(grep("is\\.data\\.table\\([^,]*\\)", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".1: Funktsiooni `is.data.table()` argumendiks läheb ainult andmestik."),
+                        label = paste0(ylesanne, ".1 is.data.table() argumendi kontroll"))
+            
+            # 2
+            
+            expect_true(length(grep("as\\.integer", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".2: Teises ülesandes kasuta funktsiooni `as.integer()`"),
+                        label = paste0(ylesanne, ".2 as.integer() funktsiooni kontroll"))
+            
+            expect_true(length(grep("as\\.integer\\([^,]*\\)", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".2: Funktsiooni `as.integer()` argumendiks läheb ainult teisendatava tunnuse nimi."),
+                        label = paste0(ylesanne, ".2 as.integer() argumendi kontroll"))
+            
+            expect_true(length(grep("loigunr\\:\\=", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".2: Kontrolli, kas teed teisenduse olemasoleva andmestiku sees st kas kasutad operaatorit `:=`."),
+                        label = paste0(ylesanne, ".2 operaatori `:=` kontroll"))
+            
+            expect_true(length(grep(",loigunr", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".2: Kontrolli, kas panid teisenduse kirja `j`-pesasse."),
+                        label = paste0(ylesanne, ".2 argumendi asukoha kontroll"))
+            
+            expect_true(exists("tekstid"),
+                        info = paste0(ylesanne, ".2 Andmestik `tekstid` on kadunud! Alusta uuesti."),
+                        label = paste0(ylesanne, ".2 Andmestiku tekstid kontroll"))
+            
+            expect_true("loigunr" %in% names(tekstid) ,
+                        info = paste0(ylesanne, ".2 Veerg tekstilõigu numbriga on andmestikust kadunud."),
+                        label = paste0(ylesanne, ".2 Veeru loigunr kontroll"))
+            
+            expect_true(typeof(tekstid$loigunr) =="integer",
+                        info = paste0(ylesanne, ".2 Veeru `loigunr` väärtus on vale."),
+                        label = paste0(ylesanne, ".2 Veeru loigunr tüübi kontroll"))
+            # 3
+            
+            expect_true(exists("valik"),
+                        info = paste0(ylesanne, ".3 Andmestikku `valik` pole! Alusta uuesti."),
+                        label = paste0(ylesanne, ".3 Andmestiku valik kontroll"))
+            
+            expect_true(sum(dim(valik)==c(4,2))==2,
+                        info = paste0(ylesanne, ".3: Andmestikus `valik` on mõni veerg ja/või rida puudu!"),
+                        label = paste0(ylesanne, ".3 Andmestiku valik dimensioonide kontroll"))
+            
+            expect_true(sum(colnames(valik)==c("hinnang","mitu"))==2,
+                        info = paste0(ylesanne, ".3: Andmestikus `valik` on mõni veerg valesti nimetatud"),
+                        label = paste0(ylesanne, ".3 Andmestiku valik veerunimede kontroll"))
+            
+            expect_true(sum(valik$mitu)==35,
+                       info = paste0(ylesanne, ".3: Andmestikus `valik` on mingid väärtused valed."),
+                       label = paste0(ylesanne, ".3 Andmestiku valik veeru mitu kontroll"))
+            
+            expect_true(length(grep("by\\=hinnang", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".3: Kontrolli, kas panid  `by`-pesasse kirja grupeeriva tunnuse nime. Jutumärke selle tunnuse nime ümber pole vaja!"),
+                        label = paste0(ylesanne, ".3 by-pesa kontroll"))
+            
+            expect_true(length(grep("length(loigunr)", tmp_part)) >0 | 
+                          length(grep("\\.N", tmp_part)) >0 , 
+                        info = paste0(ylesanne, ".3: Pole kokku tekstid loetud "),
+                        label = paste0(ylesanne, ".3 teise veeru leidmise kontroll"))
           })
 
 
