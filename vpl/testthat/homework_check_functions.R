@@ -70,15 +70,17 @@ code_run_test <- function(code, ylesanne = NULL){
   #' '''''
   
   # Read and evaluate code lines
-  read.commands = tryCatch(eval(parse(text = paste(code, collapse = '\n'))), condition = identity)
+  for(i in 1:lenght(code)){
+    read.commands = tryCatch(eval(parse(text = paste(code[i], collapse = '\n'))), condition = identity)
   
-  # If error while running the exercise code, then skip all following tests
-  if(any(class(read.commands) == "error")) {
-    fail(message = paste0("Ei suutnud käivitada ", ylesanne, " koodi!"),
-         info = paste0(read.commands$message)
-    )
-    
-    skip("")
+    # If error while running the exercise code, then skip all following tests
+    if(any(class(read.commands) == "error")) {
+      fail(message = paste0("Ei suutnud käivitada ", ylesanne, " koodi!"),
+           info = paste0(read.commands$message)
+      )
+      
+      skip("")
+    }
   }
   
   return(NULL)
