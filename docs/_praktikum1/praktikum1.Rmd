@@ -18,7 +18,7 @@ library(learnr)
 
 # Tutvume R-ga
 
-Teeme tutvust `r  icon::fa_r_project()`-ga, vaatame mis see R on, käime üle R-i süntaksi olulisemad nüansid ja paneme R-i meie jaoks tööle.
+Teeme tutvust R-ga, vaatame mis see R on, käime üle R-i süntaksi olulisemad nüansid ja paneme R-i meie jaoks tööle.
 
 
 ## Lühike sissejuhatus
@@ -58,7 +58,7 @@ Konsooli käskude sisestamise asemel on neid mõistlik kirjutada skriptifaili, e
 <!--\pagebreak-->
 
 Sriptiaknas on mõislik käskudele lisada kommentaare, et teinekord või teisel inimesel oleks koodi lihtsam lugeda. **Kommentaare** saab R-i koodis lisada ainult rea lõppu, kasutades trellide-sümbolit:
-```{r funktsTest,eval=TRUE, exercise = TRUE}
+```{r funktsTest, eval=TRUE, exercise = TRUE}
 log(5.9)  # võtame naturaallogaritmi arvust 5,9
 # terve see rida on kommentaar, sest rea alguses on # ehk trellide sümbol
 ```
@@ -171,9 +171,9 @@ log(8, BASE = 2)
 
 
 
-# Muutujatega töötamine
+## Muutujatega töötamine
 
-## Väärtuste omistamine ja töökeskkond (*environment*)
+### Väärtuste omistamine ja töökeskkond
 Sageli on mugav, kui töös kasutatavatele muutujatele nimi anda -- siis saame neid edaspidi nimepidi kutsuda. Näiteks kui nimetada `kaal <- 70`  ja  `pikkus <- 185` ehk konsoolil
 ```{r}
 kaal <- 70
@@ -206,7 +206,7 @@ Töökeskkonna salvestamisel salvestatakse kõik antud töökeskkonnas olnud obj
  
 
 
-## Vektorid. Tehted vektoritega
+### Vektorid. Tehted vektoritega
 <!--Eelpool andsime andmestikust mitme veeru (või rea) korraga eraldamiseks vajalikud veeru (rea) numbrid ette käsuga `c(.)`.-->
 Eelmises punktis vaatasime juhtu, muutujate väärtuseks oli üks arv. Objekti võib aga moodustada ka mitmest väärtusest, näiteks omistame kuue uuritava kaalud muutujale nimega `kaalud` ja muutujale `liik` uuritavate liigid:
 ```{r}
@@ -252,7 +252,7 @@ kaalud[seq(1, 6, 2)] # iga teine element alates esimesest
 
 
 
-###Ülesanded
+#### Ülesanded
 1. Moodusta vektor nimega `y`, mille väärtuseks oleks arvud `1 1 1  2 2 2 2  3 3 3 3 3` kasutades käsku `rep`.
 1. Leia vektor `z`, mille liitmisel `y`-le on tulemuseks vektor, mille kõik koordinaadid on võrdsed `7`.
 1. Vali eelnevast vektorist välja iga kolmas väärtus, kasutades kantsulge ja sobivat indeksite vektorit.
@@ -263,7 +263,7 @@ kaalud[seq(1, 6, 2)] # iga teine element alates esimesest
 
 
 
-## Puuduvad väärtused
+### Puuduvad väärtused
 Andmete kogumisel võib juhtuda, et kõigil uuritavatel ei õnnestu vajalikke mõõtmisi teha ja andmetesse tekivad lüngad. Puuduva väärtuse tähistamiseks on R-is tähekombinatsioon `NA` (*Not Available*). Oletame, et analüüsil on vaja teada ka uuritavate vanust, teise vaatlusaluse kohta pole aga see teada:
 <!-- kuudes vanus-->
 ```{r}
@@ -287,7 +287,7 @@ summary(vanused) # NA väärtuste arv tuuakse vaikimisi välja
 ```
 
 
-### Ülesanded
+#### Ülesanded
 1. Kuidas käitub funktsioon `sum(.)` kui argumendiks satub puuduvate väärtustega vektor?
 1. Kas funktsioonil `which.min(.)` on lisaargument, mis reguleerib puuduvate väärtustega tegelemist?
 
