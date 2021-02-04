@@ -666,7 +666,20 @@ test_that(ylesanne,
 
 # Ülesanne 8.1 õige lahendus -----
 if(FALSE){
+  library(stringr)
   
+  # 1
+  esineb <- str_detect(tekstid$tekst, pattern = "[Ee]sti")
+  # või ka
+  esineb.alt <- str_count(tekstid$tekst, pattern = "[Ee]esti") > 0 
+  
+  # 2
+  sagedustabel <- table(tekstid$hinnang[esineb])
+  sagedustabel
+  
+  # 3
+  tinglikjaotus <- prop.table(sagedustabel)
+  tinglikjaotus
 }
 
 ylesanne = "Ülesanne 8.1"
@@ -674,8 +687,75 @@ yl = 8
 
 test_that(ylesanne, 
           {
+            tmp_part = tmp_parts[[yl]]
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
+            # 1 
+            expect_true(length(grep("str_detect", tmp_part)) >0 |
+                          length(grep("str_count", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".1: Esimeses ülesandes saab kasutada funktsiooni `str_detect` või `str_count`"),
+                        label = paste0(ylesanne, ".1 `str_detect` või `str_count` funktsiooni kontroll"))
+            
+            expect_true(length(grep("str_detect\\([^,]*,{1}[^,]*.\\)", tmp_part)) >0 | 
+                          length(grep("str_count\\([^,]*,{1}[^,]*.\\)", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".1: Funktsioonis liiga palju argumente."),
+                        label = paste0(ylesanne, ".1 str_detect()/ str_count() argumentide kontroll"))
+            
+            expect_true(length(grep("str_count\\(tekstid\\$tekst,[^,]*.\\)", tmp_part)) >0 | 
+                          length(grep("str_detect\\(tekstid\\$tekst,[^,]*.\\)", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".1: Vaja esimeseks argumendiks panna tekstilõikude vektor."),
+                        label = paste0(ylesanne, ".1 str_detect()/ str_count() 1. argumendi kontroll"))
+            
+            expect_true(length(grep("str_count\\([^,]*,[^,]*\\[Ee\\]sti", tmp_part)) >0 | 
+                          length(grep("str_detect\\([^,]*,[^,]*\\[Ee\\]sti", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".1: Vaja teiseks argumendiks panna otsitav string."),
+                        label = paste0(ylesanne, ".1 str_detect()/ str_count() 2. argumendi kontroll"))
+            
+            expect_true(exists("esineb"),
+                        info = paste0(ylesanne, ".1: Muutuja  `esineb` on defineerimata."),
+                        label = paste0(ylesanne, ".1 Muutuja esineb kontroll"))
+            
+            # 2
+            
+            expect_true(exists("sagedustabel"),
+                        info = paste0(ylesanne, ".2: Andmestik  `sagedustabel` on defineerimata."),
+                        label = paste0(ylesanne, ".2 Andmestik sagedustabel kontroll"))
+            
+            expect_true(length(grep("table\\(", tmp_part)) >0,
+                        info = paste0(ylesanne, ".2: Teises ülesandes tuleb kasutada funktsiooni `table`."),
+                        label = paste0(ylesanne, ".2 `table` funktsiooni kontroll"))
+            
+            expect_true(length(grep("^sagedustabel$", tmp_parts[[yl]])) > 0 | 
+                          length(grep("^print(sagedustabel)$", tmp_parts[[yl]])) > 0 |
+                          length(grep("^;print(sagedustabel)$", tmp_parts[[yl]])) > 0 | 
+                          length(grep("^; print(sagedustabel)$", tmp_parts[[yl]])) > 0, 
+                        info = paste0(ylesanne, ".2: muutujat 'sagedustabel' pole välja prinditud"),
+                        label = paste0(ylesanne, ".2 muutuja 'sagedustabel' väljatrüki kontroll"))
+            
+            expect_true(sum(sagedustabel==c(167,48,65,86))==4,
+                        info = paste0(ylesanne, ".2: Tabeli  `sagedustabel` väärtus ei ole korrektne. Proovi uuesti."),
+                        label = paste0(ylesanne, ".2 Sagedustabeli väärtuste kontroll"))
+            
+            
+            # 3
+            expect_true(exists("tinglikjaotus"),
+                        info = paste0(ylesanne, ".3: Andmestik  `tinglikjaotus` on defineerimata."),
+                        label = paste0(ylesanne, ".3 Andmestik tinglikjaotus kontroll"))
+            
+            expect_true(length(grep("prop\\.table\\(", tmp_part)) >0,
+                        info = paste0(ylesanne, ".3: Kolmandas ülesandes pead kasutama funktsiooni `prop.table`."),
+                        label = paste0(ylesanne, ".3 `prop.table` funktsiooni kontroll"))
+            
+            expect_true(length(grep("^tinglikjaotus$", tmp_parts[[yl]])) > 0 | 
+                          length(grep("^print(tinglikjaotus)$", tmp_parts[[yl]])) > 0 |
+                          length(grep("^;print(tinglikjaotus)$", tmp_parts[[yl]])) > 0 | 
+                          length(grep("^; print(tinglikjaotus)$", tmp_parts[[yl]])) > 0, 
+                        info = paste0(ylesanne, ".3: muutujat 'tinglikjaotus' pole välja prinditud"),
+                        label = paste0(ylesanne, ".3 muutuja 'tinglikjaotus' väljatrüki kontroll"))
+            
+            expect_true(sum(round(tinglikjaotus,2)==c(0.46,0.13,0.18,0.23))==4,
+                        info = paste0(ylesanne, ".2: Tabeli  `tinglikjaotus` väärtus ei ole korrektne. Proovi uuesti."),
+                        label = paste0(ylesanne, ".2 Tabeli tinglikjaotus väärtuste kontroll"))
           })
 
 
