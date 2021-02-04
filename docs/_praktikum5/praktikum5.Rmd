@@ -5,26 +5,26 @@ runtime: shiny_prerendered
 description: "Tutvume R-ga"
 ---
 
- 
 
-
-```{r,echo=FALSE,  warning=FALSE}
-load("../data/andmed.RData")
-
+```{r, out.height="80px", echo = F, figure-side, fig.align = 'right'}
+knitr::include_graphics("https://www.hitsa.ee/photos/HITSA_logo.png")
+knitr::include_graphics("https://media.voog.com/0000/0034/3577/photos/IT%20Akadeemia%20logo%20RGB%201000%20px.png")
 ```
-
- 
 
 # Joonised paketiga ggplot2
+
+Seekordses praktikumis tutvume R-is jooniste tegemise võimalustega, eelkõige paketiga `ggplot2`.
+
 ```{r, echo=FALSE, warning=FALSE}
-andmed <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/mass.txt", sep="\t", header=T)
-mk <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/maakonnad.txt", sep = " ")
+andmed <- read.table("https://github.com/Rkursus/mooc/raw/main/data/mass.txt", sep="\t", header=T, stringsAsFactors = T)
+mk <- read.table("https://github.com/Rkursus/mooc/raw/main/data/maakonnad.txt", sep = " ")
 library(ggplot2)
 ```
-## Graafika R-is. ggplot2 ja graafikute grammatika
+
+## Graafika R-is
 
 R-i üks tugevaid külgi on tema jooniste tegemise võimekus. Toome siinkohal esmalt ära paar baaspaketi joonistamise käsku:
-```{r,fig.height=2.8,fig.width=5}
+```{r,fig.height=5,fig.width=9}
 # andmed = Massachusettsi osariigi valikuuringu andmed
 par(mfrow = c(1, 2), cex = 0.6)  # see rida võimaldab kaks joonist kõrvuti panna
 hist(andmed$AGE, xlab = "Vanus", ylab = "Isikuid", main = "")
@@ -33,9 +33,11 @@ plot(andmed$WKHP, andmed$WAGP, xlab = "Töötunde", ylab = "Aastapalk",
 legend("topleft", pch = 19, col = 2:3, legend = levels(andmed$SEX))
 ```
 
+### Pakett `ggplot2` ja graafikute grammatika
+
 Kuigi R-i baasgraafika on peensusteni konfigureeritav ja sellega saab teha ülikeerulisi jooniseid, peab tüüpilisemate andmeid kirjeldavate jooniste saamiseks tegema palju lisatööd ja -arvutusi, nagu ülalolevastki näha. Näiteks `barplot(.)` käsk soovib argumendiks saada sagedustabelit, mis tuleks siis eelnevalt `table(.)` käsu abil arvutada.
 
-R-i kasutajate hulgas on viimastel aastatel muutunud populaarseks pakett `ggplot2`, mis võimaldab lihtsamini joonistada andmestikke kirjeldavaid jooniseid, sealjuures on tulemused visuaalselt üsna apetiitsed. Nimelt on `ggplot2` arendamisel pandud tähele statistiku Edward Tufte soovitusi värvide valikul ning eriti Leland Wilkinsoni struktureeritud käsitlust andmejoonistest, nn graafikute grammatikat (*grammar of graphics*).
+R-i kasutajate hulgas on muutunud populaarseks pakett `ggplot2`, mis võimaldab lihtsamini joonistada andmestikke kirjeldavaid jooniseid, sealjuures on tulemused visuaalselt üsna apetiitsed. Nimelt on `ggplot2` arendamisel pandud tähele statistiku Edward Tufte soovitusi värvide valikul ning eriti Leland Wilkinsoni struktureeritud käsitlust andmejoonistest, nn graafikute grammatikat (*grammar of graphics*).
 
 Üldised soovitused (Tufte):
 
@@ -55,18 +57,19 @@ Graafikute grammatika (Wilkinson) on kontseptsioon, mille kohaselt graafiku ehit
   * üldkujundus (font jms)
 
 Paketis `ggplot2` on kaks graafikute tekitamise põhikäsku: `ggplot(.)` (keerukam) ja `qplot(.)` (*quick plot*, lihtsam). Käsk `qplot(.)` peaks käepärasem olema neile, kes on varem kasutanud R-i baasgraafika käske, kuid üldiselt on soovitav ära õppida siiski `ggplot(.)` kasutamine.
-<!--Meie kasutame praegu ainult `qplot` käsku.-->
 
-Paketi `ggplot2`  käskude jaoks on kõige põhjalikum dokumentatsioon internetis aadressil: http://ggplot2.tidyverse.org/reference/ .
+Paketi `ggplot2`  käskude jaoks on kõige põhjalikum dokumentatsioon internetis aadressil: [http://ggplot2.tidyverse.org/reference/](http://ggplot2.tidyverse.org/reference/). Ühtlasi leidub mitmeid inglisekeelseid raamatuid, mis õpetavad `ggplot2` peensusi. Kaks tasuta e-raamatut on näiteks W. Chang'i [R Graphics Cookbook](https://r-graphics.org/) ja K. Healy [Data visualization](https://socviz.co/).
 <!-- Kuna tegemist on endiselt väga noore paketiga, siis uuemate versioonide käskude süntaks või toimimine võib olla erinev vanemate versioonide omast (viimati oli oluline muutus `opts(.)` käsu asendamine `theme(.)` käsuga). Ka dokumentatsioon pole veel täielik (aga oluliselt parem, kui paar aastat tagasi). -->
 
-## ggplot2: hajuvusdiagramm; skaalad
+## Hajuvusdiagrammid
+
 Paketi `ggplot2` põhimõte on joonise ülesehitamine kihthaaval: esmalt joonise põhi ja sellele lisatakse ehk liidetakse   (kasutades `+` märki)  kihtidena erinevad kujundused. Näiteks geomeetriliste elementide (punktid, jooned, tulbad jne) lisamiseks/muutmiseks on käsud `geom_<elemendi_nimi>`. 
 
 Alustame hajuvusdiagrammist. 
 Andmestikus `maakonnad` on info USA 5 osariigi mõnede maakondade kohta (425 maakonda). Uurime kõrgharidusega inimeste osakaalu ja keskmise sissetuleku vahelist seost. Mõistlik on seda kujutada hajuvus\-diagrammina, kus iga punkt on maakond ning ühel teljel on kõrgharidusega inimeste osakaalu märkiv tunnus `bachelor` ja teisel teljel keskmise sissetuleku tunnus `per_capita_inc`:
+
 ```{r,eval=FALSE}
-mk <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/maakonnad.txt", sep = " ", header = T)
+mk <- read.table("https://github.com/Rkursus/mooc/raw/main/data/maakonnad.txt", sep = " ", header = T)
 ggplot(data = mk, mapping = aes(x = bachelor, y = per_capita_inc)) + geom_point()
 #                                                    joonise põhi  + kujunduselement
 ```
@@ -98,13 +101,13 @@ Igat tüüpi tunnuseid ei saa suvaliste jooniseühikutega seostada, näiteks arv
 ### Ülesanded
 
 1. Loe sisse maakondade andmestik:\
-`link <- "https://github.com/Rkursus/sygis2019/raw/master/data/"`\
+`link <- "https://github.com/Rkursus/mooc/raw/main/data/"`\
 `mk <- read.table(paste0(link, "maakonnad.txt"), sep = " ", header=T)`\
 1. Joonista hajuvusdiagramm keskkooli lõpetanute protsendi (`high_scl`) ja ülikooli lõpetanute protsendi (`bachelor`) vahel. Kas on näha mingit seost?
 1. Lisa joonisele osariigi (`State`) kohta käiv info; katseta erinevaid variante (värv, kuju jne)
 1. Kujuta joonisel mingil moel ka maakonna rahvaarvu (`pop_estimate`)
 ```{r, eval=FALSE, include=FALSE}
-mk <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/maakonnad.txt", sep = " ", header=T)
+mk <- read.table("https://github.com/Rkursus/mooc/raw/main/data/maakonnad.txt", sep = " ", header=T)
 
 ggplot(data = mk, aes(x = high_scl, y = bachelor)) + geom_point()
 ggplot(data = mk, aes(x = high_scl, y = bachelor, color = State)) + geom_point()
@@ -117,11 +120,7 @@ ggplot(data = mk, aes(x = high_scl, y = bachelor, shape = State, size =pop_estim
 
 
 
-
-  
-
-
-## Tulpdiagramm; elementide asukoht
+## Tulpdiagramm
 
 Graafiku teljed võivad olla seotud ka diskreetse tunnusega (nt `Factor`), näiteks võiksime maakondi kujutades siduda x-teljega osariigi:
 ```{r,eval=FALSE}
@@ -285,7 +284,6 @@ Kui uurime tekstiliste väärtustega ja pideva arvutunnuse vahelist seost, siis 
 ggplot(data = mk, aes(x = State, y = per_capita_inc)) + geom_boxplot()
 ```
 
-\pagebreak
 Tunnuse jaotuse võrdlemiseks gruppides sobib ka tihedusfunktsiooni hinnagu graafik   
 
 ```{r  }
@@ -341,7 +339,7 @@ Soo tunnuse saamiseks liida visiitide andmestik isikuandmete tabeliga \
 
 ```{r, eval=FALSE, include=FALSE}
 
-visiidid <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/visiidid.txt", sep = "\t", header = TRUE)[1:5, ]
+visiidid <- read.table("https://github.com/Rkursus/mooc/raw/main/data/visiidid.txt", sep = "\t", header = TRUE)[1:5, ]
 str(visiidid)
 
 library(stringr)
@@ -359,7 +357,7 @@ ggplot(data = visiidid,
 
 
 
-inimesed <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/isikud.txt", sep = "\t", header = TRUE)
+inimesed <- read.table("https://github.com/Rkursus/mooc/raw/main/data/isikud.txt", sep = "\t", header = TRUE)
 m <- merge(inimesed, visiidid, by = "ik")
 ggplot(data = m, 
        aes(x = as.Date(visiidi_kp), y = vererohk, 
@@ -370,8 +368,8 @@ ggplot(data = m,
 
 
 
-visiidid <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/visiidid.txt", sep = "\t", header = TRUE)
-inimesed <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/isikud.txt", sep = "\t", header = TRUE)
+visiidid <- read.table("https://github.com/Rkursus/mooc/raw/main/data/visiidid.txt", sep = "\t", header = TRUE)
+inimesed <- read.table("https://github.com/Rkursus/mooc/raw/main/data/isikud.txt", sep = "\t", header = TRUE)
 m <- merge(inimesed, visiidid, by = "ik")
 ggplot(data = m, 
        aes(x = as.Date(visiidi_kp), y = vererohk, 
@@ -443,15 +441,15 @@ ggplot(data = mk, aes(x = bachelor, y = perc_poverty)) + geom_point() +
 1. Lisa eelmisele joonisele ka jaotus osariikide kaupa. Kas erinevates osariikides on seosed on samad või erinevad?
 1. Kasuta arstivisiitide ja inimeste andmestikke
 <!--\newline
-`visiidid <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/visiidid.txt", sep = "\t", header = TRUE)`\newline
-`inimesed <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/isikud.txt", sep = "\t", header = TRUE)`\newline -->
+`visiidid <- read.table("https://github.com/Rkursus/mooc/raw/main/data/visiidid.txt", sep = "\t", header = TRUE)`\newline
+`inimesed <- read.table("https://github.com/Rkursus/mooc/raw/main/data/isikud.txt", sep = "\t", header = TRUE)`\newline -->
 Tee nende andmete põhjal järgmine joonis:
 
 ```{r, echo=FALSE, fig.width=6, fig.height=2}
-visiidid <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/visiidid.txt", sep = "\t", header = TRUE)
+visiidid <- read.table("https://github.com/Rkursus/mooc/raw/main/data/visiidid.txt", sep = "\t", header = TRUE)
 visiidid$visiidi_kp <- as.Date(visiidid$visiidi_kp )
 
-inimesed <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/isikud.txt", sep = "\t", header = TRUE)
+inimesed <- read.table("https://github.com/Rkursus/mooc/raw/main/data/isikud.txt", sep = "\t", header = TRUE)
 inimesed$skp <- as.Date(inimesed$skp )
 
 m <- merge(inimesed, visiidid, by = "ik")
@@ -472,7 +470,7 @@ ggplot(data = m,
 
 
 
-## *Veel joonisele kihtide lisamisest
+## Veel joonisele kihtide lisamisest
 
 Paketiga `ggplot2` koostatud jooniseid saab salvestada objektina töölauale (st omistada joonis muutujale); valmisolevaid jooniseid saab seetõttu lihtsasti muuta ja täiendada. Praktikumi alguses vaatasime juba hajuvusdiagrammi punktidele värvi lisamist. Teeme selle korra veel läbi, kasutades ka võimalust joonis objektina salvestada
 ```{r,results='hide',eval=FALSE}
@@ -544,14 +542,14 @@ p + geom_point(aes(colour = "blue"))
 ### *Ülesanded
 
 Ülesannetes kasuta USA viie osariigi maakondade andmestikku `mk`.
-<!--1. Loe sisse andmestik: `read.table("https://github.com/Rkursus/sygis2019/raw/master/data/maakonnad.txt", sep = " ", header=T)`-->
+<!--1. Loe sisse andmestik: `read.table("https://github.com/Rkursus/mooc/raw/main/data/maakonnad.txt", sep = " ", header=T)`-->
 
 1. Joonista hajuvusdiagramm `high_scl` ja `bachelor` vahel.
 1. Lisa neile maakondadele nimed, kus keskkooliharidusega inimeste osakaal on < 50%.
 1. Lisa graafikule vertikaaljoon kohale, kus keskkooliharidusega inimeste osakaal oleks täpselt 50% (vihje: kasuta käsku `geom_vline(.)`)
 1. Lisa viimasele graafikule veel oma valitud kohta mingi tekstikommentaar.
 ```{r, eval=FALSE, include=FALSE}
-mk <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/maakonnad.txt", sep = " ", header=T)
+mk <- read.table("https://github.com/Rkursus/mooc/raw/main/data/maakonnad.txt", sep = " ", header=T)
 
 p <- ggplot(data = mk, aes(high_scl, bachelor)) + geom_point()
 p

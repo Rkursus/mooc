@@ -5,20 +5,30 @@ runtime: shiny_prerendered
 description: "Tutvume R-ga"
 ---
 
+```{r, out.height="80px", echo = F, figure-side, fig.align = 'right'}
+knitr::include_graphics("https://www.hitsa.ee/photos/HITSA_logo.png")
+knitr::include_graphics("https://media.voog.com/0000/0034/3577/photos/IT%20Akadeemia%20logo%20RGB%201000%20px.png")
+```
+
 ```{r, include=FALSE, warning=FALSE}
 library(reshape2)
 library(ggplot2)
-link <- "https://github.com/Rkursus/sygis2019/raw/master/data/"
+link <- "https://github.com/Rkursus/mooc/raw/main/data/"
 mk <- read.table(paste0(link, "maakonnad.txt"), sep = " ", header=T)
 #mk <- read.table("C:\\Users\\annes\\Documents\\10 AinedÕpetamine\\R kursus\\R kursus 2017 EAP3\\praksid\\failid-veebist-Mait\\maakonnad.txt", sep = " ", header=T)
 
 
 ```
 
-# Pakett ggplot2:  Skaalade muutmine
+# Joonised edasijõudnutele
+
+Jooniste teema on väga suur, seega jätkame - vaatame `ggplot2` paketiga jooniste peenhäälestamist. Muudame jooniste skaalasid (diskreetsed, pidevad), kuidas värvides väärtusi näidata ja paneme paika õiged sildid. Lõpuks vaatame kuidas paljusid seadistusi teha mõne lihtsa käsuga.
+
+## Skaalade muutmine
+
 Kui `ggplot2`-ga koostada joonis, siis muutujad seostatakse graafiliste elementide omadustega (asukoht x-teljel, asukoht y-teljel, värvus, suurus jne). Vaikimisi kasutatakse küllalt mõistlikke skaalasid, nt värviskaalad on valitud selliselt, et kõik värvid oleks võrdse intensiivsusega. Mõnikord on aga soov skaalasid muuta. Selleks saab kasutada käske `scale_<graafilise elemendi omadus>_<skaala nimi>`. Näiteks `scale_x_continuous(.)` käsuga saab muuta x-telje vahemikku, `scale_colour_grey(.)` muudab värviskaala mustvalgeks.
 
-Kõiki skaalade muutmise funktsioone on võimalik näha ggplot2 kodulehel http://ggplot2.tidyverse.org/reference/  jaotuse "Scales" all.
+Kõiki skaalade muutmise funktsioone on võimalik näha [ggplot2 kodulehel](http://ggplot2.tidyverse.org/reference/) jaotuse "Scales" all.
 
 Skaleerimisfunktsiooni rakendamiseks tuleb see lisada joonisele:
 ```{r}
@@ -62,12 +72,12 @@ p2 + ylab("töötuse määr") + labs(title = "Siia pane pealkiri", x = "xtelg" )
 
 Teljepiiride määramine `ylim(.)` või `xlim(.)` käsuga võib mõjutada joonisel esitatavaid arvutuslikke tulemusi. Näiteks kui joonisel esitada keskväärtused koos usalduspiiridega ning  määrata teljepiirid nii, et mõni arvutuse aluseks olev vaatlus jääb piiridest välja, siis muutuvad ka usalduspiirid. Näide sellisest olukorrast on järgmisel joonisel (siin on  kasutuses on teine näiteandmestik: rottide kehakaalu ja dieetide andmestik) 
 
-```{r, eval = F, fig.height=2.6}
+```{r, eval = F, fig.height=2.6, message = F}
 rotid <- nlme::BodyWeight  
 rotid <- rotid[rotid$Diet != 1, ]  
 p <- ggplot(rotid, aes(factor(Time), weight)) + geom_point(color = "gray") + 
   stat_summary(geom = "errorbar", fun.data = mean_se, fun.args = list(mult = 1.96)) +
-  stat_summary(geom = "point", fun.y = mean)
+  stat_summary(geom = "point", fun = mean)
 p
 p + ylim(390, 600)
 ```
@@ -76,7 +86,7 @@ rotid <- nlme::BodyWeight # andmestik kodutööst
 rotid <- rotid[rotid$Diet != 1, ]  
 p <- ggplot(rotid, aes(factor(Time), weight)) + geom_point(color = "gray") + 
   stat_summary(geom = "errorbar", fun.data = mean_se, fun.args = list(mult = 1.96)) +
-  stat_summary(geom = "point", fun.y = mean)
+  stat_summary(geom = "point", fun = mean)
 p
 ```
 ```{r,echo=FALSE,fig.height=3.,fig.width=3., warning=FALSE}
@@ -108,7 +118,8 @@ p2 + geom_smooth(method = lm) + scale_x_continuous(limits = 1:2*10^4) +
 p2 + geom_smooth(method = lm) + coord_cartesian(xlim = 1:2*10^4) +
   labs(title = "kasutame kõiki punkte, tulemust\nnäeme vahemikus 10000-20000")
 ```
-```{r,echo=FALSE,fig.height=3.5,fig.width=3., warning=FALSE}
+```{r,echo=FALSE,fig.height=3.5,fig.width=3.5, warning=FALSE, message = F, figures-side}
+
 p2 + geom_smooth(method = lm) + scale_x_continuous(limits = 1:2*10^4) +
   labs(title = "x-teljel kasutame ja näeme\npunkte vahemikus 10000-20000") + 
   guides(color = FALSE) + theme(title = element_text(size = 9))
@@ -250,7 +261,7 @@ p3 + scale_colour_gradient2(name = nimi, low = "blue", high = "red", midpoint = 
 
 
 
-Diskreetsete/kvalitatiivsete värviskaalade kontrollimiseks kasutatakse vaikimisi funktisooni `scale_<?>_hue(.)`, mis valib HCL värviskaalal^[http://en.wikipedia.org/wiki/Munsell_color_system] parameetri `h` (*hue* värvitoon) väärtused võimalikult erinevad, jättes värvi tugevuse `c` (*chroma*) ja heleduse `l`(*luminance, lightness*) konstantseks. Nii saadakse võimalikult erinevad värvid, mis samal ajal on ühesuguse intensiivsusega.
+Diskreetsete/kvalitatiivsete värviskaalade kontrollimiseks kasutatakse vaikimisi funktisooni `scale_<?>_hue(.)`, mis valib [HCL värviskaalal](http://en.wikipedia.org/wiki/Munsell_color_system) parameetri `h` (*hue* värvitoon) väärtused võimalikult erinevad, jättes värvi tugevuse `c` (*chroma*) ja heleduse `l`(*luminance, lightness*) konstantseks. Nii saadakse võimalikult erinevad värvid, mis samal ajal on ühesuguse intensiivsusega.
 ```{r, fig.height= 3, fig.width=3, eval = F}
 p4 <- ggplot(mk, aes(per_capita_inc, unemployment_rate)) + geom_point(aes(colour = State ))
 p4 
@@ -268,10 +279,10 @@ p4 + scale_colour_hue(c = 150) # tugevus
 
 
 
-Diskreetsete värviskaalade jaoks on arendatud värvipalett "Colorbrewer"^[http://www.colorbrewer2.org] (algselt arendatud maakaartide värvimiseks). `ggplot2`-s pääseb sellele paletile ligi funktsiooniga `scale_<?>_brewer(.)`, millel on kaks argumenti: 
+Diskreetsete värviskaalade jaoks on arendatud värvipalett [Colorbrewer](http://www.colorbrewer2.org) (algselt arendatud maakaartide värvimiseks). `ggplot2`-s pääseb sellele paletile ligi funktsiooniga `scale_<?>_brewer(.)`, millel on kaks argumenti: 
   
 * `type` -- võimalikud väärtused on `"seq"`, `"div"` ja `"qual"`
-* `palette` -- paleti number (vt http://www.colorbrewer2.org)
+* `palette` -- paleti number (vt [http://www.colorbrewer2.org](http://www.colorbrewer2.org))
 
 ```{r, fig.height= 3, fig.width=3, eval = F}
 p4 + scale_colour_brewer(type = "div", palette = 2) 
@@ -287,14 +298,14 @@ p4 + scale_colour_brewer(type = "qual", palette = 2)
 
 ### Ülesanded
 
-1. Proovi eelmises ülesandes tehtud joonisel (`high_scl` ja `bachelor`) valida tunnuse `income_class` jaoks selline värviskaala, mis  http://www.colorbrewer2.org väitel on ka värvipimedatele loetav.  
+1. Proovi eelmises ülesandes tehtud joonisel (`high_scl` ja `bachelor`) valida tunnuse `income_class` jaoks selline värviskaala, mis [http://www.colorbrewer2.org](http://www.colorbrewer2.org) väitel on ka värvipimedatele loetav.  
 
 
 
 
 
 
-# Joonise viimistlemine
+## Joonise viimistlemine
 
 Vaikimisi joonistab `ggplot2` halli taustaga jooniseid -- et heledamad värvid oleksid sama silmatorkavad kui tumedad. Kui on soov valge tausta järele, siis seda saab tellida, lisades joonisele käsu `+ theme_bw()`. Veelgi detailsemalt saab joonise kujundust käsuga `+ theme(.)`, mille argumentidest mõned olulisemad on:
   
@@ -326,7 +337,7 @@ strip.text.y | text | vertikaalsete tahkude pealkiri
 
 
 
-Täielikum loetelu `theme(.)` võimalikest argumentidest on aadressil http://ggplot2.tidyverse.org/reference/#section-themes .
+Täielikum loetelu `theme(.)` võimalikest argumentidest on aadressil [http://ggplot2.tidyverse.org/reference/#section-themes](http://ggplot2.tidyverse.org/reference/#section-themes).
   
 Nagu näha, on kolm peamist elemenditüüpi, mida saab muuta käskudega `element_text(.)`, `element_line(.)` ja `element_rect(.)`. Nendel käskudel on omakorda argumendid:
   

@@ -16,6 +16,12 @@ library(learnr)
 
 ```
 
+```{r, out.height="80px", echo = F, figure-side, fig.align = 'right'}
+knitr::include_graphics("https://www.hitsa.ee/photos/HITSA_logo.png")
+knitr::include_graphics("https://media.voog.com/0000/0034/3577/photos/IT%20Akadeemia%20logo%20RGB%201000%20px.png")
+```
+
+
 # Tutvume R-ga
 
 Teeme tutvust R-ga, vaatame mis see R on, käime üle R-i süntaksi olulisemad nüansid ja paneme R-i meie jaoks tööle.

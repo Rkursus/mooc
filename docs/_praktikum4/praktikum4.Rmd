@@ -5,30 +5,26 @@ runtime: shiny_prerendered
 description: "Tutvume R-ga"
 ---
 
-
-
-
-```{r,echo=FALSE, warning=FALSE}
-#load("andmed.RData")
-#library(ggplot2)
+```{r, out.height="80px", echo = F, figure-side, fig.align = 'right'}
+knitr::include_graphics("https://www.hitsa.ee/photos/HITSA_logo.png")
+knitr::include_graphics("https://media.voog.com/0000/0034/3577/photos/IT%20Akadeemia%20logo%20RGB%201000%20px.png")
 ```
 
+# Toimingud andmestikuga
 
-# Toimingud andmestikuga -- jätk
+Jätkame andmestike muutmisega. Seekord andmestike ühendamise, sorteerimise ja unikaalsete või korduvate vaatluste otsimisega. Vaatme ka andmestiku erinvaid esitusviise.
 
-
-
-
-<!-- # Veel toimingud andmestikuga-->
 
 ## Andmestike täiendamine ja ühendamine
+
 Oleme tutvunud, kuidas andmestikust saab eraldada alamhulki (nt ridu või veerge, mis vastavad teatud kriteeriumitele). Ühekaupa saab uusi veerge  `data.frame`-tüüpi objektile lisada nii dollarimärgi kui kantsulgude abil, kui anname ette uue veeru nime.  
 
 Vaatame siin näiteandmestikuna andmestikku `mk` (*maakonnad.txt*), mis sisaldab infot USA 5 osariigi mõnede maakondade kohta (425 maakonda). Loeme andmed sisse 
 <!--ja lisame tunnuse, mis näitab, kas maakonna sündimuskordaja väärtus ületab 2.1 piiri:-->
 ```{r,eval=FALSE}
-mk <- read.table("https://github.com/Rkursus/2020/raw/master/data/maakonnad.txt", sep = " ", header = TRUE)
+mk <- read.table("https://github.com/Rkursus/mooc/raw/main/data/maakonnad.txt", sep = " ", header = TRUE)
 ```
+
 ```{r eval=FALSE, include=FALSE}
 # need read jätan praegu välja, sest see osa on samas praksis kus uue tunnuse lisamine, pole va vaja meenutust!
 mk[, "taastootev"] <- mk$births > 2.1   # või
@@ -39,6 +35,7 @@ Mitut uut veergu või rida saab andmestikule lisada `cbind(.)` ja `rbind(.)` kä
 <!--Probleeme võib tekkida ridade lisamisel, kui esineb `Factor`-tüüpi tunnuseid ja lisatavates andmetes on uusi faktoritasemeid, mida esialgses andmestikus pole välja toodud.  
 <!-- Probleem kui ntx enne faktor, lisatakse arvud??-->
 <!-- kui veergudel on päised ja veerud on liidetavates andmestikes eri järjekorras, siis rbind oskab ümber järjestada!, cbind ridu mitte  -->
+
 ```{r,eval=FALSE}
 # teeme kaks uut tunnust
 suurus <- cut(mk$pop_estimate, c(0, 1000, 10000, 1000000, Inf), 
@@ -72,7 +69,7 @@ tulemused
 ```
 
 
-###Ülesanded
+### Ülesanded
 
 1. Kuidas peaks `merge` käsu kirja panema, kui `isikud` ja `tulemused` andmestikes on võtmetunnusel erinev nimi?
 1. Proovi, mis muutub `merge` käsu tulemuses, kui kasutada `all = TRUE` argumendi asemel  `all.x = TRUE` või `all.y = TRUE`.
@@ -106,7 +103,7 @@ kokku[order(kokku$vanus, kokku$tulemus, decreasing = TRUE), ]
 ### Ülesanded
 
 1. Loe sisse kaks andmestikku ja tutvu nendega (dimensioon, tunnused):\
-`link <- "https://github.com/Rkursus/2020/raw/master/data/"`\
+`link <- "https://github.com/Rkursus/mooc/raw/main/data/"`\
 `visiidid <- read.table(paste0(link, "visiidid.txt"), sep = "\t", header = TRUE)`\
 `inimesed <- read.table(paste0(link, "isikud.txt"), sep = "\t", header = TRUE)`
 
@@ -121,8 +118,8 @@ kokku[order(kokku$vanus, kokku$tulemus, decreasing = TRUE), ]
 
 ```{r, eval=FALSE, include=FALSE}
 #1 andmed sisse
-visiidid <- read.table("https://github.com/Rkursus/2020/raw/master/data/visiidid.txt", sep = "\t", header = TRUE)
-inimesed <- read.table("https://github.com/Rkursus/2020/raw/master/data/isikud.txt", sep = "\t", header = TRUE)
+visiidid <- read.table("https://github.com/Rkursus/mooc/raw/main/data/visiidid.txt", sep = "\t", header = TRUE)
+inimesed <- read.table("https://github.com/Rkursus/mooc/raw/main/data/isikud.txt", sep = "\t", header = TRUE)
 
 str(visiidid)
 str(inimesed)
@@ -186,9 +183,10 @@ write.table(visiidid, "visiidid.txt", sep = "\t", row.names = F)
 
 
 
-## Unikaalsed ja mitmekordsed elemendid. Hulgatehted.
+## Unikaalsed ja mitmekordsed elemendid
 
 Mõnikord on üks objekt andmestikus mitu korda, ent me soovime seda ainult ühel korral analüüsi kaasata. Etteantud vektorist saab unikaalsed elemendid kätte käsuga `unique(.)`. Käsuga `duplicated(.)` saab teada, kas ette antud vektoris/andmetabelis on element esimest või juba mitmendat korda (tulemuseks on tõeväärtusvektor, kus `TRUE` tähendab seda, et antud väärtus on juba mitmendat korda).
+
 ```{r}
 # vaatame andmestikku 'kokku', andmestike ühendamise alapunktist
 kokku$nimi
@@ -198,6 +196,7 @@ duplicated(kokku)       # mitmes rida andmestikus on dubleeriv (sellist pole!)
 ```
 
 R-is on realiseeritud ka elementaarsed hulgaoperaatorid: ühisosa, ühend ja vahe. Käsk `union(x, y)` tagastab ette antud kahe vektori `x` ja `y` elementidest koostatud uue vektori, sealjuures mõlema vektori kõik elemendid on esindatud. Käsk `intersect(x, y)` tagastab vektori elementidest, sealjuures on esindatud ainult need elemendid mis on nii vektoris `x` kui ka `y`. Käsk `setdiff(x, y)` tagastab vektori, kus on ainult need `x` elemendid, mida vektoris `y` ei ole. Kõik hulgatehete käsud tagastavad sellised vektorid, kus igat elementi on ainult üks kord
+
 ```{r, echo=TRUE, eval = F}
 x <- c(1:5, 1:5)
 y <- 3:7
@@ -222,7 +221,7 @@ table(factor(mktopelt[duplicated(mktopelt), "County"]))
 
 2. Vaata  visiitide ja isikukoodide ühendatud andmestikku. Kas arsti mitte külastanud isikute osakaal (protsentuaalselt) on suurem meeste või naiste hulgas?
 ```{r, eval=FALSE, include=FALSE}
-link <- "https://github.com/Rkursus/2020/raw/master/data/"
+link <- "https://github.com/Rkursus/mooc/raw/main/data/"
 visiidid <- read.table(paste0(link, "visiidid.txt"), sep = "\t", header = TRUE)
 inimesed <- read.table(paste0(link, "isikud.txt"), sep = "\t", header = TRUE)
 
@@ -248,16 +247,14 @@ prop.table(tabel, 1)
 
 
 
+## Pikk ja lai andmetabel. 
 
-
-# Andmestiku teisendused
-
- 
-## Pikk ja lai andmetabel. Pakett reshape2 
 ```{r, include=FALSE}
 library(reshape2)
 ```
+
 Teise praktikumi materjali alguses näiteks toodud traditsioonilist andmetabeli kuju ehk  $objekt \times\  tunnus$-maatriksit nimetatakse vahel ka nn **laias formaadis andmestikuks**, tabeli iga  rida vastab ühele objektile, infoliiasus on viidud miinimumini. Näide laias formaadis andmestikust:
+
 ```{r,echo=FALSE}
 (vr <- data.frame(nimi = c("Mari", "Jaan", "Jüri"), kaal = c(68, 65, 100), pikkus = c(170, 180, 190), sugu = c(2, 1, 1), pulss0m = c(70, 80, 80), 
                   pulss10m = c(130, 120, 190), pulss30m = c(150, 120, NA)))
@@ -273,9 +270,11 @@ Eriti äärmuslik on pika formaadi puhul hoida kõiki arvulisi tunnuseid ühes v
 melt(vr, id.vars = "nimi")
 ```
 <!-- Kuigi R-i baaspaketis on kaasas käsk `reshape(.)`, siis on sellega üsna tüütu teisendada andmestikku ühest formaadist teise.  -->
+
 Andmestiku ühest formaadist teise viimiseks tutvume paketiga **reshape2**, milles olulisimad käsud `melt(.)` ja `dcast(.)` aitavad vastavalt teisendada andmestikku laiast formaadist pikka ja vastupidi, ning teha veel täiendavaid toiminguid/arvutusi.
 
 Funktsioon `melt(.)` teisendab andmed laiast formaadist pikka. Argumendiga `measure.vars` saab sellele ette anda veerunimede või -indeksite vektori, milles olevad tunnused pannakse kõik ühte veergu. Vaikimisi pannakse kõik arvulised väärtused ühte veergu nimega `value` ning teises veerus nimega `variable` on kirjas, mida antud väärtus tähendab (millises veerus see väärtus esialgses andmestikus oli).
+
 ```{r,results='hold',warning=FALSE,fig.width=5,fig.height=2}
 #install.packages("reshape2") # kui arvutis pole paketti reshape2, siis esmalt installida
 library(reshape2) 
@@ -288,6 +287,7 @@ vr <- data.frame(nimi = c("Mari", "Jaan", "Jyri"),
 (m <- melt(vr, measure.vars = 5:7)) # välimised sulud tingivad ekraanile trükkimise
 
 ```
+
 ```{r, eval=FALSE, include=FALSE}
 # välja jätta 2017
 library(ggplot2)
@@ -296,15 +296,18 @@ ggplot(data = m, aes(variable, value)) + geom_line(aes(group = nimi)) + facet_wr
 ```
 
 Funktsioon `dcast(.)` aitab andmeid pikast formaadist laia teisendada, sealjuures tuleb argumendiga `formula` kindlasti ette öelda, millised tunnused määravad ära tulemusandmestiku read ning millised määravad ära veerud: `formula = reatunnus1 + reatunnus2 ~ veerutunnus1 + veerutunnus2`. Väga kasulik on argument `fun.aggregate`, mille abil saab määrata, kas ja millist funktsiooni peaks kasutama veerutunnustega antud väärtuste agregeerimiseks. Funktsiooniga `recast(.)` saab korraga ära teha töö, mille teeks ära järjestikku  rakendatud `melt(.)` ja   `dcast(.)` käsud.
+
 ```{r,echo=FALSE}
 vana <- options()
 options(width=100)
 ```
+
 ```{r}
 dcast(m, formula = nimi ~ variable)
 dcast(m, nimi + kaal ~ variable + sugu)
 dcast(m, nimi ~ . , fun.aggregate = mean, na.rm = TRUE, value.var = "value")
 ```
+
 ```{r,eval=FALSE, echo = F}
 # (    dcast osa, melt osa         , dcast osa    )  -- tulemus sama, mis üleval
 recast(vr, nimi ~ . , measure.var = 5:7, fun.aggregate = mean, na.rm = T)
@@ -318,7 +321,7 @@ options <- vana
 ### Ülesanded
 
 1. Kasuta arstivisiitide ja isikute andmestiku ühte alamosa:\
-`link <- "https://github.com/Rkursus/2020/raw/master/data/"`\
+`link <- "https://github.com/Rkursus/mooc/raw/main/data/"`\
 `valik <- read.table(paste0(link, "valik.txt"), sep = "\t", header = TRUE)`.
 Vaata andmestik üle `head(valik)`. Tegu on valikuga isikutest, tunnuste osas on lisatud visiidi järjekorranumber. 
     - Vii andmed laiale kujule, kus iga isiku jaoks oleks andmestikus üks rida, kus on kirjas isikukood, sugu, sünnikuupäev, vanus ning vererõhu väärtus esimesel ja teisel visiidil.
@@ -351,7 +354,7 @@ head(pikk)
 
 
 #2
-visiidid <- read.table("https://github.com/Rkursus/2020/raw/master/data/visiidid.txt", sep = "\t", header = TRUE)
+visiidid <- read.table("https://github.com/Rkursus/mooc/raw/main/data/visiidid.txt", sep = "\t", header = TRUE)
 head(visiidid)
 
  
@@ -420,7 +423,7 @@ ggplot(yhend, aes(x = as.Date(visiidi_kp), y = vererohk, group = ik)) + geom_lin
 
 
 
-# Veel andmestruktuure
+## Veel andmestruktuure
 
 Oleme varem tutvunud sellega, mis tüüpi võivad olla üksikud andmeelemendid (`int`, `char`, `Factor` jm). Üksikuid elemente saab kokku panna üheks vektoriks näiteks käsuga `c(.)`, millega oleme samuti tuttavad. Samuti oleme tuttavad `data.frame`-tüüpi objektiga -- see on R-is andmetabeli tüüp. Andmeid on aga võimalik R-is hoida ka teistsugustes struktuurides kui vektor või `data.frame`.
 
