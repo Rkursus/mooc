@@ -241,6 +241,7 @@ as.logical(tekst)
 
 
 ## Andmestik, andmete import
+
 Tavaliselt koosnevad andmestikud ridadest ja veergudest (tulpadest), kus iga rida vastab mingile mõõtmisobjektile ja iga veerg vastab mingile mõõdetud omadusele (tunnusele). 
 
 ```{r, echo = F,  fig.width = 5}
@@ -291,7 +292,8 @@ MS Exceli faile ning statistikatarkvarade spetsiifilisi andmeformaate (nt Stata 
 Tänases praktikumis vaatame nii tekstifailis andmete kui ka mõne teise statistikaprogrammi andmefailide importimist R-i.
 
 
-## Andmete sisselugemine ja faili kirjutamine (tekstifail)
+## Andmete sisselugemine ja faili kirjutamine
+
 Kõige olulisem käsk tekstikujul andmestike sisselugemiseks on `read.table()`. Sellel on mitmeid **argumente**, mille abil saab täpsustada erinevaid asjaolusid, mis antud andmestikku puutuvad:
 
 <!--
@@ -317,13 +319,17 @@ Kõige olulisem käsk tekstikujul andmestike sisselugemiseks on `read.table()`. 
 --------------   -----   ------------------------------------------------------------------------------------------------------
 
 
-Faili asukoht võib olla kõvakettal või võrgus. Kui käsu `setwd` abil on määratud, milline on käimasoleva töösessiooni **töökataloog**, ja andmefail on selles kataloogis, siis piisab käsule `read.table` ainult faili nime etteandmisest (täispikka asukohta ei pea andma). Windowsis on kombeks kaustastruktuuri tähistamiseks kasutada kurakaldkriipsu (tagurpidi kaldkriipsu) `\`, aga R-is on sellisel kaldkriipsul eriline tähendus -- sellega märgitakse, et järgneb erisümbol (nt `\t` on tabulaatori sümbol). Seepärast tuleb kataloogitee märkimisel kasutada kahekordseid kurakaldkriipse, näiteks:
+Faili asukoht võib olla kõvakettal või võrgus. Kui käsu `setwd` abil on määratud, milline on käimasoleva töösessiooni **töökataloog**, ja andmefail on selles kataloogis, siis piisab käsule `read.table` ainult faili nime etteandmisest (täispikka asukohta ei pea andma). Windowsis on kombeks kaustastruktuuri tähistamiseks kasutada kurakaldkriipsu (tagurpidi kaldkriipsu) `\`, aga R-is on sellisel kaldkriipsul eriline tähendus -- sellega märgitakse, et järgneb erisümbol (nt `\t` on tabulaatori sümbol). Seepärast tuleb Windows operatsioonisüsteemis kataloogitee märkimisel kasutada kahekordseid kurakaldkriipse. Teine võimalus on kasutada tavalist kaldkriipsu, nagu MacOS-is ja Linuxites:
 ```{r,eval=FALSE}
-setwd("C:\\Users\\mina\\Rkursus\\")
-```
-Teine võimalus on kasutada tavalist kaldkriipsu, nagu MacOS-is ja Linuxites:
-```{r,eval=FALSE}
+# Windows operatsioonisüsteemis
+#  variant 1
 setwd("C:/Users/mina/Rkursus/")
+#  variant 2
+setwd("C:\\Users\\mina\\Rkursus\\")
+
+
+# Linux ja MacOS operatsioonisüsteemides
+setwd("/home/mina/Rkursus/")
 ```
 
 Andmete sisselugemisel tuleks anda andmetabelile nimi (salvestada see mingi objektina), vastasel juhul andmestik trükitakse lihtsalt ekraanile ja sellega enam midagi muud teha ei saa: `r load("../data/andmed.RData")` 
