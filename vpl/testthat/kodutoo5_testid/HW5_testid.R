@@ -286,40 +286,89 @@ test_that(ylesanne,
             tmp_part = tmp_parts[[yl]]
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
+            # 1 
             expect_true(exists("mass_char"),
                         info = paste0(ylesanne, ".1 Andmestikku `mass_char` pole tekitatud!"),
-                        label = paste0(ylesanne, ".1 Andmestiku mass_char nime kontroll"))
+                        label = paste0(ylesanne, ".1 Andmestikku mass_char nime kontroll"))
             
             expect_true(length(grep("mutate_if\\(", tmp_part)) >0, 
-                        info = paste0(ylesanne, ".2: Kasuta teises ülesandes funktsiooni `mutate_if()`"),
-                        label = paste0(ylesanne, ".2 mutate_if() funktsiooni kontroll"))
+                        info = paste0(ylesanne, ".1: Kasuta teises ülesandes funktsiooni `mutate_if()`"),
+                        label = paste0(ylesanne, ".1 mutate_if() funktsiooni kontroll"))
             
             #esimene argument is.factor
              expect_true(length(grep("mutate_if\\(.*[^is.factor$]", tmp_part)) >0, 
-                         info = paste0(ylesanne, ".2: Funktsiooni `mutate_if()` esimeseks argumendiks peab sattuma andmestik `mass`, st see saadetakse aheldamisega funktsiooni esimeseks argumendiks.
+                         info = paste0(ylesanne, ".1: Funktsiooni `mutate_if()` esimeseks argumendiks peab sattuma andmestik `mass`, st see saadetakse aheldamisega funktsiooni esimeseks argumendiks.
                                        Ära kustuta, ega muuda seda kohta koodist."),
-                         label = paste0(ylesanne, ".2 mutate_if() argumentide kontroll"))
+                         label = paste0(ylesanne, ".1 mutate_if() argumentide kontroll"))
              
             #kas mutate_if lõpus as.character(), võiks olla ka komade arvu kontroll
             # expect_true(length(grep("mutate_if\\(.+\n.+[^as.character()$],", tmp_part)) >0, 
-            #             info = paste0(ylesanne, ".2: Peab määrama teisenduse, mida valitud veergudele rakendada, see peaks veeru tüübiks määrama `character`. Kasuta funktsiooni `as.character()`."),
-            #             label = paste0(ylesanne, ".2 as.character() funktsiooni kontroll"))
+            #             info = paste0(ylesanne, ".1: Peab määrama teisenduse, mida valitud veergudele rakendada, see peaks veeru tüübiks määrama `character`. Kasuta funktsiooni `as.character()`."),
+            #             label = paste0(ylesanne, ".1 as.character() funktsiooni kontroll"))
             
              # 2
              
              expect_true(exists("uus_funktsioon"),
-                         info = paste0(ylesanne, ".1 Funktsiooni `uus_funktsioon` pole tekitatud!"),
-                         label = paste0(ylesanne, ".1 Andmestiku uus_funktsioon nime kontroll"))
+                         info = paste0(ylesanne, ".2 Funktsiooni `uus_funktsioon` pole tekitatud!"),
+                         label = paste0(ylesanne, ".2 Funktsiooni uus_funktsioon nime kontroll"))
              
+             expect_true(length(grep("function\([^,]\)", tmp_part)) >0,
+                         info = paste0(ylesanne, ".2 Piisab, kui defineeritaval funkstioonil on üks argument."),
+                         label = paste0(ylesanne, ".2 Funktsiooni uus_funktsioon argumendi kontroll"))
              
-            
+             expect_true(uus_funktsioon(100)==10,
+                         info = paste0(ylesanne, ".2 Funktsioon `uus_funktsioon` tagastab argumendiga `100` vale väärtuse."),
+                         label = paste0(ylesanne, ".2 Funktsiooni uus_funktsioon sisu kontroll"))
+             
+             expect_true(sum(str_count(tmp_part,"%>%")) > 1 , 
+                         info = paste0(ylesanne, ".2: Kasuta aheldamisoperaatorit `%>%` vähemalt 2 korda."),
+                         label = paste0(ylesanne, ".2 %>% funktsiooni kasutamise kontroll"))
+             
+             expect_true(length(grep("mutate_at\\(", tmp_part)) >0, 
+                         info = paste0(ylesanne, ".2: Kasuta teises ülesandes funktsiooni `mutate_at()`"),
+                         label = paste0(ylesanne, ".2 mutate_at() funktsiooni kontroll"))
+             
+             #kontroll, kas on argument KOMA argument, töötab regex101, siin mitte
+             # expect_true(length(grep("mutate_at\\([^,]*,{1}[^EX),]*.\\)", tmp_part)) >0, 
+             #             info = paste0(ylesanne, ".2: Ära muuda funktsiooni `mutate_at()` etteantud argumentide väärtusi või kirjapilti."),
+             #             label = paste0(ylesanne, ".2 mutate_at() argumentide kontroll"))
+             
+             expect_true(exists("antropo_cm_kg"),
+                         info = paste0(ylesanne, ".2 Andmestikku `antropo_cm_kg` pole tekitatud!"),
+                         label = paste0(ylesanne, ".2 Andmestiku antropo_cm_kg nime kontroll"))
+             
+             expect_true(ncol(antropo_cm_kg)==9,
+                         info = paste0(ylesanne, ".2 Andmestikus `antropo_cm_kg` on mõni veerg puudu! "),
+                         label = paste0(ylesanne, ".2 Andmestiku antropo_cm_kg veergude arvu kontroll"))
+             
+             expect_true(round(sum(antropo_cm_kg$WEIGHT, na.rm = T),2)==276164.5,
+                         info = paste0(ylesanne,".2: veeru 'WEIGHT' väärtused valesti leitud"),
+                         label = paste0(ylesanne,".2: veeru 'WEIGHT' väärtuste kontroll"))
+             
+             #esimene millimeetrites rida
+             expect_true(round(sum(antropo_cm_kg$ACROMION_HT),2)==550351.2,
+                         info = paste0(ylesanne,".2: veeru 'ACROMION_HT' väärtused valesti leitud"),
+                         label = paste0(ylesanne,".2: veeru 'ACROMION_HT' väärtuste kontroll"))
+             
             
           })
 
 
 # Ülesanne 5.1 õige lahendus -----
 if(FALSE){
+  A <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/A.csv", nrows = 45)
+  B <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/B.csv", nrows = 160)
+  B <- B[, c("id", "grupp", sort(names(B)[-(1:2)]))]
   
+  # 1
+  A1 <- A %>% mutate_if(.predicate = is.factor, .funs = as.character())
+  B1 <- B %>% mutate_if(.predicate = is.factor, .funs = as.character())
+  
+  # 2
+  AB1 <- B1 %>% semi_join(A1, by = "id")
+  
+  # 3
+  AB2 <- A1 %>% left_join(B1, by = "id")
 }
 
 ylesanne = "Ülesanne 5.1"
@@ -327,14 +376,110 @@ yl = 5
 
 test_that(ylesanne, 
           {
+            
+            A_kt <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/A.csv", nrows = 45)
+            B_kt <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/B.csv", nrows = 160)
+            B_kt <- B_kt[, c("id", "grupp", sort(names(B_kt)[-(1:2)]))]
+            
+            
+            tmp_part = tmp_parts[[yl]]
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
+            
+            # 1 
+            #dim(A)==45*8 -> väärtusi=45*8=360
+            expect_true(sum(A==A_kt)==360,
+                        info = paste0(ylesanne, ".1 Ära muuda andmestiku `A` sisu."),
+                        label = paste0(ylesanne, ".1 Andmestiku A sisu kontroll"))
+            #dim(B)==160*79 -> väärtusi=160*79=12640
+            expect_true(sum(B==B_kt)==12640,
+                        info = paste0(ylesanne, ".1 Ära muuda andmestiku `B` sisu."),
+                        label = paste0(ylesanne, ".1 Andmestiku B sisu kontroll"))
+            
+            expect_true(exists("A1"),
+                        info = paste0(ylesanne, ".1 Andmestikku `A1` pole tekitatud!"),
+                        label = paste0(ylesanne, ".1 Andmestiku A1 nime kontroll"))
+            
+            expect_true(exists("B1"),
+                        info = paste0(ylesanne, ".1 Andmestikku `B1` pole tekitatud!"),
+                        label = paste0(ylesanne, ".1 Andmestiku B1 nime kontroll"))
+            
+            expect_true(length(grep("mutate_if\\(", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".1: Muuda `mutate_if()` käsus argumente, see pole praegu õige."),
+                        label = paste0(ylesanne, ".1 mutate_if() argumentide kontroll"))
+            
+            expect_true(length(grep("mutate_if\\([^,]*,{1}[^,]*.\\)", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".1: Kasuta teises ülesandes funktsiooni `mutate_if()`"),
+                        label = paste0(ylesanne, ".1 mutate_if() funktsiooni kontroll"))
+            # 2
+            
+            expect_true(exists("AB1"),
+                        info = paste0(ylesanne, ".2 Andmestikku `AB1` pole tekitatud!"),
+                        label = paste0(ylesanne, ".2 Andmestiku AB1 nime kontroll"))
+            
+            expect_true(length(grep("semi_join\\(", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".2: Kasuta teises ülesandes funktsiooni `semi_join()`"),
+                        label = paste0(ylesanne, ".2 semi_join() funktsiooni kontroll"))
+            
+            expect_true(sum(str_count(tmp_part,"B1%>%semi_join")) > 0, 
+                        info = paste0(ylesanne, ".2: Muuda `semi_join()` käsus läbi aheldamise saadetav andmestik."),
+                        label = paste0(ylesanne, ".2 semi_join() argumendi kontroll"))
+            
+            expect_true(length(grep("semi_join\\(A1", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".2: Muuda `semi_join()` käsus teine liidetav andmestik."),
+                        label = paste0(ylesanne, ".2 semi_join() argumendi kontroll"))
+            
+            expect_true(length(grep("semi_join\\([^,]*,{1}[^,]*.\\)", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".2: Funktsioonis `semi_join()` liiga palju argumente."),
+                        label = paste0(ylesanne, ".2 semi_join() argumentide kontroll"))
+            
+            expect_true(sum(dim(AB1)==c(35,79))==2,
+                        info = paste0(ylesanne, ".2: Andmestikus `AB1` on mõni veerg ja/või rida puudu!"),
+                        label = paste0(ylesanne, ".2 Andmestiku AB1 dimensioonide kontroll"))
+            
+            # 3 
+            
+            expect_true(exists("AB2"),
+                        info = paste0(ylesanne, ".3 Andmestikku `AB2` pole tekitatud!"),
+                        label = paste0(ylesanne, ".3 Andmestiku AB2 nime kontroll"))
+            
+            expect_true(length(grep("left_join\\(", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".3: Kasuta kolmandas ülesandes funktsiooni `left_join()`"),
+                        label = paste0(ylesanne, ".3 left_join() funktsiooni kontroll"))
+            
+            expect_true(sum(str_count(tmp_part,"A1%>%left_join")) > 0, 
+                        info = paste0(ylesanne, ".2: Muuda `left_join()` käsus läbi aheldamise saadetav andmestik."),
+                        label = paste0(ylesanne, ".2 left_join() argumendi kontroll"))
+            
+            expect_true(length(grep("left_join\\(B1", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".3: Muuda `left_join()` käsus teine liidetav andmestik."),
+                        label = paste0(ylesanne, ".3 left_join() argumendi kontroll"))
+            
+            expect_true(length(grep("left_join\\([^,]*,{1}[^,]*.\\)", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".3: Funktsioonis `left_join()` liiga palju argumente."),
+                        label = paste0(ylesanne, ".3 left_join() argumentide kontroll"))
+            
+            expect_true(sum(dim(AB2)==c(45,86))==2,
+                        info = paste0(ylesanne, ".3: Andmestikus `AB2` on mõni veerg ja/või rida puudu!"),
+                        label = paste0(ylesanne, ".3 Andmestiku AB2 dimensioonide kontroll"))
             
           })
 
 
 # Ülesanne 6.1 õige lahendus -----
 if(FALSE){
+  library(data.table)
+  A <- as.data.table(A)
   
+  # 2
+  tabel1 <- A[vanus > 50 & kaal > 80, 
+              .(kmi = kaal / (kasv / 100) ** 2, sirutus)]
+  tabel1
+  
+  # 3
+  tabel2 <- A[visiit == FALSE, 
+              .(kesk.vanus = mean(vanus), kesk.pikkus = mean(kasv)),
+              by = .(sugu, elukoht)]
+  tabel2
 }
 
 ylesanne = "Ülesanne 6.1"
@@ -342,7 +487,34 @@ yl = 6
 
 test_that(ylesanne, 
           {
+            tmp_part = tmp_parts[[yl]]
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
+            
+            # 1 
+            expect_true(length(grep("library\\(", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".1: vaja kasutada funktsiooni 'library'"),
+                        label = paste0(ylesanne, ".1 library() funktsiooni kontroll"))
+            
+            expect_true(length(grep("library\\(data.table", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".1: Käsu `library()` argumendiks anna paketi nimi `reshape2`"),
+                        label = paste0(ylesanne, ".1 library() argumendi kontroll"))
+            
+            expect_true(sum(str_count(tmp_part,"library\\(data\\.table\\)")) > 0, 
+                        info = paste0(ylesanne, ".1: Käsu `library()` argumendiks anna paketi nimi `data.table`"),
+                        label = paste0(ylesanne, ".1 library() argumendi kontroll"))
+            
+            expect_true(sum(str_count(tmp_part,"as\\.data\\.table\\(A\\)")) > 0, 
+                        info = paste0(ylesanne, ".1: Andmestiku A tüüp tuleb muuta tüübiks `data.table`"),
+                        label = paste0(ylesanne, ".1 library() argumendi kontroll"))
+            
+            # 2
+            expect_true(exists("tabel1"),
+                        info = paste0(ylesanne, ".2 Andmestikku `tabel1` pole tekitatud!"),
+                        label = paste0(ylesanne, ".2 Andmestiku tabel1 nime kontroll"))
+            
+            expect_true(sum(dim(tabel1)==c(11,2))==2,
+                        info = paste0(ylesanne, ".2: Andmestikus `tabel1` on mõni veerg ja/või rida puudu!"),
+                        label = paste0(ylesanne, ".2 Andmestiku tabel1 dimensioonide kontroll"))
             
           })
 
