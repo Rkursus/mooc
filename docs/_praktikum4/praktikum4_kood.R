@@ -1,4 +1,4 @@
-# --- Rakendustarkvara R
+# --- Rakendustarkvara R: MOOC
 # --- IV praktikum ----
 
 
@@ -6,7 +6,7 @@
 # --- 1. Toimingud andmestikuga - jätk ----
 
 # Andmestik
-mk <- read.table("https://github.com/Rkursus/2020/raw/master/data/maakonnad.txt", sep = " ", header = TRUE)
+mk <- read.table("https://github.com/Rkursus/mooc/raw/main/data/maakonnad.txt", sep = " ", header = TRUE)
 
 
 
@@ -70,7 +70,7 @@ kokku[order(kokku$vanus, kokku$tulemus, decreasing = TRUE), ]
 
 # --- ÜL 1.2.1 ----
 # 1. Loe sisse andmestikud ja tutvu nendega:
-link <- "https://github.com/Rkursus/2020/raw/master/data/"
+link <- "https://github.com/Rkursus/mooc/raw/main/data/"
 visiidid <- read.table(paste0(link, "visiidid.txt"), sep = "\t", header = TRUE)
 inimesed <- read.table(paste0(link, "isikud.txt"), sep = "\t", header = TRUE)
 dim(visiidid)
@@ -155,7 +155,7 @@ dcast(m, nimi ~ . , fun.aggregate = mean, na.rm = TRUE, value.var = "value")
 # --- ÜL 2.1.1 ----
 
 # 1 
-link <- "https://github.com/Rkursus/2020/raw/master/data/"
+link <- "https://github.com/Rkursus/mooc/raw/main/data/"
 valik <- read.table(paste0(link, "valik.txt"), sep = "\t", header = TRUE)
 head(valik)
 

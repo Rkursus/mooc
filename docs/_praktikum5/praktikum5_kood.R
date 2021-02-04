@@ -1,15 +1,15 @@
-# --- Rakendustarkvara R
+# --- Rakendustarkvara R: MOOC
 # --- V praktikum ----
 
 
 # --- 1 Joonised paketiga ggplot2 ----
 
 
-# --- 1.1 Graafika R-is. ggplot2 ja graafikute grammatika ----
+# --- 1.1 Graafika R-is ----
 
 
 # Baasgraafika näited
-andmed <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/mass.txt",
+andmed <- read.table("https://github.com/Rkursus/mooc/raw/main/data/mass.txt",
                      header = T, sep = "\t")
 
 par(mfrow = c(1, 2), cex = 0.6) # see rida võimaldab kaks joonist kõrvuti panna
@@ -19,11 +19,11 @@ plot(andmed$WKHP, andmed$WAGP, xlab = "Töötunde", ylab = "Aastapalk",
 legend("topleft", pch = 19, col = 2:3, legend = levels(andmed$SEX))
 
 
-# --- 1.2 ggplot2: hajuvusdiagramm; skaalad ----
+# --- 1.2 Hajuvusdiagramm ----
 library(ggplot2)
 
 # andmed
-mk <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/maakonnad.txt",
+mk <- read.table("https://github.com/Rkursus/mooc/raw/main/data/maakonnad.txt",
                  sep = " ", 
                  header = T)
 head(mk)
@@ -40,7 +40,7 @@ ggplot(data = mk, mapping = aes(x = bachelor, y = per_capita_inc)) +
 # --- ÜL 1.2.1 ----
 
 # 1. loe sisse maakondade andmestik
-link <- "https://github.com/Rkursus/sygis2019/raw/master/data/"
+link <- "https://github.com/Rkursus/mooc/raw/main/data/"
 mk <- read.table(paste0(link, "maakonnad.txt"), sep = " ", header=T)
 
 # 2. hajuvusdiagramm: high_scl vs bachelor
@@ -133,11 +133,11 @@ ggplot(mk[tingimus, ], aes(_____,______)) +
 
 # 2.
 ggplot(mk, aes(_____,______)) +
-  geom_bar(stat = ______, fun.y = _____ )
+  geom_bar(stat = ______, fun = _____ )
 
 # tulbad ümberjärjestada
 ggplot(mk, aes(x = reorder(State, _____, FUN = _____), y = ________)) +
-  geom_bar(stat = ______, fun.y = _____ )
+  geom_bar(stat = ______, fun = _____ )
 
 
 
@@ -191,7 +191,7 @@ ggplot(mk, aes(_______,_______)) + geom________(aes(color = sooylekaal))
 
 
 # 3. joondiagramm vererõhkudele (isikukaupa) värv soo põhjal
-link <- "https://github.com/Rkursus/sygis2019/raw/master/data/"
+link <- "https://github.com/Rkursus/mooc/raw/main/data/"
 visiidid <- read.table(paste0(link, "visiidid.txt"), sep = "\t", header = TRUE)
 inimesed <- read.table(paste0(link, "isikud.txt"), sep = "\t", header = TRUE)
 

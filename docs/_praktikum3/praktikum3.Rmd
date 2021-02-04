@@ -6,8 +6,12 @@ description: "Tutvume R-ga"
 ---
 
 
+```{r, out.height="80px", echo = F, figure-side, fig.align = 'right'}
+knitr::include_graphics("https://www.hitsa.ee/photos/HITSA_logo.png")
+knitr::include_graphics("https://media.voog.com/0000/0034/3577/photos/IT%20Akadeemia%20logo%20RGB%201000%20px.png")
+```
+
 ```{r,echo=FALSE, warning=FALSE}
-load("../data/andmed.RData")
 library(ggplot2)
 library(learnr)
 ```
@@ -15,18 +19,18 @@ library(learnr)
 
 # Toimingud andmestikuga
 
+Nüüd kus andmetüübid ja andmestiku sisselugemine on selged, vaatame kuidas saame andmeid manipuleerida, sest tihti on meil vaja ainult kindlaid tunnuseid või kindlaid vaatlusi. Lisaks vaatame kuidas andmetest esmast vajalikku teavet eraldada.
+
+
+## Andmete eraldamine indeksi ja nime järgi
+
 Impordime uuesti andmestiku, mida korra kasutasime ka eelmises praktikumis (Massachusettsi andmestik), ja vaatame andmestikust ülevaadet
 ```{r, results='hide'}
-andmed <- read.table("https://github.com/Rkursus/2020/raw/master/data/mass.txt", 
+andmed <- read.table("https://github.com/Rkursus/mooc/raw/main/data/mass.txt", 
                      header = T, sep = "\t")
 str(andmed)
 ```
 
-
-
-
-
-## Veergude ja ridade eraldamine andmestikust: indeksi ja nime järgi
 
 Kui tahame andmestikust ainult üht veergu uurida, siis kõige mugavam on kasutada dollari-sümbolit:
 ```{r, eval=FALSE}
@@ -74,7 +78,8 @@ str(andmed)
 
 
 
-## Veergude ja ridade eraldamine andmestikust: tõeväärtusvektori abil
+## Andmete eraldamine tõeväärtusvektori abil
+
 Tõeväärtusvektoreid on väga mugav kasutada nn filtritena. Nimelt on `data.frame` puhul võimalik ridu (ja ka veerge!) eraldada mitte ainult indeksi või -nime järgi, vaid ka tõeväärtusvektori abil. Kui eraldada ridu, siis vastav tõeväärtusvektor peab olema sama pikk kui on andmestikus ridu ning  väärtused selles vektoris näitavad, kas vastavat rida kasutada (`TRUE`) või mitte (`FALSE`). Tõeväärtusvektorite kombineerimisel saab andmestikust väga spetsiifilisi alamhulki eraldada.
 ```{r}
 # eraldame kõik read, kus SEX == "Male" ning salvestame selle uueks objektiks
@@ -173,7 +178,7 @@ table(üle74 = andmed$AGEP > 74 , doktor = andmed$SCHL == "Doctorate degree", na
 
 
 #5
-table(andmed$SCHL %in% c("Doctorate degree", "Master's degree","Bachelor's degree"))
+table(andmed$SCHL %in% c("Doctorate degree", "main's degree","Bachelor's degree"))
 
 
 #6
@@ -185,8 +190,8 @@ table(andmed$SCHL)
 
  
 # ERi tulemused!!!!!
-ilma <- !(andmed$SCHL %in% c("Doctorate degree", "Master's degree","Bachelor's degree", "Professional degree beyond a bachelor's degree"))
-ilma <- !(andmed$SCHL == "Doctorate degree" | andmed$SCHL == "Master's degree"| andmed$SCHL =="Bachelor's degree" | andmed$SCHL == "Professional degree beyond a bachelor's degree")
+ilma <- !(andmed$SCHL %in% c("Doctorate degree", "main's degree","Bachelor's degree", "Professional degree beyond a bachelor's degree"))
+ilma <- !(andmed$SCHL == "Doctorate degree" | andmed$SCHL == "main's degree"| andmed$SCHL =="Bachelor's degree" | andmed$SCHL == "Professional degree beyond a bachelor's degree")
 
 summary(ilma)
 
@@ -219,7 +224,7 @@ by(valik5$WAGP, valik5$SEX, mean, na.rm = T)
 Et teada saada, mitu erinevat väärtust antud faktortunnusel võib üldse olla, kasutatakse käsku `levels(.)`. Sealjuures ei pruugi kõiki faktori väärtustasemeid antud andmetes üldse esineda:
 ```{r}
 # loeme andmestiku uuesti sisse, tekitades faktor-tunnused
-andmed1 <- read.table("https://github.com/Rkursus/2020/raw/master/data/mass.txt", 
+andmed1 <- read.table("https://github.com/Rkursus/mooc/raw/main/data/mass.txt", 
                      header = T, sep = "\t", stringsAsFactors = T)
 # tekitame uuesti alamandmestiku
 mehed1 <- andmed1[andmed1$SEX == "Male",]

@@ -6,16 +6,23 @@ description: "Tutvume R-ga"
 ---
 
 ```{r,echo=FALSE, warning=FALSE}
-load("../data/andmed.RData")
+#load("../data/andmed.RData")
 library(ggplot2)
 library(reshape2)
 ```
 
+```{r, out.height="80px", echo = F, figure-side, fig.align = 'right'}
+knitr::include_graphics("https://www.hitsa.ee/photos/HITSA_logo.png")
+knitr::include_graphics("https://media.voog.com/0000/0034/3577/photos/IT%20Akadeemia%20logo%20RGB%201000%20px.png")
+```
 
+# Kasulikud paketid anmetöötluseks
 
-# Andmetöötlus paketiga dplyr
+R-i baaspaketi käskudega saab andmetega pea kõik vajaliku ära teha aga kas ka alati kõige mugavamalt, arusaadavamalt ning resursse säästvalt? Tutvume siinkohal kahe väga paljude fännidega pakette `dplyr` ja `data.table`.
 
-Pakett **dplyr** mõeldud andmetabelite täienduste, tabelis olevate objektide või tunnuste alamhulkade valiku, grupeerimise ja sorteerimise teostamiseks. Samuti saab selle abil leida erinevaid andmeid agregeerivaid tabeleid, mis sobivad kirjeldava statistilise analüüsi läbiviimiseks. Paketi **dplyr** käskude juures võib välja tuua veel nende töö kiiruse suuremate andmestike korral.  Põhjalik ülevaade selle paketi käskudest on paketi dokumentatsioonis^[https://cran.rstudio.com/web/packages/dplyr/vignettes/dplyr.html]. Põhifunktsioonid paketis on järgmised
+## Andmetöötlus paketiga `dplyr`
+
+Pakett **dplyr** mõeldud andmetabelite täienduste, tabelis olevate objektide või tunnuste alamhulkade valiku, grupeerimise ja sorteerimise teostamiseks. Samuti saab selle abil leida erinevaid andmeid agregeerivaid tabeleid, mis sobivad kirjeldava statistilise analüüsi läbiviimiseks. Paketi **dplyr** käskude juures võib välja tuua veel nende töö kiiruse suuremate andmestike korral.  Põhjalik ülevaade selle paketi käskudest on [paketi dokumentatsioonis](https://cran.rstudio.com/web/packages/dplyr/vignettes/dplyr.html). Põhifunktsioonid paketis on järgmised
 
 - `mutate()` -- lisab andmestikku uusi tunnuseid, mis on leitud olemasolevate põhjal.
 - `select()` -- valib andmestikust nime põhjal tunnused.
@@ -31,11 +38,11 @@ Kõigi funktsioonide esimene argument on andmetabel, järgmised argumendid täps
 ## Paketi dplyr  käskude kasutamine
 Loeme kõigepealt sisse näiteandmestiku: Massachusettsi valikuuring
 ```{r, warning=FALSE, message=F}
-mass <- read.table("https://github.com/Rkursus/2020/raw/master/data/mass.txt", sep = "\t", header = T)
+mass <- read.table("https://github.com/Rkursus/mooc/raw/main/data/mass.txt", sep = "\t", header = T)
 ```
-Paketi installimine ja aktiveerimine:
+Paketi paigaldamine ja aktiveerimine:
 ```{r, warning=FALSE, message=F}
-#install.packages(dplyr)          # vajadusel installeerida pakett
+#install.packages(dplyr)          # vajadusel paigalda pakett
 library(dplyr)  
 ```
 
@@ -62,7 +69,7 @@ select(filter(mass, AGEP > 70, WAGP > 100000), contains("G"))
 
 Käsk `group_by(.)` aitab andmestiku tükkideks jagada, aga ei tee sellega midagi enamat. Kui tükkidel soovida midagi analüüsida, tuleb `group_by(.)` funktsiooni tulemus ette anda vastavaks analüüsiks kasutatavale funktsioonile. Siin kohal on  hea kasutada funktsiooni `summarise(.)`, mis esitab agregeeritud tulemused:
 
-```{r}
+```{r, warning=FALSE, message=F}
 summarise(group_by(mass, CIT), 
           keskpalk = mean(WAGP, na.rm = T),
           n = n(),
@@ -70,7 +77,7 @@ summarise(group_by(mass, CIT),
 ```
 
 Käsu `arrange(.)` abil saab andmestikke sorteerida
-```{r}
+```{r, warning=FALSE, message=F}
 osa <- filter(select(mass, id, SEX, AGEP, WKHP, WAGP), WAGP > 300000, AGEP < 55)
 arrange(osa, SEX, desc(AGEP), WKHP)
 ```
@@ -109,7 +116,7 @@ head(summarise(group_by(mass, SEX, MAR), keskpalk = mean(WAGP, na.rm = T), n = n
 ```{r, eval=FALSE, include=FALSE}
 # n()
 #This function is implemented specifically for each data source and can only be used from within summarise(), mutate() and filter().
-mass <- read.table("https://github.com/Rkursus/2020/raw/master/data/mass.txt", sep = "\t", header=T)
+mass <- read.table("https://github.com/Rkursus/mooc/raw/main/data/mass.txt", sep = "\t", header=T)
 mass$vanusgr <- cut(mass$AGEP, seq(0, 100, 5), include.lowest = T)
 
 summarise(group_by(filter(mass, AGEP > 15, AGEP < 86),  vanusgr, SEX), 
@@ -208,9 +215,9 @@ mass %>% filter(between(AGEP,  16, 85)) %>%
 
 
 
-# Pakett data.table
+## Pakett `data.table`
 
-Suurte andmete filtreerimiseks, teisendamiseks, agregeerimiseks ja grupeerimiseks sobib ka pakett **data.table**^[https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html].
+Suurte andmete filtreerimiseks, teisendamiseks, agregeerimiseks ja grupeerimiseks sobib ka pakett [**data.table**](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html).
 
 Paketi andmetabel ehk *data.table* on tavalise andmetabeli *data.frame*-i edasiarendus. Nagu tavalise andmetabeli korral on *data.table* tabelist võimalik objekte ja veerge valida kantsulgudes indekseid määrates. Lisavõimalus on see, et *data.table* tabelis saab sel moel uusi tunnuseid arvutada, tunnuseid jooksvalt uuendada ning andmeid grupitunnuse põhjal agregeerida.
 
@@ -225,7 +232,7 @@ kus
 - `by` määrab vajadusel grupitunnuse `j` tehtavateks arvutustesse.
 
 
-## Näited data.table süntaksi kasutamisest
+## Näited `data.table` süntaksi kasutamisest
 Siinkohal mõned näiteid andmestikust objektide või veergude valimisest ja arvutuste kirjapanekust. Proovi need läbi ja uuri tulemust. 
 Erinevalt tavalisest andmestikust ei ole *data.table* tabelites reanimesid, on ainult reanumbrid, seega rida nime järgi valida saa. Teiseks võib välja tuua, et tekstitunnused on neis tabelites vaikimisi *character* tüüpi, mitte *factor* tüüpi.
 ```{r, message=F}
@@ -290,7 +297,7 @@ DT[, c("uus1", "uus2") := NULL][]
 1. Tekita tabel, kus oleks soo ja perekonnaseisu gruppides leitud keskmine vanus, vanuse standardhälve ja levinum haridustase.
 
 ```{r, eval = F, echo = F}
-mass <- read.table("https://github.com/Rkursus/2020/raw/master/data/mass.txt", header = T, sep = "\t")
+mass <- read.table("https://github.com/Rkursus/mooc/raw/main/data/mass.txt", header = T, sep = "\t")
 dtmass <- as.data.table(mass)
 is.data.table(dtmass)
 

@@ -5,6 +5,11 @@ runtime: shiny_prerendered
 description: "Tutvume R-ga"
 ---
 
+```{r, out.height="80px", echo = F, figure-side, fig.align = 'right'}
+knitr::include_graphics("https://www.hitsa.ee/photos/HITSA_logo.png")
+knitr::include_graphics("https://media.voog.com/0000/0034/3577/photos/IT%20Akadeemia%20logo%20RGB%201000%20px.png")
+```
+
 ```{r echo = FALSE, warning = FALSE, message = FALSE}
 library(learnr)
 ```
@@ -193,7 +198,7 @@ as.integer(c("tere", 0, 1, TRUE, FALSE))
 as.integer(c(0, 1, TRUE, FALSE))
 ```
 
-```{r yl2.1, eval = F, exercise = T}
+```{r yl2_1, eval = F, exercise = T}
 # Ülesannde 1
 x <- c(__, __, __, __, __)
 x
@@ -332,7 +337,7 @@ setwd("C:\\Users\\mina\\Rkursus\\")
 setwd("/home/mina/Rkursus/")
 ```
 
-Andmete sisselugemisel tuleks anda andmetabelile nimi (salvestada see mingi objektina), vastasel juhul andmestik trükitakse lihtsalt ekraanile ja sellega enam midagi muud teha ei saa: `r load("../data/andmed.RData")` 
+Andmete sisselugemisel tuleks anda andmetabelile nimi (salvestada see mingi objektina), vastasel juhul andmestik trükitakse lihtsalt ekraanile ja sellega enam midagi muud teha ei saa: 
 ```{r}
 naide1 <- read.table("https://github.com/Rkursus/mooc/raw/main/data/esimene.txt", 
                      header = T, sep = "\t", dec = ",")
@@ -350,7 +355,7 @@ write.table(näide1, "failinimi.txt", sep = "\t")
 
 1. Aadressil https://github.com/Rkursus/mooc/tree/main/data/ leiad failid *tabel1.csv*, *tabel2*, *tabel3.txt*, *tabel4.tab*. Tutvu nendega (Notepadi vmt kasutades) ja proovi need seejärel R-i korrektselt sisse lugeda. Veendu, et R-is olevates tabelites on sama palju veerge kui originaalandmestikes.
 
-1. USA riiklikud institutsioonid võimaldavad päris sageli andmekogudele vaba ligipääsu. Selles aines kasutame näidisandmestikena USA Rahvaloendusbüroo^[http://www.census.gov/data.html] poolt kogutud andmeid, millele saab ligi IPUMS-USA^[Steven Ruggles, J. Trent Alexander, Katie Genadek, Ronald Goeken, Matthew B. Schroeder, and Matthew Sobek. Integrated Public Use Microdata Series: Version 5.0 [Machine-readable database]. Minneapolis, MN: Minnesota Population Center [producer and distributor], 2010.] liidese kaudu^[https://usa.ipums.org/usa-action/variables/group]. Aadressil https://github.com/Rkursus/mooc/tree/main/data/ on fail *mass.txt*, milles on Massachusettsi osariigis ühe valikuuringuga kogutud andmed. Loe see R-i sisse, andmestiku objektile pane nimeks `andmed`. Tutvu ka tunnuste kirjeldusega: https://github.com/Rkursus/mooc/raw/main/data/descr.txt. Andmestikuobjektist esmase ülevaate saamiseks kasuta käsku `str(andmed)`.
+1. USA riiklikud institutsioonid võimaldavad päris sageli andmekogudele vaba ligipääsu. Selles aines kasutame näidisandmestikena [USA Rahvaloendusbüroo](http://www.census.gov/data.html) poolt kogutud andmeid, millele saab ligi IPUMS-USA (S. Ruggles, J. T. Alexander, K. Genadek, R. Goeken, M. B. Schroeder, ja M. Sobek. _Integrated Public Use Microdata Series: Version 5.0_. Minneapolis, MN: Minnesota Population Center, 2010.) [liidese kaudu](https://usa.ipums.org/usa-action/variables/group). (Kursuse andmestike kaustast]( https://github.com/Rkursus/mooc/tree/main/data/) on fail *mass.txt*, milles on Massachusettsi osariigis ühe valikuuringuga kogutud andmed. Loe see R-i sisse, andmestiku objektile pane nimeks `andmed`. Tutvu ka [tunnuste kirjeldustega](https://github.com/Rkursus/mooc/raw/main/data/descr.txt). Andmestikuobjektist esmase ülevaate saamiseks kasuta käsku `str(andmed)`.
 
 ```{r yl3, eval = F, exercise = T}
 # Ülesanne 1

@@ -1,13 +1,13 @@
-# --- Rakendustarkvara R
+# --- Rakendustarkvara R: MOOC
 # --- VI praktikum ----
 
 
-# --- 1. Pakett ggplot2. Skaalade muutmine ----
+# --- 1. Skaalade muutmine ----
 
 library(ggplot2)
 
 # Maakondade andmestik
-mk <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/maakonnad.txt", sep = " ", header=T)
+mk <- read.table("https://github.com/Rkursus/mooc/raw/main/data/maakonnad.txt", sep = " ", header=T)
 head(mk)
 
 # Skaleerimisfunktsiooni rakendamiseks tuleb see lisada joonisele
@@ -19,7 +19,7 @@ rotid <- nlme::BodyWeight
 rotid <- rotid[rotid$Diet != 1, ]
 p <- ggplot(rotid, aes(factor(Time), weight)) + geom_point(color = "gray") +
   stat_summary(geom = "errorbar", fun.data = mean_se, fun.args = list(mult = 1.96)) +
-  stat_summary(geom = "point", fun.y = mean)
+  stat_summary(geom = "point", fun = mean)
 p
 
 p + ylim(390, 600)
