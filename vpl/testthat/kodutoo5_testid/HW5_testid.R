@@ -857,7 +857,16 @@ test_that(ylesanne,
 
 # Ülesanne 10.1 õige lahendus -----
 if(FALSE){
+  haigla <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/haigla.csv", colClasses = c("integer", "Date", "Date"))
   
+  # 1
+  vead1 <- haigla[!is.na(haigla$haiglast.kp) 
+                  & haigla$haiglasse.kp > haigla$haiglast.kp, ]
+  vead1
+  
+  # 2
+  vead2 <- haigla[is.na(haigla$haiglast.kp), ]
+  vead2
 }
 
 ylesanne = "Ülesanne 10.1"
@@ -865,6 +874,48 @@ yl = 10
 
 test_that(ylesanne, 
           {
+            tmp_part = tmp_parts[[yl]]
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
+            
+            # 1 
+            expect_true(exists("vead1"),
+                        info = paste0(ylesanne, ".1 Andmestik  `vead1` on defineerimata."),
+                        label = paste0(ylesanne, ".1 Andmestiku vead1 kontroll"))
+            
+            expect_true(length(grep("^vead1$", tmp_parts[[yl]])) > 0 | 
+                          length(grep("^print(vead1)$", tmp_parts[[yl]])) > 0 |
+                          length(grep("^;print(vead1)$", tmp_parts[[yl]])) > 0 | 
+                          length(grep("^; print(vead1)$", tmp_parts[[yl]])) > 0, 
+                        info = paste0(ylesanne, ".1: muutujat 'vead1' pole välja prinditud"),
+                        label = paste0(ylesanne, ".1 muutuja 'vead1' väljatrüki kontroll"))
+            
+            expect_true(sum(dim(vead1)==c(5,3))==2,
+                        info = paste0(ylesanne, ".1: Andmestikus `vead1` on mõni veerg ja/või rida puudu!"),
+                        label = paste0(ylesanne, ".1 Andmestiku vead1 dimensioonide kontroll"))
+            
+            expect_true(sum(colnames(vead1)==c("id","haiglasse.kp","haiglast.kp"))==3,
+                        info = paste0(ylesanne, ".1: Andmestikus `vead1` on mõni veerg valesti nimetatud"),
+                        label = paste0(ylesanne, ".1 Andmestiku vead1 veerunimede kontroll"))
+            
+            
+            # 2
+            expect_true(exists("vead2"),
+                        info = paste0(ylesanne, ".2 Andmestik  `vead2` on defineerimata."),
+                        label = paste0(ylesanne, ".2 Andmestiku vead2 kontroll"))
+            
+            expect_true(length(grep("^vead2$", tmp_parts[[yl]])) > 0 | 
+                          length(grep("^print(vead2)$", tmp_parts[[yl]])) > 0 |
+                          length(grep("^;print(vead2)$", tmp_parts[[yl]])) > 0 | 
+                          length(grep("^; print(vead2)$", tmp_parts[[yl]])) > 0, 
+                        info = paste0(ylesanne, ".2: muutujat 'vead2' pole välja prinditud"),
+                        label = paste0(ylesanne, ".2 muutuja 'vead2' väljatrüki kontroll"))
+            
+            expect_true(sum(dim(vead2)==c(2,3))==2,
+                        info = paste0(ylesanne, ".2: Andmestikus `vead1` on mõni veerg ja/või rida puudu!"),
+                        label = paste0(ylesanne, ".2 Andmestiku vead1 dimensioonide kontroll"))
+            
+            expect_true(sum(colnames(vead2)==c("id","haiglasse.kp","haiglast.kp"))==3,
+                        info = paste0(ylesanne, ".2: Andmestikus `vead1` on mõni veerg valesti nimetatud"),
+                        label = paste0(ylesanne, ".2 Andmestiku vead1 veerunimede kontroll"))
             
           })
