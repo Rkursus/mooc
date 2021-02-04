@@ -18,7 +18,7 @@ library(learnr)
 
 # Tutvume R-ga
 
-Teeme tutvust `r  icon::fa_r_project()`-ga, vaatame mis see R on, käime üle R-i süntaksi olulisemad nüansid ja paneme R-i meie jaoks tööle.
+Teeme tutvust R-ga, vaatame mis see R on, käime üle R-i süntaksi olulisemad nüansid ja paneme R-i meie jaoks tööle.
 
 
 ## Lühike sissejuhatus
@@ -31,46 +31,47 @@ Seega kui õpid R-i siis oskad paljusid asju teha ka teistes tarkvarades!
 
 R-i kodulehelt saab vajaliku tarkvara alla laadida: http://www.r-project.org/
 
-## Kasutajaliides
+## R ja selle kasutajaliides
 
-Ava Start-menüü ja otsi programm nimega R, käivita see.
+Programm R ise on äärmiselt minimalistlik ja seetõttu ka minimalistlik kasutajaliides. Ava: 
 
-Programmil R on äärmiselt minimalistlik kasutajaliides. Programmi käivitades on näha ainult konsooliaken. Rea ees olev märk `>` näitab, et R ootab uut käsku. Käsud saab kirjutada sümboli `>` järele, sealjuures võib üks käsk paikneda mitmel järjestikusel real. Kui R-i arvates on käsu sisestamine pooleli, on konsoolirea alguses sümbol `+`, sel juhul võib käsu sisestamist uuest reast jätkata. Kui aga reavahetus on lisatud ekslikult, näiteks on koodis näha viga just eelnevas reas (mida pärast reavahetuse lisamist enam redigeerida ei saa) saab uue tühja käsurea tekitada vajutades `Esc` klahvi. 
+* Start-menüü (_Windows_) otsi programm nimega R 
+* _Spotlight_ otsing (_MacOS_) otsi programm nimega R
+* Kirjuta terminali `R` (_Linux_)
+
+Programmi käivitades on näha ainult konsooliaken. Rea ees olev märk `>` näitab, et R ootab uut käsku. Käsud saab kirjutada sümboli `>` järele, sealjuures võib üks käsk paikneda mitmel järjestikusel real. Kui R-i arvates on käsu sisestamine pooleli, on konsoolirea alguses sümbol `+`, sel juhul võib käsu sisestamist uuest reast jätkata. Kui aga reavahetus on lisatud ekslikult, näiteks on koodis näha viga just eelnevas reas (mida pärast reavahetuse lisamist enam redigeerida ei saa) saab uue tühja käsurea tekitada vajutades `Esc` klahvi. 
 
 Kui käsk on sisestatud, siis `enter`-klahvi vajutamise järel käsk täidetakse  ja tulemus trükitakse konsooliaknasse. Sageli on siis rea alguses kantsulgudes mingi arv, mis näitab, mitmes tulemuse element on rea alguses -- nimelt võib tulemus mõnikord koosneda mitmest elemendist.
-```{r arvutusTest, exercise = TRUE, eval = F}
+
+Näide R-i käskudest ja milline on tulemus konsooliaknas:
+```{r arvutusTest, eval = F}
 4 * 6
 
 4 * 
 6
 
-4 * (1:40)
+4 * (1:20)
 
 ```
 
+```{r, out.width = "500px", echo = F}
+knitr::include_graphics("images/console1.png")
+```
+
+
+**NB!** Pane tähele kuidas konsoolis paistab välja poolik käsk (`4 *` rida ootab ilmselgelt teist korrutatavat). See `+` märk ei ole mitte liitmise tehe, vaid R-i märguanne, et tema jaoks on käsk poolik ehk praegusel juhul oodati teist korrutatavat eelmise rea käsu lõpetamiseks.
 
 Kui konsooliaknas olles vajutada üles- või allanooleklahvi, saab sirvida eelnevalt täidetud käske.
 
-Konsooli käskude sisestamise asemel on neid mõistlik kirjutada skriptifaili, et hiljem (nt järgmisel päeval) saaks tehtud tööd (näiteks mingi analüüsi) kiiresti jätkata või uuesti teha kui on lisandunud uued andmed. Skriptifaili tekitamiseks R-is tuleks valida menüüst `File` valik `New script`. Avatakse skriptiaken, kuhu saab käske kirjutada. Kui skriptiaknas olles vajutada klahve `Ctrl+R`, siis vastaval real olev käsk saadetakse R-ile täitmiseks. Kui käsk on kirjutatud mitmel real või on soov mitut käsku järjest jooksutada, võib vastavad read skriptiaknas hiirega ära märkida ning seejärel `Ctrl+R` vajutada. Valides menüüst `File` valiku `Save`, salvestatakse `.R` lõpuga skriptifail kasutaja poolt määratud asukohta.\medskip\medskip
-
-
-
-<!--\pagebreak-->
-
-Sriptiaknas on mõislik käskudele lisada kommentaare, et teinekord või teisel inimesel oleks koodi lihtsam lugeda. **Kommentaare** saab R-i koodis lisada ainult rea lõppu, kasutades trellide-sümbolit:
-```{r funktsTest,eval=TRUE, exercise = TRUE}
-log(5.9)  # võtame naturaallogaritmi arvust 5,9
-# terve see rida on kommentaar, sest rea alguses on # ehk trellide sümbol
-```
-
-Pane tähele, et **kümnendmurru eraldamiseks** kasutatakse R-is punkti, mitte koma.
-
+### RStudio
 
 Kahjuks on R-i kasutajaliides mõnevõrra ebamugav. Näiteks konsooliaknas ei saa hiirega kursori asukohta muuta. Samuti on kogu tekst sama värvi (koodi värvimine puudub). Üks alternatiivne kasutajaliides R-i kasutamiseks on [RStudio](http://www.rstudio.com/), kus neid puuduseid pole ning millega on natuke hõlpsam koodi kirjutada. Praktikumides hakkamegi edaspidi kasutama programmi RStudio.
 
-Ava Start-menüü ja otsi programm nimega RStudio, käivita see.
+Leia oma arvutis programm RStudio, kui sa pole seda veel paigaldanud, siis saad selle tasuta alla laadida [RStudio kodulehelt](https://rstudio.com/products/rstudio/download/#download). **NB!** RStudio pole ainus R-i kasutajaliides, on veel palju teisi aga pidime valima ühe aga pea kõik kursusel käsitletav on tehtav igas teises R-i kasutajaliideses.
 
-* Avanenud programmiaken jaguneb neljaks. Akende paigutust saab oma suva järgi muuta, kuid esialgu paiknevad paremal aknad, mis annavad ülevaate kasutatavatest kaustadest, defineeritud muutujatest, graafikutest jne ning vasakul on R-i konsool ja tekstiredaktor käskude kirjapanekuks;
+Teeme tutvust RStudio-ga (kui valisid selle):
+
+* Avanenud programmiaken jaguneb üldiselt neljaks. Akende paigutust saab oma suva järgi muuta, kuid esialgu paiknevad paremal aknad, mis annavad ülevaate kasutatavatest kaustadest, defineeritud muutujatest, graafikutest jne ning vasakul on R-i konsool ja tekstiredaktor käskude kirjapanekuks;
 * R konsool
     - alumine vasakpoolne aken on programmi R konsooliaknen, kuhu saab programmi käsud kirjutada viiba `>` järele;
     -	käsk täidetakse pärast `Enter`-klahvi vajutamist;
@@ -82,6 +83,29 @@ Ava Start-menüü ja otsi programm nimega RStudio, käivita see.
     - kommentaari lisamiseks tuleb vastava rea algusess lisada `#`-märk;
     - mingi koodilõigu käivitamiseks tuleb see hiirega ära valida ning vajutada klahvikombinatsiooni `Ctrl+Enter`.
 
+```{r, out.width = '100%', echo = F}
+knitr::include_graphics("images/rstudio2.png")
+```
+
+
+Konsooli käskude sisestamise asemel on neid mõistlik kirjutada skriptifaili, et hiljem (nt järgmisel päeval) saaks tehtud tööd (näiteks mingi analüüsi) kiiresti jätkata või uuesti teha kui on lisandunud uued andmed. Skriptifaili tekitamiseks R-is tuleks valida menüüst `File` valik `New script`. Avatakse skriptiaken, kuhu saab käske kirjutada. Kui skriptiaknas olles vajutada klahve `Ctrl+Enter`, siis vastaval real olev käsk saadetakse R-ile täitmiseks. Kui käsk on kirjutatud mitmel real või on soov mitut käsku järjest jooksutada, võib vastavad read skriptiaknas hiirega ära märkida ning seejärel `Ctrl+Enter` vajutada. Valides menüüst `File` valiku `Save`, salvestatakse `.R` lõpuga skriptifail kasutaja poolt määratud asukohta.
+
+```{r, out.width = '100%', echo = F}
+knitr::include_graphics("images/rstudio1.png")
+```
+
+<!--\pagebreak-->
+
+Sriptiaknas on mõislik käskudele lisada kommentaare, et teinekord või teisel inimesel oleks koodi lihtsam lugeda. **Kommentaare** saab R-i koodis lisada ainult rea lõppu, kasutades trellide-sümbolit:
+```{r funktsTest, eval=TRUE, exercise = TRUE}
+log(5.9)  # võtame naturaallogaritmi arvust 5,9
+# terve see rida on kommentaar, sest rea alguses on # ehk trellide sümbol
+```
+
+Pane tähele, et **kümnendmurru eraldamiseks** kasutatakse R-is punkti, mitte koma.
+
+### Enesekontrolli küsimused
+
 
 ```{r kysimused1, echo=FALSE}
 question("Mida teeb R kui koodirea ees on `#` märk?",
@@ -90,7 +114,9 @@ question("Mida teeb R kui koodirea ees on `#` märk?",
   answer("See tähistab kommentaari märki ja R ei tee midagi", correct = TRUE),
   answer("See on _hastag_ ehk räsimärk ja seega määrab käsu tüübi või teema")
 )
+```
 
+```{r kysimused2, echo=FALSE}
 question("Mida R ootab kui käsurea ees on  `+` märk?",
   answer("R annab märku, et ta hetkel arvutab midagi"),
   answer("See tähedab, et R-i käsk on poolik ja R-i ootab lisasisendit", correct = TRUE),
@@ -171,9 +197,9 @@ log(8, BASE = 2)
 
 
 
-# Muutujatega töötamine
+## Muutujatega töötamine
 
-## Väärtuste omistamine ja töökeskkond (*environment*)
+### Väärtuste omistamine ja töökeskkond
 Sageli on mugav, kui töös kasutatavatele muutujatele nimi anda -- siis saame neid edaspidi nimepidi kutsuda. Näiteks kui nimetada `kaal <- 70`  ja  `pikkus <- 185` ehk konsoolil
 ```{r}
 kaal <- 70
@@ -206,7 +232,7 @@ Töökeskkonna salvestamisel salvestatakse kõik antud töökeskkonnas olnud obj
  
 
 
-## Vektorid. Tehted vektoritega
+### Vektorid. Tehted vektoritega
 <!--Eelpool andsime andmestikust mitme veeru (või rea) korraga eraldamiseks vajalikud veeru (rea) numbrid ette käsuga `c(.)`.-->
 Eelmises punktis vaatasime juhtu, muutujate väärtuseks oli üks arv. Objekti võib aga moodustada ka mitmest väärtusest, näiteks omistame kuue uuritava kaalud muutujale nimega `kaalud` ja muutujale `liik` uuritavate liigid:
 ```{r}
@@ -252,7 +278,7 @@ kaalud[seq(1, 6, 2)] # iga teine element alates esimesest
 
 
 
-###Ülesanded
+#### Ülesanded
 1. Moodusta vektor nimega `y`, mille väärtuseks oleks arvud `1 1 1  2 2 2 2  3 3 3 3 3` kasutades käsku `rep`.
 1. Leia vektor `z`, mille liitmisel `y`-le on tulemuseks vektor, mille kõik koordinaadid on võrdsed `7`.
 1. Vali eelnevast vektorist välja iga kolmas väärtus, kasutades kantsulge ja sobivat indeksite vektorit.
@@ -263,7 +289,7 @@ kaalud[seq(1, 6, 2)] # iga teine element alates esimesest
 
 
 
-## Puuduvad väärtused
+### Puuduvad väärtused
 Andmete kogumisel võib juhtuda, et kõigil uuritavatel ei õnnestu vajalikke mõõtmisi teha ja andmetesse tekivad lüngad. Puuduva väärtuse tähistamiseks on R-is tähekombinatsioon `NA` (*Not Available*). Oletame, et analüüsil on vaja teada ka uuritavate vanust, teise vaatlusaluse kohta pole aga see teada:
 <!-- kuudes vanus-->
 ```{r}
@@ -287,7 +313,7 @@ summary(vanused) # NA väärtuste arv tuuakse vaikimisi välja
 ```
 
 
-### Ülesanded
+#### Ülesanded
 1. Kuidas käitub funktsioon `sum(.)` kui argumendiks satub puuduvate väärtustega vektor?
 1. Kas funktsioonil `which.min(.)` on lisaargument, mis reguleerib puuduvate väärtustega tegelemist?
 

@@ -10,12 +10,15 @@ library(learnr)
 ```
 
 
-
-# Väärtuste tüübid. 
+# Väärtuste tüübid ja andmete import 
 <!--Nägime eespool `str(.)` käsku kasutades, et andmestiku veerud on erinevad tüüpi. Massachusettsi andmestikus oli erinevaid tüüpe kaks: `int` ja `Factor`.
 -->
 
-Nagu eelmises praktikumis öeldud, siis vektori väärtused peavad olema kõik ühte tüüpi. R-is on väärtuste põhitüübid:
+Nagu eelmises praktikumis öeldud, siis vektori väärtused peavad olema kõik ühte tüüpi. R-is on 5 väärtuste põhitüüp
+
+## Väärtuste põhitüübid
+
+R-is on 5 väärtuste põhitüüpi:
 
 * `int` / `integer` -- täisarvud (ka negatiivsed)
 * `numeric` -- reaalarvud
@@ -35,16 +38,19 @@ liik <- c("koer", "kass", "rott", "kass", "kass", "koer")
 vanused <- c(7, NA, 3, 53, 53, 95)
 ```
 ja kontrollime väärtuste tüüpe:
-```{r} 
+```{r tyybiKontroll, eval=TRUE, exercise = TRUE} 
 is.integer(kaalud)
 is.numeric(kaalud)
 class(liik)
 class(vanused)
 ```
+
 Eraldi käsk on ka puuduvate väärtuste esinemise kontrolliks:
-```{r}
+```{r puuduvadVaartused, eval=FALSE, exercise = TRUE}
+# Proovi, mis saad järgmise käsu vastuseks
 is.na(vanused)
 ```
+
 ```{r include=FALSE}
 anyNA(vanused)
 ```
@@ -65,6 +71,34 @@ either logical, numeric, complex, character or raw.
 2. Miks annavad  käsud `is.integer(1:4)` ja `is.integer(c(1, 2, 3))` erineva tulemuse?
 3. Rakenda funktsiooni `is.na(.)` vektorile  `z <- c("a", "NA", NA, 0)`. Kas tulemus on oodatav?
 
+```{r yl1, eval=FALSE, exercise = TRUE}
+# Ülesanne 1
+month.name
+x <- c(0:5, "tekst", "T", 234.5, "234,5")
+x
+
+# Kas on sõned?
+is.character(____)
+is.character(____)
+
+# Proovi arvuks teisendada: as.numeric()
+as.numeric(____) 
+as.numeric(____)
+
+
+
+# Ülesanne 2
+# Miks on tulemused erinevad?
+is.integer(1:4)
+is.integer(c(1, 2, 3))
+
+
+# Ülesanne 3
+# Kas tulemus on oodatav?
+z <- c("a", "NA", NA, 0)
+is.na(z)
+
+```
 
 ```{r, eval = F, echo = F}
 # 1
@@ -87,7 +121,7 @@ is.na(z)
 
 ## Tõeväärtused ja tõeväärtusvektorid
 
-Kui käsuga `mean` kasutada argumenti `na.rm`, siis selle argumendi väärtus võib olla `TRUE` või `FALSE`. Tegemist on **tõeväärtustega**. Kuna tõeväärtustega saab teha **loogilisi tehteid** (ehk neid kombineerida), siis on neist kasu ka mujal kui `na.rm` argumendi väärtustamisel. 
+Kui sõned ja numbrilised väärtused on intuitiivselt arusaadavad, siis omaette käsitlust vajavad tõeväärtused. Kui käsuga `mean` kasutada argumenti `na.rm`, siis selle argumendi väärtus võib olla `TRUE` või `FALSE`. Tegemist on **tõeväärtustega** (ingl.k. _boolean_, _logical_). Kuna tõeväärtustega saab teha **loogilisi tehteid** (ehk neid kombineerida), siis on neist kasu ka mujal kui `na.rm` argumendi väärtustamisel. 
 
 
 Loogilisi tehteid on kolm: korrutamine (`&`), liitmine (`|`) ja eitus (`!`). 
@@ -119,7 +153,8 @@ suurem kui     |  `>`          | `3 > 2` ; `"a" > "A"`
 suurem või võrdne | `>=`       | `3 >= 2` ; `"a" >= "A"`
 
 Nagu ennist mainitud, siis R-is tehakse tehteid vektoritega elementhaaval. Seepärast ka siis, kui võtame mingi arvulise vektori ja võrdleme seda mingi arvuga, siis võrreldakse igat elementi eraldi ja tulemuseks on tõeväärtustest koosnev vektor, milles on sama palju elemente kui oli elemendiviisilisi võrdluseid. Sama kehtib ka juhul, kui võrreldakse muud tüüpi väärtuseid (näiteks tekstilisi väärtuseid). 
-```{r, eval=F}
+
+```{r loogiline1, eval=T, exercise = T}
 kaalud > 10
 vanused == 53
 liik == "kass"
@@ -158,10 +193,55 @@ as.integer(c("tere", 0, 1, TRUE, FALSE))
 as.integer(c(0, 1, TRUE, FALSE))
 ```
 
+```{r yl2.1, eval = F, exercise = T}
+# Ülesannde 1
+x <- c(__, __, __, __, __)
+x
+as.numeric(x)
+# Mis sai NA-st?
+
+# Ülesannde 2
+?as.logical
+# Kontrolli
+nr <- c(-3, -1/3, 0, 1, 2, Inf, -Inf, NA, NaN, 1:4)
+as.logical(nr)
+
+
+# Ülesannde 3  
+NA | FALSE
+NA | TRUE
+
+NA & FALSE
+NA & TRUE
+
+!NA 
+
+
+# Ülesannde 4
+as.integer(c("tere", 0, 1, TRUE, FALSE)) 
+as.integer(c(        0, 1, TRUE, FALSE))
+# Miks on tulemused erinevad?
+
+```
+
+Lisaks tasub teada, mis tekst teisendub loogikaväärtuseks? Proovi järgmisi käskusid jooskutada. Kas saad aru, mille järgi R tunneb tõeväärtused ära?
+
+```{r yl2Lisa, eval = F, exercise = T}
+# Vaata abiteksti 
+?logical
+#  c("T", "TRUE", "True", "true") are regarded as true,
+#  c("F", "FALSE", "False", "false") as false
+
+# Kontrolli
+tekst <- c("T", "TRUE", "True", "true", "F", "FALSE", "False", "false", "skljgsdfj", "TRue", "truE", "fals", "FAlse")
+as.logical(tekst)
+```
+
 <!-- 1. Mitu inimest töötab nädalas üle 40 tunni (tunnus `WKHP`)? Mitmel inimesel on töötundide arv puudu?-->
 
 
-# Andmestik, andmete import
+## Andmestik, andmete import
+
 Tavaliselt koosnevad andmestikud ridadest ja veergudest (tulpadest), kus iga rida vastab mingile mõõtmisobjektile ja iga veerg vastab mingile mõõdetud omadusele (tunnusele). 
 
 ```{r, echo = F,  fig.width = 5}
@@ -212,7 +292,8 @@ MS Exceli faile ning statistikatarkvarade spetsiifilisi andmeformaate (nt Stata 
 Tänases praktikumis vaatame nii tekstifailis andmete kui ka mõne teise statistikaprogrammi andmefailide importimist R-i.
 
 
-## Andmete sisselugemine ja faili kirjutamine (tekstifail)
+## Andmete sisselugemine ja faili kirjutamine
+
 Kõige olulisem käsk tekstikujul andmestike sisselugemiseks on `read.table()`. Sellel on mitmeid **argumente**, mille abil saab täpsustada erinevaid asjaolusid, mis antud andmestikku puutuvad:
 
 <!--
@@ -238,23 +319,28 @@ Kõige olulisem käsk tekstikujul andmestike sisselugemiseks on `read.table()`. 
 --------------   -----   ------------------------------------------------------------------------------------------------------
 
 
-Faili asukoht võib olla kõvakettal või võrgus. Kui käsu `setwd` abil on määratud, milline on käimasoleva töösessiooni **töökataloog**, ja andmefail on selles kataloogis, siis piisab käsule `read.table` ainult faili nime etteandmisest (täispikka asukohta ei pea andma). Windowsis on kombeks kaustastruktuuri tähistamiseks kasutada kurakaldkriipsu (tagurpidi kaldkriipsu) `\`, aga R-is on sellisel kaldkriipsul eriline tähendus -- sellega märgitakse, et järgneb erisümbol (nt `\t` on tabulaatori sümbol). Seepärast tuleb kataloogitee märkimisel kasutada kahekordseid kurakaldkriipse, näiteks:
+Faili asukoht võib olla kõvakettal või võrgus. Kui käsu `setwd` abil on määratud, milline on käimasoleva töösessiooni **töökataloog**, ja andmefail on selles kataloogis, siis piisab käsule `read.table` ainult faili nime etteandmisest (täispikka asukohta ei pea andma). Windowsis on kombeks kaustastruktuuri tähistamiseks kasutada kurakaldkriipsu (tagurpidi kaldkriipsu) `\`, aga R-is on sellisel kaldkriipsul eriline tähendus -- sellega märgitakse, et järgneb erisümbol (nt `\t` on tabulaatori sümbol). Seepärast tuleb Windows operatsioonisüsteemis kataloogitee märkimisel kasutada kahekordseid kurakaldkriipse. Teine võimalus on kasutada tavalist kaldkriipsu, nagu MacOS-is ja Linuxites:
 ```{r,eval=FALSE}
-setwd("C:\\Users\\mina\\Rkursus\\")
-```
-Teine võimalus on kasutada tavalist kaldkriipsu, nagu MacOS-is ja Linuxites:
-```{r,eval=FALSE}
+# Windows operatsioonisüsteemis
+#  variant 1
 setwd("C:/Users/mina/Rkursus/")
+#  variant 2
+setwd("C:\\Users\\mina\\Rkursus\\")
+
+
+# Linux ja MacOS operatsioonisüsteemides
+setwd("/home/mina/Rkursus/")
 ```
 
 Andmete sisselugemisel tuleks anda andmetabelile nimi (salvestada see mingi objektina), vastasel juhul andmestik trükitakse lihtsalt ekraanile ja sellega enam midagi muud teha ei saa: `r load("../data/andmed.RData")` 
 ```{r}
-naide1 <- read.table("https://github.com/Rkursus/2020/raw/master/data/esimene.txt", 
+naide1 <- read.table("https://github.com/Rkursus/mooc/raw/main/data/esimene.txt", 
                      header = T, sep = "\t", dec = ",")
 ```
 
 Töökeskkonnas olevaid andmetabeleid saab faili kirjutada käsuga `write.table(.)`, andes käsule ette salvestatava andmestiku nime ning loodava faili nime jutumärkides (vajaduse korral koos kataloogiteega):
 ```{r, eval = F}
+# Proovi oma RStudios
 write.table(näide1, "failinimi.txt", sep = "\t")
 ```
 
@@ -262,24 +348,49 @@ write.table(näide1, "failinimi.txt", sep = "\t")
 
 1. Vaata `read.table` käsu argumentide täielikku loetelu abifailist.
 
-1. Aadressil https://github.com/Rkursus/2020/tree/master/data/ leiad failid *tabel1.csv*, *tabel2*, *tabel3.txt*, *tabel4.tab*. Tutvu nendega (Notepadi vmt kasutades) ja proovi need seejärel R-i korrektselt sisse lugeda. Veendu, et R-is olevates tabelites on sama palju veerge kui originaalandmestikes.
+1. Aadressil https://github.com/Rkursus/mooc/tree/main/data/ leiad failid *tabel1.csv*, *tabel2*, *tabel3.txt*, *tabel4.tab*. Tutvu nendega (Notepadi vmt kasutades) ja proovi need seejärel R-i korrektselt sisse lugeda. Veendu, et R-is olevates tabelites on sama palju veerge kui originaalandmestikes.
 
-1. USA riiklikud institutsioonid võimaldavad päris sageli andmekogudele vaba ligipääsu. Selles aines kasutame näidisandmestikena USA Rahvaloendusbüroo^[http://www.census.gov/data.html] poolt kogutud andmeid, millele saab ligi IPUMS-USA^[Steven Ruggles, J. Trent Alexander, Katie Genadek, Ronald Goeken, Matthew B. Schroeder, and Matthew Sobek. Integrated Public Use Microdata Series: Version 5.0 [Machine-readable database]. Minneapolis, MN: Minnesota Population Center [producer and distributor], 2010.] liidese kaudu^[https://usa.ipums.org/usa-action/variables/group]. Aadressil https://github.com/Rkursus/2020/tree/master/data/ on fail *mass.txt*, milles on Massachusettsi osariigis ühe valikuuringuga kogutud andmed. Loe see R-i sisse, andmestiku objektile pane nimeks `andmed`. Tutvu ka tunnuste kirjeldusega: https://github.com/Rkursus/2020/raw/master/data/descr.txt. Andmestikuobjektist esmase ülevaate saamiseks kasuta käsku `str(andmed)`.
+1. USA riiklikud institutsioonid võimaldavad päris sageli andmekogudele vaba ligipääsu. Selles aines kasutame näidisandmestikena USA Rahvaloendusbüroo^[http://www.census.gov/data.html] poolt kogutud andmeid, millele saab ligi IPUMS-USA^[Steven Ruggles, J. Trent Alexander, Katie Genadek, Ronald Goeken, Matthew B. Schroeder, and Matthew Sobek. Integrated Public Use Microdata Series: Version 5.0 [Machine-readable database]. Minneapolis, MN: Minnesota Population Center [producer and distributor], 2010.] liidese kaudu^[https://usa.ipums.org/usa-action/variables/group]. Aadressil https://github.com/Rkursus/mooc/tree/main/data/ on fail *mass.txt*, milles on Massachusettsi osariigis ühe valikuuringuga kogutud andmed. Loe see R-i sisse, andmestiku objektile pane nimeks `andmed`. Tutvu ka tunnuste kirjeldusega: https://github.com/Rkursus/mooc/raw/main/data/descr.txt. Andmestikuobjektist esmase ülevaate saamiseks kasuta käsku `str(andmed)`.
+
+```{r yl3, eval = F, exercise = T}
+# Ülesanne 1
+?read.table
+
+
+# Ülesanne 2
+tab1 <- read.table("https://github.com/Rkursus/mooc/raw/main/data/____", ____)
+
+tab2 <- read.table("https://github.com/Rkursus/mooc/raw/main/data/____", ____)
+
+tab3 <- read.table("https://github.com/Rkursus/mooc/raw/main/data/____", ____)
+
+tab4 <- read.table("https://github.com/Rkursus/mooc/raw/main/data/____", ____)
+
+tab1;tab2;tab3;tab4
+
+# Ülesanne 3
+andmed <- read.table(____)
+
+# ülevaate saamine andmstikust, kontroll
+str(andmed)
+```
+
+
 
 ```{r, echo = F, results = "hide"}
 
 
 # 2. loe sisse 4 andmetabelit
-tab1 <- read.table("https://github.com/Rkursus/2020/raw/master/data/tabel1.csv", sep = ",", header = TRUE)
-tab2 <- read.table("https://github.com/Rkursus/2020/raw/master/data/tabel2", sep = ";", header = TRUE)
-tab3 <- read.table("https://github.com/Rkursus/2020/raw/master/data/tabel3.txt", sep = "\t", header = TRUE, na.strings = ".")
-tab4 <- read.table("https://github.com/Rkursus/2020/raw/master/data/tabel4.tab", sep = " ", header = TRUE, quote = "")
+tab1 <- read.table("https://github.com/Rkursus/mooc/raw/main/data/tabel1.csv", sep = ",", header = TRUE)
+tab2 <- read.table("https://github.com/Rkursus/mooc/raw/main/data/tabel2", sep = ";", header = TRUE)
+tab3 <- read.table("https://github.com/Rkursus/mooc/raw/main/data/tabel3.txt", sep = "\t", header = TRUE, na.strings = ".")
+tab4 <- read.table("https://github.com/Rkursus/mooc/raw/main/data/tabel4.tab", sep = " ", header = TRUE, quote = "")
 tab1;tab2;tab3;tab4
  
 
 
 # 3.
-andmed <- read.table("https://github.com/Rkursus/2020/raw/master/data/mass.txt", header = T, sep = "\t")
+andmed <- read.table("https://github.com/Rkursus/mooc/raw/main/data/mass.txt", header = T, sep = "\t")
 ```
 
 
@@ -317,27 +428,32 @@ Käsu `summary(.)` puhul on näha, et mõne tunnuse puhul arvutatakse keskmine, 
 
 Üks R-i populaarseks muutumise põhjuseid on rikkalik lisapakkettide olemasolu. Tõenäoliselt leidub iga praktilise statistika-alase (ja ka mõne muu valdkonna) probleemi jaoks omaette pakett (*package*). Näiteks paketid `foreign`, `readstata13`, `haven`, `readxl` sisaldavad funktsioone, mis aitavad teistes kui tekstiformaatides andmestikke hõlpsamini R-i sisse lugeda. Andmete impordiks sobilikke lisapakette on lisaks nimetatutele veel. Siinkohal vaatame aga  kahe paketi `haven` ja `readxl` võimalusi.
 
-Lisapaketid ei ole tavaliselt R-iga kaasas, vaid need tuleb installeerida. Kui paigaldatav pakett vajab omakorda mingeid muid pakette, siis installeeritakse ka need. Kui kasutatakse R-i installeerimisel paika pandud vaikeseadistusi, siis töösessiooni korral esimest korda mingit paketti installeerides küsitakse, millisest serverist soovib kasutaja neid alla laadida. Järgmistel kordadel sama töösessiooni jooksul pakette paigaldades seda enam ei küsita.
+Lisapaketid ei ole tavaliselt R-iga kaasas, vaid need tuleb eraldi paigaldada. Kui paigaldatav pakett vajab omakorda mingeid muid pakette, siis paigaldatakse ka need automaatselt. Kui kasutatakse R-i installeerimisel paika pandud vaikeseadistusi, siis töösessiooni korral esimest korda mingit paketti paigaldades võib R küsida, millisest serverist soovib kasutaja neid alla laadida. Järgmistel kordadel sama töösessiooni jooksul pakette paigaldades seda enam ei küsita.
 
-Installeerime lisapaketid `readxl` ja `haven`
+Paigaldame lisapaketid `readxl` ja `haven`
 ```{r, eval=FALSE}
 install.packages("readxl")
 install.packages("haven")
-# NB! Arvutiklassi arvuti korral võib olla vajalik salvestuskoha ettemääramine
-# install.packages("readxl", lib = "C:/kataloog-installimiseks")
+# NB! Mõnikord võib olla vajalik salvestuskoha ettemääramine
+# install.packages("readxl", lib = "C:/kataloog-installimiseks") # Windows
+# install.packages("readxl", lib = "/kataloog-installimiseks") # Linux, MacOS
 ```
 
 Kui pakett on installitud, siis järgmisel töösessioonil seda enam uuesti installeerima ei pea. Arvutisse paigaldatud paketid tuleb iga kord uut R-i sessiooni alustades kasutamiseks sisse laadida käsuga `library` (või `require`), mille argumendiks on laaditava paketi nimi:
 ```{r, results='hide', warning=FALSE}
 library(readxl)
 # Kui installimisel oli käsitsi määratud salvestuskoht:
-# library(readxl, lib.loc = "C:/kataloog-installimiseks")
+# library("readxl", lib = "C:/kataloog-installimiseks") # Windows
+# library("readxl", lib = "/kataloog-installimiseks") # Linux, MacOS
 ```
 
 
-## Andmete import programmide MS Excel, SAS, Stata, SPSS failidest
+## Teistest programmidest andmete sisselugemine 
+
+Kui sinu algsed andmed on pärit Excelist, SPSS-st, SAS-st vms. siis kahjuks R-i baaspaketi käskudega hakkama ei saa ja peab kasutama mõne lisapaketi funktsioone.
+
 ### MS Excel failid
-Lisapaketi `readxl` käsu `read_excel(.)` abil saab importida MS Exceli failide (nii *.xlsx* kui *xls*) töölehti. Salvesta  aadressilt https://github.com/Rkursus/2020/tree/master/data/ oma töökataloogi fail *tudengite-arv.xlsx*, mis sisaldab infot TÜ tudengite arvude kohta aastate lõikes. Ava esmalt fail MS Exceli abil ning vaata millised töölehed failis on. Seejärel vaata ka  R abil millised on töölehtede nimed ja impordi teine tööleht, millel on andmed avatud ülikooli õpilaste arvude kohta. 
+Lisapaketi `readxl` käsu `read_excel(.)` abil saab importida MS Exceli failide (nii *.xlsx* kui *xls*) töölehti. Salvesta  aadressilt https://github.com/Rkursus/mooc/tree/main/data/ oma töökataloogi fail *tudengite-arv.xlsx*, mis sisaldab infot TÜ tudengite arvude kohta aastate lõikes. Ava esmalt fail MS Exceli abil ning vaata millised töölehed failis on. Seejärel vaata ka  R abil millised on töölehtede nimed ja impordi teine tööleht, millel on andmed avatud ülikooli õpilaste arvude kohta. 
 
 ```{r, eval=FALSE}
 list.files() # vaata, mis nimega failid on töökaustas
@@ -355,7 +471,7 @@ str(tabel)
 
 
 ### SAS, Stata ja SPSS failid
-Programmide SAS, Stata ja SPSS failide importimiseks saab kasutada paketi `haven` vastavaid funktsioone `read_sas(.), read_stata(.)` ja `read_spss(.)`. Salvesta  aadressilt https://github.com/Rkursus/2020/tree/master/data/ oma töökataloogi kolm faili nimega *effort* ja loe need R-i:
+Programmide SAS, Stata ja SPSS failide importimiseks saab kasutada paketi `haven` vastavaid funktsioone `read_sas(.), read_stata(.)` ja `read_spss(.)`. Salvesta  aadressilt https://github.com/Rkursus/mooc/tree/main/data/ oma töökataloogi kolm faili nimega *effort* ja loe need R-i:
 ```{r, eval=FALSE}
 library(haven)
 andmestik_SAS <- read_sas("effort.sas7bdat")
@@ -375,9 +491,21 @@ R-i andmestiku saab `haven` paketi abil ka eksportida vaadeldud programmide andm
 
 ### Ülesanded
 
+Tee palun järgmised ülesanded oma RStudios.
+
 1. Impordi failist *tudengite-arv.xlsx* viimane tööleht *kokku*, kus on tudengite arvud aastate lõikes (liidetud statsionaar ja avatud ülikool). Vaata esmalt ka abilehte kasutatava funktsiooni kohta: `?read_excel`
+
+Tööd lihtsustab natuke järgmine käsk:
+
+```{r, eval = F}
+# Lae Exceli fail oma töökausta
+download.file("https://github.com/Rkursus/mooc/raw/main/data/tudengite-arv.xlsx", "tudengite-arv.xlsx")
+
+```
+
+
 ```{r, eval=FALSE, echo = F}
-download.file("https://github.com/Rkursus/2020/raw/master/data/tudengite-arv.xlsx", "tudengite-arv.xlsx")
+download.file("https://github.com/Rkursus/mooc/raw/main/data/tudengite-arv.xlsx", "tudengite-arv.xlsx")
 
 kokku <- read_excel("praks1import/tudengite-arv.xlsx", sheet = "kokku")
 kokku <- read_excel("praks1import/tudengite-arv.xlsx", sheet = "kokku", col_names = F)

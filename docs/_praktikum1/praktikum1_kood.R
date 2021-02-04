@@ -9,7 +9,8 @@
 ## Tools -> Global Options -> Code -> Savings -> Default text encoding (vali "UTF-8" kui seal on midagi muud)
 ## 
 ## Vaata, kas on õige R-i versioon RStudio 'kõhus'
-## 
+## Tools -> Global Options -> General -> R version
+##
 ## Lisaks saab seadistada värve ja väljanägemist
 ## Tools -> Global Options -> Appearence
 ##
@@ -37,7 +38,7 @@ log(exp(1)) * cos(-pi) * sqrt(9) + factorial(4) - choose(4, 2) * min(4, 5, 2)
 0/0  # NaN ehk Not a Number, määramatus
 -Inf 
 
-## --- ÜL 1.2.1 KMI arvutamine ----
+## --- ÜL 1.2 KMI arvutamine ----
 
 
 
@@ -67,7 +68,7 @@ log(8, BASE = 2)
 log(8, base = 2)
 
 
-# ---- ÜL 1.3.1 ----
+# ---- ÜL 1.3 ----
 # 1 abi akna avamine
 
 
@@ -155,7 +156,7 @@ kaalud[seq(1, 6, 2)]  # iga teine element alates esimesest
 
 
 
-# ---- Ül 2.2.1 ----
+# ---- Ül 2.2. ----
 # 1
 y <- rep(____)
 y
