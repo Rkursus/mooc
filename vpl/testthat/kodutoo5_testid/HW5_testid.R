@@ -761,7 +761,20 @@ test_that(ylesanne,
 
 # Ülesanne 9.1 õige lahendus -----
 if(FALSE){
+  # Vaata andmestikku
+  head(apelsinid)
   
+  # Ülesanne 1: Lisa kuupäeva tunnus andmestikku
+  apelsinid$kuupaev <- as.Date(apelsinid$age, origin = "1968-12-31")
+  
+  
+  # Ülesanne 2: Moodusta unikaalsete väärtuste vektor
+  ajad <- unique(apelsinid$kuupaev)
+  
+  
+  # Ülesanne 3: Kui pikk on mõõtmistevaheline aeg nädalates?
+  nadalad <- difftime(ajad[-1], ajad[-length(ajad)], units = "weeks");nadalad
+  nadalad
 }
 
 ylesanne = "Ülesanne 9.1"
@@ -769,8 +782,76 @@ yl = 9
 
 test_that(ylesanne, 
           {
+            library(lubridate)
+            tmp_part = tmp_parts[[yl]]
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
+            # 1
+            
+            expect_true(length(grep("as\\.Date\\(", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".1: vaja kasutada funktsiooni 'as.Date'"),
+                        label = paste0(ylesanne, ".1 as.Date() funktsiooni kontroll"))
+            
+            expect_true(length(grep("as\\.Date\\([^,]*,{1}[^,]*\\)", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".1: Funktsioonis 'as.Date' vale arv argumente"),
+                        label = paste0(ylesanne, ".1 as.Date() argumentide kontroll"))
+            
+            expect_true(length(grep("as\\.Date\\(apelsinid\\$age,[^,]*.\\)", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".1: Oled `as.Date` esimeseks argumendiks vale tunnuse andnud."),
+                        label = paste0(ylesanne, ".1 as.Date 1. argumendi kontroll"))
+            
+            expect_true(length(grep("as\\.Date\\([^,]*,[^,]*1968\\-12\\-31", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".1: Oled `as.Date`  käsus vale `origin` argumendi väärtuse määranud. Pead `as.Date` funktsiooni lisama `origin` argumendi."),
+                        label = paste0(ylesanne, ".1 as.Date 2. argumendi kontroll"))
+            
+            expect_true(exists("apelsinid"),
+                        info = paste0(ylesanne, ".1 Andmestik `apelsinid` on kadunud! Alusta uuesti."),
+                        label = paste0(ylesanne, ".1 Andmestiku apelsinid kontroll"))
+            
+            expect_true("kuupaev" %in% names(apelsinid) ,
+                        info = paste0(ylesanne, ".1 Andmestikus `apelsinid` pole veergu nimega `kuupaev`."),
+                        label = paste0(ylesanne, ".1 Veeru kuupaev kontroll"))
+            
+            expect_true(is.Date(apelsinid$kuupaev),
+                        info = paste0(ylesanne, ".1 Andmetabeli `apelsinid`  veeru `kuupaev` väärtused ei ole korrektsed. Proovi uuesti."),
+                        label = paste0(ylesanne, ".1 Veeru kuupaev tüübi kontroll"))
+            
+            # 2 
+            expect_true(exists("ajad"),
+                        info = paste0(ylesanne, ".2 Muutuja  `ajad` on defineerimata."),
+                        label = paste0(ylesanne, ".2 Muutuja ajad kontroll"))
+            
+            expect_true(sum(ajad == c("1969-04-28" ,"1970-04-29", "1970-10-26", 
+                                  "1971-10-01", "1972-05-15", "1972-10-03",
+                                   "1973-05-01"))==7,
+                        info = paste0(ylesanne, ".2 Muutuja  `ajad` väärtus ei ole korrektne. Proovi uuesti."),
+                        label = paste0(ylesanne, ".2 Muutuja ajad väärtuste kontroll"))
+          # 3
+            expect_true(exists("nadalad"),
+                        info = paste0(ylesanne, ".3 Muutuja  `nadalad` on defineerimata."),
+                        label = paste0(ylesanne, ".3 Muutuja nadalad kontroll"))
+            
+            expect_true(length(grep("^nadalad$", tmp_parts[[yl]])) > 0 | 
+                          length(grep("^print(nadalad)$", tmp_parts[[yl]])) > 0 |
+                          length(grep("^;print(nadalad)$", tmp_parts[[yl]])) > 0 | 
+                          length(grep("^; print(nadalad)$", tmp_parts[[yl]])) > 0, 
+                        info = paste0(ylesanne, ".3: muutujat 'nadalad' pole välja prinditud"),
+                        label = paste0(ylesanne, ".3 muutuja 'nadalad' väljatrüki kontroll"))
+            
+            expect_true(length(grep("difftime\\(", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".3: Viimases ülesandes kasuta  funktsiooni `difftime`."),
+                        label = paste0(ylesanne, ".3 difftime() funktsiooni kontroll"))
+            
+            expect_true(length(grep("difftime\\([^,].*\\,ajad\\,units", tmp_part)) >0 |
+                          length(grep("difftime\\(ajad\\[-1\\],ajad\\[-length\\(ajad\\)\\]\\,units", tmp_part)) >0 |
+                          length(grep("difftime\\(ajad\\[2\\:7\\],ajad\\[1\\:6\\]\\,units", tmp_part)) >0 |
+                          length(grep("difftime\\(ajad\\[2\\:length\\(ajad\\)\\],ajad\\[1\\:length\\(ajad\\)\\-1\\]\\,units", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".3: Käsus `difftime` peab olema kolm argumenti."),
+                        label = paste0(ylesanne, ".3 difftime() argumentide kontroll"))
+          
+            expect_true(length(grep("units\\=", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".3: Määra `difftime` käsus argumendi `units` väärtus."),
+                        label = paste0(ylesanne, ".3 difftime() argumendi units kontroll"))
           })
 
 
