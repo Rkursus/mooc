@@ -115,11 +115,11 @@ test_that(ylesanne,
                         info = paste0(ylesanne, ".1: vaja kasutada funktsiooni %>% vähemalt kaks korda "),
                         label = paste0(ylesanne, ".1 %>% funktsiooni kontroll"))
             
-            expect_true(colnames(tabel) == c("sugu","elukoht","n","kesk.vanus","kesk.kmi","visiit.osak"),
+            expect_true(sum(colnames(tabel) == c("sugu","elukoht","n","kesk.vanus","kesk.kmi","visiit.osak"))==6,
                         info = paste0(ylesanne, ".1: veerunimed erinevad oodatust või puuduvad"),
                         label = paste0(ylesanne, ".1 veerunimede kontroll"))
             
-            expect_true(sum(tabel$n==45),
+            expect_true(sum(tabel$n)==45,
                         info = paste0(ylesanne,".1: veerg 'n' valesti leitud"),
                         label = paste0(ylesanne,".1: veeru 'n' väärtuste kontroll"))
             
@@ -127,7 +127,7 @@ test_that(ylesanne,
                         info = paste0(ylesanne,".1: veeru 'kesk.vanus' väärtused valesti leitud"),
                         label = paste0(ylesanne,".1: veeru 'kesk.vanus' väärtuste kontroll"))
             
-            expect_true(round(sum(tabel$kesk.kmi),2)==197.01,
+            expect_true(round(sum(tabel$kesk.kmi),2)==105.59,
                         info = paste0(ylesanne,".1: veeru 'kesk.kmi' väärtused valesti leitud"),
                         label = paste0(ylesanne,".1: veeru 'kesk.kmi' väärtuste kontroll"))
             
@@ -135,7 +135,7 @@ test_that(ylesanne,
                         info = paste0(ylesanne,".1: veeru 'visiit.osak' väärtused valesti leitud"),
                         label = paste0(ylesanne,".1: veeru 'visiit.osak' väärtuste kontroll"))
             
-            #2
+            # 2
             
             expect_true(length(grep("sugu=1,elukoht=1", tmp_part))>0,
                         info = paste0(ylesanne,".2: leitud vale grupp"),
@@ -146,7 +146,19 @@ test_that(ylesanne,
 
 # Ülesanne 3.1 õige lahendus -----
 if(FALSE){
+  B <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/B.csv", nrows = 160)
   
+  # 1
+  
+  B1 <- B %>% select(starts_with("test"))
+  
+  # 2
+  library(reshape2)
+  tabel <- B1 %>% 
+    melt() %>%  
+    group_by(variable)  %>%  
+    summarise_all(.funs = c("mean", "sd", "min", "max"))
+  arrange(tabel, variable)
 }
 
 ylesanne = "Ülesanne 3.1"
@@ -154,14 +166,116 @@ yl = 3
 
 test_that(ylesanne, 
           {
+            tmp_part = tmp_parts[[yl]]
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
+            
+            # 1
+            expect_true(length(grep("select\\(", tmp_part)) >0,
+                 info = paste0(ylesanne, ".1 Kasuta esimeses ülesandes funktsiooni `select()`."),
+                 label = paste0(ylesanne, ".1 select() funktsiooni kontroll."))
+            
+            expect_true(length(grep("select\\(\\)", tmp_part)) == 0,
+                        info = paste0(ylesanne, ".1 Funktsioonil `select()` puudub argument."),
+                        label = paste0(ylesanne, ".1 select() argumendi kontroll"))
+            
+            expect_true(length(grep("starts_with\\(", tmp_part)) >0,
+                        info = paste0(ylesanne, ".1 Kasuta esimeses ülesandes funktsiooni `starts_with`."),
+                        label = paste0(ylesanne, ".1 starts_with() funktsiooni kontroll"))
+            
+            expect_true(length(grep("starts_with\\(\\)", tmp_part)) == 0,
+                        info = paste0(ylesanne, ".1 Funktsioonil `starts_with` puudub argument."),
+                        label = paste0(ylesanne, ".1 starts_with() argumendi kontroll"))
+            
+            expect_true(exists("B1"),
+                        info = paste0(ylesanne, ".1 Andmestikku `B1` pole tekitatud!"),
+                        label = paste0(ylesanne, ".1 Andmestiku B1 nime kontroll"))
+            
+            expect_true(ncol(B1)==40,
+                        info = paste0(ylesanne, ".1 Andmestikus `B1` on mõni nõutud veerg puudu!"),
+                        label = paste0(ylesanne, ".1 Andmestiku B1 veergude kontroll"))
+              
+            
+            # 2 
+            
+            expect_true(length(grep("library\\(", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".2: vaja kasutada funktsiooni 'library'"),
+                        label = paste0(ylesanne, ".2 library() funktsiooni kontroll"))
+            
+            expect_true(length(grep("library\\(reshape2", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".2: Käsu `library()` argumendiks anna paketi nimi `reshape2`"),
+                        label = paste0(ylesanne, ".2 library() argumendi kontroll"))
+            
+            expect_true(length(grep("melt\\(", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".2: Kasuta teises ülesandes funktsiooni `melt()`"),
+                        label = paste0(ylesanne, ".2 melt() funktsiooni kontroll"))
+            
+            expect_true(length(grep("melt\\(\\)", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".2: Funktsioonile `melt()` peab aheldamise kaudu argumendiks minema andmestik `B1`. Teisi argumente antud funktsioonis pole vaja täpsustada."),
+                        label = paste0(ylesanne, ".2 melt() argumendi kontroll"))
+            
+            expect_true(length(grep("group_by\\(", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".2: Kasuta teises ülesandes funktsiooni `group_by()`"),
+                        label = paste0(ylesanne, ".2 group_by() funktsiooni kontroll"))
+            
+            expect_true(length(grep("group_by\\({1}.*[,].+\\)", tmp_part)) == 0, 
+                        info = paste0(ylesanne, ".2: Funktsiooni `group_by()` esimeseks argumendiks peab aheldamine saatma pikas formaadis andmestiku. 
+                                      Grupeerivaks tunnuseks peab minema veerg, kus on kirjas testide nimed. Funktsioonile antud liiga palju argumente."),
+                        label = paste0(ylesanne, ".2 group_by() argumentide kontroll"))
+            
+            expect_true(length(grep("summarise_all\\(", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".2: Kasuta teises ülesandes funktsiooni `summarise_all()`."),
+                        label = paste0(ylesanne, ".2 summarise_all() funktsiooni kontroll"))
+            
+            #kas 3 koma e pole lisatud rohkem argumente
+            expect_true(length(grep("summarise_all.*[,]{1}.+[,]{1}.+[,]{1}.+\\)", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".2: Funktsioonide nimekiri pole sama, mis etteantud koodis. 
+                                      Ära kustuta, ega muuda seda kohta koodist."),
+                        label = paste0(ylesanne, ".2 summarise_all() argumentide kontroll"))
+            
+            expect_true(sum(str_count(tmp_part,"%>%")) > 3 , 
+                        info = paste0(ylesanne, ".2: Kasuta aheldamisoperaatorit `%>%` vähemalt 4 korda."),
+                        label = paste0(ylesanne, ".2 %>% funktsiooni kasutamise kontroll"))
+            
+            expect_true(exists("tabel"),
+                        info = paste0(ylesanne, ".2 Andmestikku `tabel` pole tekitatud!"),
+                        label = paste0(ylesanne, ".2 Andmestiku tabel nime kontroll"))
+            
+            expect_true(ncol(tabel)==5,
+                        info = paste0(ylesanne, ".2 Andmestikus `tabel` on mõni nõutud veerg puudu!"),
+                        label = paste0(ylesanne, ".2 Andmestiku tabel veergude kontroll"))
+            
+            expect_true(round(sum(tabel$mean),2)==799.68,
+                        info = paste0(ylesanne,".2: veeru 'mean' väärtused valesti leitud"),
+                        label = paste0(ylesanne,".2: veeru 'mean' väärtuste kontroll"))
+            
+            expect_true(round(sum(tabel$sd),2)==80.42,
+                        info = paste0(ylesanne,".2: veeru 'sd' väärtused valesti leitud"),
+                        label = paste0(ylesanne,".2: veeru 'sd' väärtuste kontroll"))
+            
+            expect_true(round(sum(tabel$min),2)==589,
+                        info = paste0(ylesanne,".2: veeru 'min' väärtused valesti leitud"),
+                        label = paste0(ylesanne,".2: veeru 'min' väärtuste kontroll"))
+            
+            expect_true(round(sum(tabel$max),2)==1015.5,
+                        info = paste0(ylesanne,".2: veeru 'max' väärtused valesti leitud"),
+                        label = paste0(ylesanne,".2: veeru 'max' väärtuste kontroll"))
             
           })
 
 
 # Ülesanne 4.1 õige lahendus -----
 if(FALSE){
+  antropo <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/antropo.txt", header=T, sep="\t")
+  mass <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/mass.txt", header=T, sep="\t")
   
+  # 1
+  mass_char <-  mass %>% mutate_if(.predicate = is.factor, 
+                                   .funs = as.character())
+  
+  # 2
+  uus_funktsioon <- function(x) x/10
+  antropo_cm_kg <- antropo %>% mutate_at(.vars = vars(-SEX), 
+                                         .funs = uus_funktsioon)
 }
 
 ylesanne = "Ülesanne 4.1"
@@ -169,7 +283,36 @@ yl = 4
 
 test_that(ylesanne, 
           {
+            tmp_part = tmp_parts[[yl]]
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
+            
+            expect_true(exists("mass_char"),
+                        info = paste0(ylesanne, ".1 Andmestikku `mass_char` pole tekitatud!"),
+                        label = paste0(ylesanne, ".1 Andmestiku mass_char nime kontroll"))
+            
+            expect_true(length(grep("mutate_if\\(", tmp_part)) >0, 
+                        info = paste0(ylesanne, ".2: Kasuta teises ülesandes funktsiooni `mutate_if()`"),
+                        label = paste0(ylesanne, ".2 mutate_if() funktsiooni kontroll"))
+            
+            #esimene argument is.factor
+             expect_true(length(grep("mutate_if\\(.*[^is.factor$]", tmp_part)) >0, 
+                         info = paste0(ylesanne, ".2: Funktsiooni `mutate_if()` esimeseks argumendiks peab sattuma andmestik `mass`, st see saadetakse aheldamisega funktsiooni esimeseks argumendiks.
+                                       Ära kustuta, ega muuda seda kohta koodist."),
+                         label = paste0(ylesanne, ".2 mutate_if() argumentide kontroll"))
+             
+            #kas mutate_if lõpus as.character(), võiks olla ka komade arvu kontroll
+            # expect_true(length(grep("mutate_if\\(.+\n.+[^as.character()$],", tmp_part)) >0, 
+            #             info = paste0(ylesanne, ".2: Peab määrama teisenduse, mida valitud veergudele rakendada, see peaks veeru tüübiks määrama `character`. Kasuta funktsiooni `as.character()`."),
+            #             label = paste0(ylesanne, ".2 as.character() funktsiooni kontroll"))
+            
+             # 2
+             
+             expect_true(exists("uus_funktsioon"),
+                         info = paste0(ylesanne, ".1 Funktsiooni `uus_funktsioon` pole tekitatud!"),
+                         label = paste0(ylesanne, ".1 Andmestiku uus_funktsioon nime kontroll"))
+             
+             
+            
             
           })
 
