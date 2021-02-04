@@ -308,11 +308,50 @@ test_that(ylesanne,
              # 2
              
              expect_true(exists("uus_funktsioon"),
-                         info = paste0(ylesanne, ".1 Funktsiooni `uus_funktsioon` pole tekitatud!"),
-                         label = paste0(ylesanne, ".1 Andmestiku uus_funktsioon nime kontroll"))
+                         info = paste0(ylesanne, ".2 Funktsiooni `uus_funktsioon` pole tekitatud!"),
+                         label = paste0(ylesanne, ".2 Funktsiooni uus_funktsioon nime kontroll"))
              
+             expect_true(length(grep("function\([^,]\)", tmp_part)) >0,
+                         info = paste0(ylesanne, ".2 Piisab, kui defineeritaval funkstioonil on üks argument."),
+                         label = paste0(ylesanne, ".2 Funktsiooni uus_funktsioon argumendi kontroll")
+             )
              
-            
+             expect_true(uus_funktsioon(100)==10,
+                         info = paste0(ylesanne, ".2 Funktsioon `uus_funktsioon` tagastab argumendiga `100` vale väärtuse."),
+                         label = paste0(ylesanne, ".2 Funktsiooni uus_funktsioon sisu kontroll")
+                         
+             )
+             
+             expect_true(sum(str_count(tmp_part,"%>%")) > 1 , 
+                         info = paste0(ylesanne, ".2: Kasuta aheldamisoperaatorit `%>%` vähemalt 2 korda."),
+                         label = paste0(ylesanne, ".2 %>% funktsiooni kasutamise kontroll"))
+             
+             expect_true(length(grep("mutate_at\\(", tmp_part)) >0, 
+                         info = paste0(ylesanne, ".2: Kasuta teises ülesandes funktsiooni `mutate_at()`"),
+                         label = paste0(ylesanne, ".2 mutate_at() funktsiooni kontroll"))
+             
+             #kontroll, kas on argument KOMA argument, töötab regex101, siin mitte
+             # expect_true(length(grep("mutate_at\\([^,]*,{1}[^EX),]*.\\)", tmp_part)) >0, 
+             #             info = paste0(ylesanne, ".2: Ära muuda funktsiooni `mutate_at()` etteantud argumentide väärtusi või kirjapilti."),
+             #             label = paste0(ylesanne, ".2 mutate_at() argumentide kontroll"))
+             
+             expect_true(exists("antropo_cm_kg"),
+                         info = paste0(ylesanne, ".2 Andmestikku `antropo_cm_kg` pole tekitatud!"),
+                         label = paste0(ylesanne, ".2 Andmestiku antropo_cm_kg nime kontroll"))
+             
+             expect_true(ncol(antropo_cm_kg)==9,
+                         info = paste0(ylesanne, ".2 Andmestikus `antropo_cm_kg` on mõni veerg puudu! "),
+                         label = paste0(ylesanne, ".2 Andmestiku antropo_cm_kg veergude arvu kontroll"))
+             
+             expect_true(round(sum(antropo_cm_kg$WEIGHT, na.rm = T),2)==276164.5,
+                         info = paste0(ylesanne,".2: veeru 'WEIGHT' väärtused valesti leitud"),
+                         label = paste0(ylesanne,".2: veeru 'WEIGHT' väärtuste kontroll"))
+             
+             #esimene millimeetrites rida
+             expect_true(round(sum(antropo_cm_kg$ACROMION_HT),2)==550351.2,
+                         info = paste0(ylesanne,".2: veeru 'ACROMION_HT' väärtused valesti leitud"),
+                         label = paste0(ylesanne,".2: veeru 'ACROMION_HT' väärtuste kontroll"))
+             
             
           })
 
