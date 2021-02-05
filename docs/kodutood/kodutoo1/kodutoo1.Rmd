@@ -228,11 +228,11 @@ temp[ -1 ] # vektori kõik elemendid va esimene
 temp[ c(1, 5, 9) ] # vektori esimene, viies ja üheksas element
 
 # Näide 2. Tulemuseks tõeväärtustega vektorid 
-temp < -15 # Kontrollime millised temperatuurid jäävad alla -15 kraadi 
+temp < (-15) # Kontrollime millised temperatuurid jäävad alla -15 kraadi 
 jaam == "Tallinn"  # Millisel kohal vektoris on ilmajaama nimi Tallinn?
 
 # Näide 3. Tingimustele vastavate elementide väljavalimine. Tõeväärtusvektori kasutamine
-jaam[ temp < -15 ] # valime välja need  jaamad, kus temperatuur on alla -15
+jaam[ temp < (-15) ] # valime välja need  jaamad, kus temperatuur on alla -15
 temp[jaam == "Tallinn"]  # valime välja Tallinnale vastava temperatuuri
 
 ```
