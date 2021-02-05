@@ -6,6 +6,11 @@ output:
     number_sections: true
 ---
 
+```{r, out.height="60px", echo = F, figure-side, fig.align = 'right'}
+knitr::include_graphics("https://www.hitsa.ee/photos/HITSA_logo.png")
+knitr::include_graphics("https://media.voog.com/0000/0034/3577/photos/IT%20Akadeemia%20logo%20RGB%201000%20px.png")
+```
+
 # Tulpdiagamm esinemissagedustega
 
 Loe töölauale andmestik `jootraha`, see on vaikimisi kaasas paketiga `reshape2`. Tegu on ühe kelneri kogutud andmetega paari kuu pikkusest tööperioodist. Registreeritud on kõik laudkonnad, kes selle perioodi jooksul andsid jootraha. Kirja sai:

@@ -6,6 +6,11 @@ output:
     number_sections: true
 ---
 
+```{r, out.height="60px", echo = F, figure-side, fig.align = 'right'}
+knitr::include_graphics("https://www.hitsa.ee/photos/HITSA_logo.png")
+knitr::include_graphics("https://media.voog.com/0000/0034/3577/photos/IT%20Akadeemia%20logo%20RGB%201000%20px.png")
+```
+
 # Pakett dplyr - Andmestikku tunnuste lisamine 
 
 
@@ -15,7 +20,7 @@ Paketi **dplyr** funktsioonidest `mutate()` on abiks kui on vaja andmestikku uus
 Loe töölauale andmestik `A`. Andmestikus on kirjas 40 inimese id-kood, sugu, elukoht, vanus, pikkus, kaal, käte siruulatus ning arstivisiidi toimumine.
 
 ```{r eval = F}
-A <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/A.csv", nrows = 45)
+A <- read.csv2("https://github.com/Rkursus/mooc/raw/main/data/A.csv", nrows = 45)
 
 ```
 
@@ -262,7 +267,7 @@ Paketis **dplyr** on olemas funktsioonide `mutate()` ja `summarise()` eriversioo
 Loe töölauale andmestik `B`. Andmestikus on 160 inimese kohta mitmete testide ja ankeetküsitluse tulemused ning taustatunnuste väärtused.
 
 ```{r eval = F}
-B <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/B.csv", nrows = 160)
+B <- read.csv2("https://github.com/Rkursus/mooc/raw/main/data/B.csv", nrows = 160)
 
 ```
 
@@ -440,8 +445,8 @@ Nagu öeldud on lisapaketis **dplyr** on olemas funktsioonide `mutate()` ja `sum
 Loe töölauale andmestikud `mass` (tuttav praktikumist) ja `antropo`. Andmestikus  `antropo` on mõned antropomeetrilised mõõtmised, mõõdetud on  pikkus õlani (mm), kerepikkus istudes (mm),  põlve kõrgus, istudes (mm),  talje ümbermõõt (mm),  õlgade ümbermõõt (mm),  randmeümbermõõt (mm) ja  kaal (kg*10), lisaks on teada uuritava sugu.
 
 ```{r eval = F}
-antropo <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/antropo.txt", header=T, sep="\t")
-mass<- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/mass.txt", header=T, sep="\t")
+antropo <- read.table("https://github.com/Rkursus/mooc/raw/main/data/antropo.txt", header=T, sep="\t")
+mass<- read.table("https://github.com/Rkursus/mooc/raw/main/data/mass.txt", header=T, sep="\t")
 
 ```
  
@@ -597,8 +602,8 @@ Töölaual on olemas kaks andmestikku:
 - andmestikus `B` on kirjas vastajate id-kood, uuringugrupi tunnus ning vastused mitmesugustele testidele.
 
 ```{r eval = F}
-A <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/A.csv", nrows = 45)
-B <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/B.csv", nrows = 160)
+A <- read.csv2("https://github.com/Rkursus/mooc/raw/main/data/A.csv", nrows = 45)
+B <- read.csv2("https://github.com/Rkursus/mooc/raw/main/data/B.csv", nrows = 160)
 B <- B[, c("id", "grupp", sort(names(B)[-(1:2)]))]
 ```
 
@@ -884,7 +889,7 @@ Töölaual on andmestik `tekstid`, mis sisaldab tekstilõike ajalehe Postimees a
 Andmed on pärit: http://peeter.eki.ee:5000/valence/paragraphsquery/
 
 ```{r eval = F}
-tekstid <- fread("https://github.com/Rkursus/sygis2019/raw/master/data/tekstid.csv", nrow = 1000, encoding = "UTF-8", 
+tekstid <- fread("https://github.com/Rkursus/mooc/raw/main/data/tekstid.csv", nrow = 1000, encoding = "UTF-8", 
                col.names = c("rubriik", "loigunr", "hinnang", "tekst"), select = c(1,3:5))
 tekstid <- tekstid[loigunr != "None", ] # Eemaldame read, kus 'loigunr' puudub.
 ```
@@ -1272,7 +1277,7 @@ success_msg("Hästi!")
 Loe töölauale andmestik `haigla`. See sisaldab infot patsientide haiglasse saabumise(`haiglasse.kp`) ja lahkumise(`haiglast.kp`) kuupäevade kohta.
 
 ```{r eval = F}
-haigla <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/haigla.csv", colClasses = c("integer", "Date", "Date"))
+haigla <- read.csv2("https://github.com/Rkursus/mooc/raw/main/data/haigla.csv", colClasses = c("integer", "Date", "Date"))
 ```
 
 

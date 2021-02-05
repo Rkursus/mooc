@@ -7,9 +7,14 @@ output:
     number_sections: true
 ---
 
+```{r, out.height="60px", echo = F, figure-side, fig.align = 'right'}
+knitr::include_graphics("https://www.hitsa.ee/photos/HITSA_logo.png")
+knitr::include_graphics("https://media.voog.com/0000/0034/3577/photos/IT%20Akadeemia%20logo%20RGB%201000%20px.png")
+```
+
 # Sissejuhatus
 
-Antud kodutöös on praktikumi teemad lühidalt kokku võetud ning iga teema all valik ülesandeid. Kirjuta kõigi ülesannete lahendused ühte teksti faili (RStudio-t kasutades skripti aknasse). Nummerda vastused vastava ülesande numbriga (kasuta kommentaari märki!). Näiteks nii:
+Antud kodutöös on praktikumi teemad lühidalt kokku võetud ning iga teema all valik ülesandeid. Kirjuta kõigi ülesannete lahendused ühte teksti faili - [I kodutöö põhjale](https://raw.githubusercontent.com/Rkursus/mooc/main/docs/kodutood/kodutoo1/kodutoo1_pohi.R) (RStudio-t kasutades skripti aknasse). Nummerda vastused vastava ülesande numbriga (kasuta kommentaari märki!). Näiteks nii:
 ```{r eval = FALSE}
 # Ülesanne 1.1 lahendus
 

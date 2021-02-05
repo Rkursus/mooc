@@ -6,16 +6,21 @@ output:
     number_sections: true
 ---
 
+```{r, out.height="60px", echo = F, figure-side, fig.align = 'right'}
+knitr::include_graphics("https://www.hitsa.ee/photos/HITSA_logo.png")
+knitr::include_graphics("https://media.voog.com/0000/0034/3577/photos/IT%20Akadeemia%20logo%20RGB%201000%20px.png")
+```
+
 # Andmete R-i toimetamine
 
 ## Andmete import 1
 
-Impordi andmed tekstifailist https://github.com/Rkursus/sygis2019/raw/master/data/tulemused.txt. Failis on kirjas inimeste nimed ja nende testitulemused.  Pööra tähelepanu sellele, mis on failis tunnuseveergude eraldaja ning kuidas on esitatud murdarvud.
+Impordi andmed tekstifailist https://github.com/Rkursus/mooc/raw/main/data/tulemused.txt. Failis on kirjas inimeste nimed ja nende testitulemused.  Pööra tähelepanu sellele, mis on failis tunnuseveergude eraldaja ning kuidas on esitatud murdarvud.
 
 
 ### Ülesanded
 
-- **Ülesanne 1** Kasutades käsku `read.table()` impordi R-i fail *tulemused.txt* aadressilt  https://github.com/Rkursus/sygis2019/raw/master/data/tulemused.txt, omista andmestik muutujale `andmed2`. Prindi andmestik ekraanile
+- **Ülesanne 1** Kasutades käsku `read.table()` impordi R-i fail *tulemused.txt* aadressilt  https://github.com/Rkursus/mooc/raw/main/data/tulemused.txt, omista andmestik muutujale `andmed2`. Prindi andmestik ekraanile
 - **Ülesanne 2** Vaata andmestiku tunnuste ülevaadet käsuga `summary()`.
 
 
@@ -77,10 +82,10 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 Nüüd edaspidi piisab kui viitad allalaetud failidele nende nime järgi, mitte täieliku failipuu aadressiga.
 
-Lae alla andmed https://github.com/Rkursus/sygis2019/raw/master/data/A.csv ja õpime kasutama funktsioonie `read.csv()` ja `read.csv2()`.
+Lae alla andmed https://github.com/Rkursus/mooc/raw/main/data/A.csv ja õpime kasutama funktsioonie `read.csv()` ja `read.csv2()`.
 
 ```{r eval = F}
-download.file("https://github.com/Rkursus/sygis2019/raw/master/data/A.csv", "A.csv",  mode = "wb")
+download.file("https://github.com/Rkursus/mooc/raw/main/data/A.csv", "A.csv",  mode = "wb")
 
 ```
 
@@ -88,7 +93,7 @@ download.file("https://github.com/Rkursus/sygis2019/raw/master/data/A.csv", "A.c
 ### Ülesanded
 
 - **Ülesanne 1** Loe funktsioonide `read.csv()` ja `read.csv2()` abilehte. Tee kindlaks, mis argumendi abil saab määrata maksimaalse imporditava ridade arvu. Omista selle argumendi nimi stringina muutujale nimega `argumendinimi`.
-- **Ülesanne 2**: Kontrolli, kas fail *A.csv*  on juba töökaustas olemas, kasuta selleks käsku `list.files()`. Tulemuseks peab olema töökaustas failide nimed. Faili saad vaadata ka aadressil https://github.com/Rkursus/sygis2019/raw/master/data/A.csv  
+- **Ülesanne 2**: Kontrolli, kas fail *A.csv*  on juba töökaustas olemas, kasuta selleks käsku `list.files()`. Tulemuseks peab olema töökaustas failide nimed. Faili saad vaadata ka aadressil https://github.com/Rkursus/mooc/raw/main/data/A.csv  
 - **Ülesanne 3**: Impordi failist *A.csv* andmed, kasuta selleks funktsiooni `read.csv()` või `read.csv2()`, vali see funktsioon, mille korral pead vähem argumente väärtustama st see, mis argumentide vaikeväärtuste poolest paremini sobib.  Omista andmestik muutujale `andmed4`.  Pane tähele, et failis on andmeteploki all kommentaaritekst, mille peab importimisel välja jätma.
 - **Ülesanne 4**: Omista muutujale `valik` andmestikust `andmed4` esimesed 10 rida ja kõik veerud väljaarvatud neljas ja viies. Prindi see ekraanile. 
 
@@ -125,7 +130,7 @@ valik
 Lae töölauale andmestik nimega *B.csv*, failis on andmed 160 isiku testitulemustega. Fail on R-i imporditav järgmise käsu abil:
 
 ```{r eval = F}
-download.file("https://github.com/Rkursus/sygis2019/raw/master/data/B.csv", "B.csv",  mode = "wb")
+download.file("https://github.com/Rkursus/mooc/raw/main/data/B.csv", "B.csv",  mode = "wb")
 andmed5a <- read.csv2("B.csv")
 
 ```
@@ -176,7 +181,7 @@ Kasutame andmestikku `pojad`. Mõõdetud on perede esimese ja teise poja pea pik
 - `b2` – teise poja pea laius
 
 ```{r eval = F}
-pojad <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/pojad.txt", header = T)
+pojad <- read.table("https://github.com/Rkursus/mooc/raw/main/data/pojad.txt", header = T)
 
 
 ```
@@ -224,7 +229,7 @@ Kasutame admestikku `kapsad`. Uuritud on kahe kapsasordi kapsapeade kaalu ja vit
 
 
 ```{r eval = F}
-kapsad <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/cabbages.txt", header = T)
+kapsad <- read.table("https://github.com/Rkursus/mooc/raw/main/data/cabbages.txt", header = T)
 
 
 ```
@@ -337,11 +342,11 @@ rm(n, id, grupp, kaal1, kaal2)
 
 
 
-Loe R'i sisse fail `https://github.com/Rkursus/sygis2019/raw/master/data/dieet.csv`, paiguta see oma töökausta ja loe töölauale andmestik `dieet`. Tegu on teatavate dieetide mõju uuringuga. Uuringus osalejaid on kaalutud enne dieeti (`kaal1`) ja pärast dieeti (`kaal2`). Lisaks on teada iga inimese identifikaator ja dieedi tüüp.
+Loe R'i sisse fail `https://github.com/Rkursus/mooc/raw/main/data/dieet.csv`, paiguta see oma töökausta ja loe töölauale andmestik `dieet`. Tegu on teatavate dieetide mõju uuringuga. Uuringus osalejaid on kaalutud enne dieeti (`kaal1`) ja pärast dieeti (`kaal2`). Lisaks on teada iga inimese identifikaator ja dieedi tüüp.
  
 
 ```{r eval = F}
-dieet <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/dieet.csv", header = T)
+dieet <- read.csv2("https://github.com/Rkursus/mooc/raw/main/data/dieet.csv", header = T)
 
 ```
 
@@ -392,8 +397,8 @@ Loe töölauale uuesti kaks varem kasutatud andmestikku:
 - andmestikus `B` on kirjas vastajate id-kood, uuringugrupi tunnus ning vastused mitmesugustele testidele
 
 ```{r eval = F}
-A <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/A.csv", nrows = 45)
-B <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/B.csv", nrows = 160)
+A <- read.csv2("https://github.com/Rkursus/mooc/raw/main/data/A.csv", nrows = 45)
+B <- read.csv2("https://github.com/Rkursus/mooc/raw/main/data/B.csv", nrows = 160)
 B <- B[, c("id", "grupp", sort(names(B)[-(1:2)]))]
 
 ```
