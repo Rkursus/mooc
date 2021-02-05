@@ -85,7 +85,8 @@ test_that(ylesanne,
                         label = paste0(ylesanne, " kümnendlogaritmi kontroll"))
             
             #3
-            expect_true(length(grep("log\\(z\\)", tmp_parts[[yl]])) > 0, 
+            expect_true(length(grep("log\\(z\\)", tmp_parts[[yl]])) > 0 | 
+                          length(grep("log\\(z,base\\=exp\\(1\\)\\)", tmp_parts[[yl]])) > 0, 
                         info = paste0(ylesanne, ": naturaallogaritmi pole leitud või pole kasutatud muutujat 'z'"),
                         label = paste0(ylesanne, " naturaallogaritmi kontroll"))
           
@@ -121,8 +122,11 @@ test_that(ylesanne,
             # First test if exercise code runs without errors
             code_run_test(list(tmp_parts[[yl]]), ylesanne)
             
+            lahendus = split(tmp_parts[[yl]], cumsum(stringr::str_detect(tmp_parts[[yl]], "#[^Näide](.|\n)*")))
+            tmp_part = lahendus[[length(lahendus)]]
+            
             # Evaluate submission exercise
-            eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
+            eval(parse(text = paste(tmp_part, collapse = '\n')))
             
             #1
             expect_is(poisse, "numeric")
