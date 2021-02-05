@@ -420,8 +420,7 @@ abc != "c"  # täht ei ole 'c'
 !(abc == "c")  # eitame väidet, et täht on 'c'
 
 
-# Ülesandes on uurimise all tekstiväärtustega vektor y, vaata selle väärtuste sagedustabelit
-table(y)
+# Ülesandes on uurimise all tekstiväärtustega vektor y, vaata selle väärtuste sagedustabelit funktsiooniga 'table()'
 
 # Jooksuta järgnev kood
 kordused <- c(45, 20, 68, 9)
