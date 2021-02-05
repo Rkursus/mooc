@@ -5,10 +5,25 @@ runtime: shiny_prerendered
 description: "Tutvume R-ga"
 ---
 
+```{r echo = F, message = FALSE, warning = FALSE}
+suppressPackageStartupMessages(library(learnr))
+```
+
+```{r, out.height="80px", echo = F, figure-side, fig.align = 'right'}
+knitr::include_graphics("https://www.hitsa.ee/photos/HITSA_logo.png")
+knitr::include_graphics("https://media.voog.com/0000/0034/3577/photos/IT%20Akadeemia%20logo%20RGB%201000%20px.png")
+```
+
 
 # Tulemuste vormistamine 
 
-Sageli kõige tüütum andmeanalüüsi juures on tulemuste vormistamine ilusaks dokumendiks. R-i väljund on tavaliselt kas konsoolis või graafikaaknas. Isegi kui tulemused on konsooliaknas tabelina, on seda Wordi vms programmi ümber tõsta tülikas. Õnneks on ka selle probleemi lahendamiseks R-is mitmeid erinevaid pakette, mille tööpõhimõte on sarnane:
+Sageli kõige tüütum andmeanalüüsi juures on tulemuste vormistamine ilusaks dokumendiks. R-i väljund on tavaliselt kas konsoolis või graafikaaknas. Isegi kui tulemused on konsooliaknas tabelina, on seda Wordi vms programmi ümber tõsta tülikas. Õnneks on ka selle probleemi lahendamiseks R-is mitmeid erinevaid pakette, üks neid on `knitr`, mis defineerib dokumendikeele `Rmarkdown` ja RStudio on selle paketiga töötamise teinud äärmiselt mugavaks.
+
+## Tulemuste vormistamine RStudio ja `Rmarkdown` abil
+
+`Rmarkdown` on R-i võimalustega laiendatud [_markdown_](https://et.wikipedia.org/wiki/Markdown) keel. Kui oled varem _markdown_ keelega kokku puutunud, siis enamus reeglid ja süntaksit on sulle tuttavad.
+
+`Rmarkdown` keeles tulemuste vormistamise tööpõhimõte on järgmine:
 
 1. Kirjutada oma analüüsi tekst koos vahepealsete koodiridadega ühte tekstifaili.
 1. See fail kompileerida sobivasse formaati (nt word, html, tex või pdf).
@@ -17,9 +32,9 @@ Kui kasutada RStudiot, siis on taolise analüüsiraporti koostamine väga lihtne
 <!---Väga paindlik pakett on **Sweave**, mis produtseerib tex ja html formaadis dokumente.
 Käesolevas kursuses tutvume  paketiga **knitr**^[http://yihui.name/knitr/]. Selle paketi kõige olulisem käsk on `knit(.)`, millele tuleb ette anda punktis 1. koostatud faili nimi. Selles failis on mingis formaadis tekst ja R-i kood vaheldumisi, näiteks nii:-->
 
-```{r,eval=TRUE,results='hold',echo=FALSE,comment=""}
-load("../data/andmed.RData")
-cat("---\noutput: pdf_document\n---\n# Esimene arvutus\n```{r,echo=FALSE}\nmass <- read.table(\"https://github.com/Rkursus/sygis2019/raw/master/data/mass.txt\", sep =\"\\t\", header = T)\n```\nMassachusettsi andmestikus on kokku `r nrow(mass)` inimest; sooline jaotus on järgnev:\n```{r,echo=FALSE}\ntable(mass$SEX)\n```\n## Esimene alapunkt\nNüüd on lisaks tulemusele endale näha, milline koodijupp leiab keskmise vanuse:\n```{r,echo=TRUE}\nmean(mass$AGEP)\n```\n")
+```{r,eval=TRUE, results='hold', echo=FALSE, comment=""}
+load("data/andmed.RData")
+cat("---\noutput: pdf_document\n---\n# Esimene arvutus\n```{r,echo=FALSE}\nmass <- read.table(\"https://github.com/Rkursus/mooc/raw/main/data/mass.txt\", sep =\"\\t\", header = T)\n```\nMassachusettsi andmestikus on kokku `r nrow(mass)` inimest; sooline jaotus on järgnev:\n```{r,echo=FALSE}\ntable(mass$SEX)\n```\n## Esimene alapunkt\nNüüd on lisaks tulemusele endale näha, milline koodijupp leiab keskmise vanuse:\n```{r,echo=TRUE}\nmean(mass$AGEP)\n```\n")
 ```
 <br>
 See fail peaks olema salvestatud laiendiga *.rmd* ja avatud RStudios, siis vastava pdf-faili saab kompileerida kui vajutada menüüribal lõngakeraga nuppu *Knit*. Kui avada sama nupu noolemärgist rippmenüü, siis saab ka muuta koostatava faili tüüpi: *Knit to PDF* asemel võib valida ka  *Knit to HTML* või  *Knit to Word*. (NB! Pdf-faili tegemine eeldab, et arvutis on olemas MikTeX vms).
@@ -35,15 +50,16 @@ tunneb R ära, et tegemist on **markdown**-märgenduskeeles koodiga (täpsemini 
 ```{r, echo=TRUE, eval = FALSE}
 library(markdown) # kui pole arvutis, siis enne installeerida
 markdownToHTML("minuraport.md", output = "valmisraport.html")
-browseURL("valmisraport.html")
+
 ```
 -->
 
-Selleks, et raporti genereerimine ise läbi proovida kontrolli kõigepealt kas installeeritud on paketid **knitr** ja **rmarkdown**. Seejärel ava uus markdown fail valides menüüst `File -> New file -> R Markdown`. Pane  analoogselt ülaltoodud näitega faili kirja oma tekst ja märgendite vahele R-i kood, mis teeb arvutused, salvesta fail laiendiga *.rmd* ja vajuta nuppu *Knit to ...*. Markdown märgendkeeles faili vormistamise abi saamiseks vaata näiteks http://rmarkdown.rstudio.com/pdf_document_format.html
+Selleks, et raporti genereerimine ise läbi proovida kontrolli kõigepealt kas installeeritud on paketid **knitr** ja **rmarkdown**. Seejärel ava uus _markdown_ fail valides menüüst `File -> New file -> R Markdown`. Pane  analoogselt ülaltoodud näitega faili kirja oma tekst ja märgendite vahele R-i kood, mis teeb arvutused, salvesta fail laiendiga *.rmd* ja vajuta nuppu *Knit to ...*. Markdown märgendkeeles faili vormistamise abi saamiseks vaata näiteks http://rmarkdown.rstudio.com/pdf_document_format.html
 
 Ülalolevas näites on teksti vahele pikitud R-i koodi nn juppide/plokkide ehk *chunk*idega. Jupp võib olla nn reasisene ehk *inline*, või täiesti eraldiseisev. Reasisene R-i koodijupp tuleb piirata graavise sümboliga (*backtick*), mida eesti paigutusega klaviatuuril leiab *backspace* klahvi kõrvalt; reasisese koodijupi alguses peab olema täht `r`.  
 
-Sageli on mõttekas kasutada täiesti eraldiseisvaid koodiplokke, mis tuleks piirata kolmekordse graavisega. Ploki alguses tuleb loogelistes sulgudes kõigepealt kirjutada täht `r`, seejärel võib kirjutada komaga eraldatult lisaargumente^[http://yihui.name/knitr/options].
+Sageli on mõttekas kasutada täiesti eraldiseisvaid koodiplokke, mis tuleks piirata kolmekordse graavisega. Ploki alguses tuleb loogelistes sulgudes kõigepealt kirjutada täht `r`, seejärel võib kirjutada komaga eraldatult [lisaargumente](http://yihui.name/knitr/options).
+
 Mõned olulisemad:
 
 * `echo` -- kas väljundis peaks ka R-i kood olema näha (TRUE/FALSE)
@@ -54,7 +70,7 @@ Mõned olulisemad:
 Oluline on, et eraldiseisva koodiploki algus ja lõpumärgised oleks eraldi real ja ilma eelneva tühikuta. RStudios on koodiploki märgendeid lihtne lisada klahvikombinatsiooni `Ctrl + Alt + I` abil või vajutades vastavat nuppu (*Insert*)  menüüreal.
 
 
-Koodiplokkide vahelise teksti puhul mõned olulisemad märgendusvõtted^[http://rmarkdown.rstudio.com/authoring_basics.html]:
+Koodiplokkide vahelise teksti puhul mõned [olulisemad märgendusvõtted](http://rmarkdown.rstudio.com/authoring_basics.html):
 
 * `# Pealkiri` -- esimese taseme pealkiri
 * `## alapealkiri` -- teise taseme pealkiri jne  (kuni 6 taset)
@@ -109,19 +125,47 @@ mudel <- lm(WAGP ~ AGEP + I(AGEP^2) + LANX + CIT + SEX*WKHP, data = mass)
 print(xtable(mudel), comment = FALSE)
 ```
  
+
+### Lisamaterjal
+
+Vaata lisaks:
+ 
+ * [RStudio `R markdown` õppematerjale](https://rmarkdown.rstudio.com/lesson-1.html)
+ * [Olulisemad vormindusvõtted](http://rmarkdown.rstudio.com/authoring_basics.html)
+ * [R markdown _cheat sheet_](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+ * [Knitr paketi autori koduleht](http://yihui.name/knitr)
+ * [Põhjalik R Markdown õpik (tasuta)](https://bookdown.org/yihui/rmarkdown/)
  
 
+### Ülesanded
+
+1. Tee oma markdown dokument. Selleks mine `File -> New file -> R Markdown` ja sulle avaneb aken algseadistustega. Lisa dokumendi pealkiri (nt. `Minu R markdown testimine`), enda nimi autori lahtrisse ja vali HTML dokument väljundiks (ole mureta, kõike saab hiljem muuta). Sulle avaneb juba valmis sisuga dokument, mis annab ülevaate peamistest R markdown võimalustest javormistamisviisist.
+1. Salvesta oma uus dokument meelepärasesse kataloogi.
+1. Vajuta `Knit` nuppu lõngakera ikooniga (see asub skriptiakna ülemises servas). Võrdle väljasülitatud dokumenti sinu salvestatud R markdown dokumendiga.
+
+    * Kuidas on sinu dokumendis märgitud pealkiri? Mis sümbol eelneb pealkirja tekstile?
+    * Mis sümbolid ümbritsevad seda koodiosa, mis annab välja kokkuvõtva andmestiku tabeli?
+    * Mis juhtub tekstiga kui see panna graavise (_backtick_) ehk " \` " sümbolite vahele?
+    * Kuidas saab markdown dokumendis jooniseid lisada?
+    * Mis juhtub tekstiga kui see panna " \*\* " sümbolite vahele?
+  
+1. Loe R koodi jupis (_chunk_) sisse `mass` andmestik (vt. eelmisi praktikume). Lisa koodijupi alguses loogeliste sulgude vahele sellised argumendid, et koodi ei trükita dokumenti (vaikimisi trükitakse).
+1. Lisa allolev seletav tekst, kus `<x>` ja `<y>` asemel oled arvutanud vastavad arvud otse koodi sees kasutades selleks funktsioone `nrow(.)` ja `ncol(.)`:\
+`"Andmestikus mass on <x> rida ja <y> veergu."`\
+Otse teksti sees arvutuste tegemiseks kasuta järgnevat kirjutusviisi graavise sümbolite vahel `r knitr::inline_expr("ncol(Brand19)")`.
+1. Lisa dokumenti tunnuse `AGEP` histogramm.
+1. Lisa dokumenti tunuste `SEX`, `MAR` ja `WAGP` kokkuvõttev statistika (nt. käsuga `summary(.)`). Vorminda tabel kasutades funktsiooni `kable(.)` või `xtable(.)`.
+
+<!--
 ## Veel võimalusi  vormistamiseks
 
 R koodi ja  analüüsiteksti võib siduda ka  LaTeX keelt kasutades. Sellega alustamiseks vali menüüst: `File -> New file -> R Sweave`. Tekkiv fail salvesta laiendiga *.rnw*. Sel juhul võib teksti vormistamise osas järgida LaTeX reegleid. 
 
 Kui tekstireal on vaja teha mingi arvutus, siis selleks on käsk `\Sexpr{}`, mille argumendiks võib anda mingi muutuja koodist või arvutustehte.  Eraldiseisvate koodiplokkide algusmärgendiks on `<<>>=` ning lõpumärgiks `@`, ka siin peavad koodijupi algus ja lõpumärgised olema eraldi real ja ilma eelnevate tühikuteta. Koodiploki argumendid on samad, mis välja toodud markdown variandi juures, argumendid tuleb panna märgendite vahele, näiteks  `<<echo = TRUE, results = 'hold'>>`. Teksti ja koodi siduva faili genereerimiseks vajutada munüüreal nuppu *Compile PDF*.
-
-
-
+-->
  
  
-<!--\pagebreak-->
+<!--\pagebreak
  
 
 # Kordamiseks
@@ -134,7 +178,7 @@ Läbitud teemade kordamiseks tee läbi järgmised ülesanded. Kasutatavas andmes
 
 ## Ülesanded
 
-1. Loe sisse andmestik WB.txt aadressilt https://github.com/Rkursus/sygis2019/raw/master/data/. (NB! pane tähele kuidas
+1. Loe sisse andmestik WB.txt aadressilt https://github.com/Rkursus/mooc/raw/main/data/. (NB! pane tähele kuidas
 on tähistatud tühjad lahtrid)
 1. Andmeid vaadates on näha, et osade riikide kohta on süstemaatiliselt andmed puudu.
 - Kui palju neid riike on?
@@ -160,4 +204,4 @@ kapitali. Kas joonistub välja mingi trend?
 sisaldava nimega suuruste jaoks. Kujuta tulemusi sobiva joonisega.
 
 
-
+-->

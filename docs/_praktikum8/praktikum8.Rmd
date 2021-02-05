@@ -5,8 +5,20 @@ runtime: shiny_prerendered
 description: "Tutvume R-ga"
 ---
 
+```{r echo = F}
+library(learnr)
+```
 
-# Sõnetöötlus paketiga stringr
+```{r, out.height="80px", echo = F, figure-side, fig.align = 'right'}
+knitr::include_graphics("https://www.hitsa.ee/photos/HITSA_logo.png")
+knitr::include_graphics("https://media.voog.com/0000/0034/3577/photos/IT%20Akadeemia%20logo%20RGB%201000%20px.png")
+```
+
+# Töötamine sõnede ja kuupäevadega
+
+Tihti puutume andmetöötluses kokku tekstide ja kuupäevadega, mis vajavad omaette käsitlust. Tekstina esitatud andmete seest saab informatsioon välja eraldada (nt. Eesti isikukoodist sünnikuupäeva eraldamine, pangakonto IBANist päritolumaa jms.).Kuupäevade puhul saab mitmel erineval viisil läheneda - grupeerida andmed nädala kaupa, leida kahe kuupäeva vahe päevades, nädalates, kuudes jms. Head avastamist!
+
+## Sõnetöötlus paketiga `stringr`
 
 R- i baaspaketiga on kaasas mitmeid sõnede töötlemise käske, näiteks `grep(.)` ja `substr(.)`; pikemat loetelu näeb, kui trükkida konsooli `?grep` ja `?substr`. Kahjuks nende käskude süntaks pole päris ühesugune ning mõned neist ei ole täielikult vektoriseeritud.
 <!--(nt `substr(.)` argumendid `start` ja `stop` ei tohi olla vektorid).   
@@ -64,15 +76,15 @@ str_sub(sõnad, end = -3)
 
 ### Ülesanded
 1. Loe sisse Massatchusettsi andmestik:\
-`link <- "https://github.com/Rkursus/sygis2019/raw/master/data/"`\
+`link <- "https://github.com/Rkursus/mooc/raw/main/data/"`\
 `mass <- read.table(str_c(link, "mass.txt"), sep = "\t", header = T)`\
 Andmetabelis on veerus OCCP iga inimese amet, sealjuures kolme esimese tähega on kodeeritud vastav valdkond; näiteks kõik puhastusteenustega seotud ametid algavad tähtedega CLN. Mitu erinevat valdkonda on selles andmetabelis?
 1. Kasutades sama tunnnust (`OCCP`) lisa andmestikku uus veerg `OCCP1`, mille väärtused oleks samad kui `OCCP`-l, kuid töötutel oleks tunnuse väärtus kujul *"UNE-UNEMPLOYED, LAST WORKED 5 YEARS AGO OR EARLIER OR NEVER"*.
 ```{r, eval=FALSE, include=FALSE}
-mass <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/mass.txt", sep = "\t", header=T)
+mass <- read.table("https://github.com/Rkursus/mooc/raw/main/data/mass.txt", sep = "\t", header=T)
 
 
-link <- "https://github.com/Rkursus/sygis2019/raw/master/data/"
+link <- "https://github.com/Rkursus/mooc/raw/main/data/"
 mass <- read.table(str_c(link, "mass.txt"), sep = "\t", header = T)
 
 
@@ -124,7 +136,7 @@ str_replace(sõnad, "r", "l")
 str_replace_all(sõnad, "r", "l")
 ```
 
-Kõigile `stringr` paketi käskudele võib argumentidega `pattern` ja `replacement` ette anda ka regulaaravaldisi^[http://en.wikipedia.org/wiki/Regular_expression].
+Kõigile `stringr` paketi käskudele võib argumentidega `pattern` ja `replacement` ette anda ka [regulaaravaldisi](http://en.wikipedia.org/wiki/Regular_expression).
 <!-- R-is on kasutusel selline määratlus, nagu on kirjeldatud käsu `regex(.)` abifailis `?regex`.
 ```{r,results='hold'}
 str_replace("telefoninumber: +372 55-549-85", "[a-zA-Z: ]*(\\+[0-9]*)*( )*(.*)", "(\\1) \\3")
@@ -135,9 +147,9 @@ str_replace("telefoninumber: +372 55-549-85", "[a-zA-Z: ]*(\\+[0-9]*)*( )*(.*)",
 
 ### Ülesanded
 1.  Massatchusettsi andmestikus on veerus `COW` ära toodud, kelle heaks inimene töötab. Kui tegemist on palgatöötajaga, sisaldab `COW` väärtus vastava inimese puhul sõna *Employee* või *employee*. Milline on palgatöötajate keskmine palk (`WAGP`)? Andmestik:\
-`link <- "https://github.com/Rkursus/sygis2019/raw/master/data/"`\
+`link <- "https://github.com/Rkursus/mooc/raw/main/data/"`\
 `mass <- read.table(str_c(link, "mass.txt"), sep = "\t", header = T)` 
-1. Eesti isikukoodi formaat^[http://et.wikipedia.org/wiki/Isikukood] on järgmine: abcdefghijk, kus a -- sugu ja sajand (paaritu arv mees, paarisarv naine, 1,2 -- 1800, 3,4 -- 1900, 5,6 -- 2000); bc -- aasta, de -- kuu, fg -- päev, hij -- (haigla) sel päeval (selles haiglas) sündimise järjekord, k -- kontrollnumber.   
+1. Eesti [isikukoodi formaat](http://et.wikipedia.org/wiki/Isikukood) on järgmine: abcdefghijk, kus a -- sugu ja sajand (paaritu arv mees, paarisarv naine, 1,2 -- 1800, 3,4 -- 1900, 5,6 -- 2000); bc -- aasta, de -- kuu, fg -- päev, hij -- (haigla) sel päeval (selles haiglas) sündimise järjekord, k -- kontrollnumber.   
     1. Loe sisse komaga eraldatud isikukoodide jada:  
     `isikukoodid <- read.table(str_c(link, "isikukoodid.txt"))[1,]`
     1. Eralda isikukoodid üksteisest ja salvesta tekkiv vektor mingi nimega.
@@ -145,7 +157,7 @@ str_replace("telefoninumber: +372 55-549-85", "[a-zA-Z: ]*(\\+[0-9]*)*( )*(.*)",
     1. Lisa veerg, kus oleks kirjas, mis sugu iga inimene selles andmetabelis on.
 ```{r, eval=FALSE, include=FALSE}
 # 1
-mass <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/mass.txt", sep = "\t", header = T)
+mass <- read.table("https://github.com/Rkursus/mooc/raw/main/data/mass.txt", sep = "\t", header = T)
 
 cbind(table(andmed$COW))
 
@@ -161,7 +173,7 @@ by(andmed$WAGP,andmed$emp, mean, na.rm = T)
 
 #2
 # 1
-isikukoodid <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/isikukoodid.txt")[1,]
+isikukoodid <- read.table("https://github.com/Rkursus/mooc/raw/main/data/isikukoodid.txt")[1,]
 
 # 2. eralda
 ik <- unlist(str_split(isikukoodid, ",") )
@@ -181,7 +193,7 @@ isikud$sugu <- sugu
 
 
 
-# Kuupäevadega töötamine
+## Kuupäevadega töötamine
 R-is on kuupäevade jaoks `Date` andmetüüp. See on omapärane andmetüüp: näiliselt on tegemist tekstiga, ent sisuliselt arvuga -- kuupäevi saab liita-lahutada, arvutada keskmist. ISO standardile vastav kuupäev on kujul aasta-kuu-päev, sealjuures aasta on nelja numbriga, kuu ja päev kumbki kahe numbriga. Sageli on sisse loetavates andmestikes aga kuupäev teisiti vormindatud. Suvalises formaadis kuupäevalise sõna saab `Date`-tüüpi väärtuseks teisendada käsuga `as.Date(.)`, mille argumendiga `format` saab määrata, millises formaadis kuupäev ette antakse. Kui formaati ei ole käsus täpsustatud, siis proovib funktsioon esmalt formaadi `"%Y-%m-%d"`  ehk  *aasta-kuu-päev (2018-02-01)*, seejärel  `"%Y/%m/%d"` ehk *aasta/kuu/päev (2018/03/01)* sobivust, kui kumbki ei klapi antakse veateade.
 
 ```{r}
@@ -219,7 +231,7 @@ Vaatame edasi isikukoodide vektori (`isikukoodid` eelmisest ülesandest) põhjal
 1. Lisa veerg, mis annab inimese vanuse täisaastates tänasel päeval (arvestades, et aastas on ~365,25 päeva).
 1. Leia kuupäev, mil said/saad  10 000 päeva vanuseks.
 ```{r, eval=FALSE, include=FALSE}
-isikukoodid <- (read.table("https://github.com/Rkursus/sygis2019/raw/master/data/isikukoodid.txt"))[1,]
+isikukoodid <- (read.table("https://github.com/Rkursus/mooc/raw/main/data/isikukoodid.txt"))[1,]
 ik <- unlist(str_split(isikukoodid, ",") )
 isikud <- data.frame(ID = ik)
 sugunr <- as.numeric(str_sub(ik, 1, 1))

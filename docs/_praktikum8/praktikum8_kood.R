@@ -28,7 +28,7 @@ str_sub(sõnad, end = -3)
 # --- Ül 1.1.1 ----
 
 # 1. Loe sisse Massatchusettsi andmestik
-link <- "https://github.com/Rkursus/sygis2019/raw/master/data/"
+link <- "https://github.com/Rkursus/mooc/raw/main/data/"
 mass <- read.table(str_c(link, "mass.txt"), sep = "\t", header = T)
 
 mass$OCCP[1:4]
@@ -80,7 +80,7 @@ str_replace_all(sõnad, "r", "l")
 
 # --- ÜL 1.2.1 ----
 # 1
-mass <- read.table("https://github.com/Rkursus/sygis2019/raw/master/data/mass.txt", sep = "\t", header = TRUE)
+mass <- read.table("https://github.com/Rkursus/mooc/raw/main/data/mass.txt", sep = "\t", header = TRUE)
 str(mass)
 
 table(mass$COW)
@@ -93,7 +93,7 @@ ________(mass$WAGP[palgaline], na.rm = T)
 
 
 # 2
-link <- "https://github.com/Rkursus/sygis2019/raw/master/data/"
+link <- "https://github.com/Rkursus/mooc/raw/main/data/"
 isikukoodid <- read.table(str_c(link, "isikukoodid.txt"))[1,]
 str(isikukoodid)
 

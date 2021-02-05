@@ -9,6 +9,7 @@ description: "Tutvume R-ga"
 #load("../data/andmed.RData")
 library(ggplot2)
 library(reshape2)
+library(learnr)
 ```
 
 ```{r, out.height="80px", echo = F, figure-side, fig.align = 'right'}

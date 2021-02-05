@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<meta name="progressive" content="false" />
+<meta name="allow-skip" content="false" />
+
+<title>R MOOC: 9. praktikum</title>
+
+
+<!-- highlightjs -->
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+<!-- taken from https://github.com/rstudio/rmarkdown/blob/67b7f5fc779e4cfdfd0f021d3d7745b6b6e17149/inst/rmd/h/default.html#L296-L362 -->
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("section-TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+<!-- end tabsets -->
+
+
+
+</head>
+
+<body>
+
+
+
+<div class="pageContent band">
+<div class="bandContent page">
+
+<div class="topics">
+
+<pre><code>## Warning: package &#39;learnr&#39; was built under R version 4.0.3</code></pre>
+<p><img src="https://www.hitsa.ee/photos/HITSA_logo.png" height="80px" style="display: block; margin: auto 0 auto auto;" /><img src="https://media.voog.com/0000/0034/3577/photos/IT%20Akadeemia%20logo%20RGB%201000%20px.png" height="80px" style="display: block; margin: auto 0 auto auto;" /></p>
+<div id="section-programmeerimine-r-is-ja-simuleerimine" class="section level1">
+<h1>Programmeerimine R-is ja simuleerimine</h1>
+<p>R on <a href="http://en.wikipedia.org/wiki/S_(programming_language)">programmeerimiskeele S</a> implementatsioon; selles on olemas enamus teistest programmeerimiskeeltest tuttavaid konstruktsioone nagu tsüklid, <code>if-else</code> tingimuslaused ning võimalus kirjutada lisafunktsioone. Tutvume nendega lähemalt.</p>
+<div id="section-tsüklid" class="section level2">
+<h2>Tsüklid</h2>
+<p>Tsükkel on programmikonstruktsioon, mis kordab teatud tegevust mitu korda järjest. See on kasulik näiteks siis, kui tahame vektori ükshaaval järjest üle vaadata ja vastavalt elemendi väärtusele midagi teha. R-is on võimalik kasutada kahte tüüpi tsükleid:</p>
+<ul>
+<li><code>for</code>-tsükkel teeb ettemääratud arvu samme. Tsükli defineerimisel antakse ette mingi vektor, mille elemente ükshaaval hakatakse läbi käima. Enamasti koosneb see vektor järjestikustest täisarvudest, näiteks täisarvudest 1:10, kuid võib olla ka tekstiväärtustega.</li>
+</ul>
+<pre class="r"><code>for (i in 1:10) {  # NB! siinne &#39;in&#39; on ilma protsendimärkideta!
+  print(i)
+}
+
+for (loom in c(&quot;kass&quot;, &quot;kaamel&quot;, &quot;kilpkonn&quot;, NA, &quot;kaan&quot;)) {
+  print(loom)
+}</code></pre>
+<ul>
+<li><code>while</code>-tsüklit korratakse seni, kuni teatud tingimus saab täidetud. Nn peatumistingimus tuleb kindlasti tsükli defineerimisel ette anda, sealjuures tuleb tsükli kirjutamisel olla ettevaatlik, et tsükkel lõpmatult kaua korduma ei jääks. <code>while</code>-tsükkel on kasulik siis, kui realiseerida mingit algoritmi, mille peatumine sõltub algoritmi koondumisest. Lõpmatu kordumise ohu vältimiseks on mõistlik tsükli päisesse lõpetamistingimuste hulka lisada tsüklisammude loendur.</li>
+</ul>
+<pre class="r"><code>a &lt;- 1
+while(a &lt; 10) {
+  print(a)
+  a &lt;- a + 1  # kui seda rida poleks, jääks tsükkel lõpmatult korduma
+}</code></pre>
+<div id="section-ülesanded" class="section level3">
+<h3>Ülesanded</h3>
+<ol style="list-style-type: decimal">
+<li>Loe sisse Massachusetts’i andmestik: <code>mass &lt;- read.table("https://github.com/Rkursus/mooc/raw/main/data/mass.txt", sep = "\t", header = TRUE)</code>  Kasutades tsüklit leia tabel, kus oleks üle 15 aastaste korral arvutatud ametialade (<code>OCCP</code>) kaupa keskmine ja summaarne nädala töötundide (<code>WKHP</code>) arv. Vaata ainult neid, kel on ametiala teada ja kes pole <code>OCCP</code> järgi töötud.</li>
+<li>Tee sama tabel <strong>dplyr</strong> ja <strong>data.table</strong> paketide käske kasutades; võrdle kulunud aega kasutades käsku <code>system.time({.})</code>.</li>
+</ol>
+</div>
+</div>
+<div id="section-tingimuslause-if" class="section level2">
+<h2>Tingimuslause <code>if</code></h2>
+<p>Nagu praktiliselt kõigis programmeerimiskeeltes, on ka R-is tingimuslause <code>if</code>, millega saab kontrollida erinevate loogiliste tingimuste kehtimist ja vastavalt sellele, kas tulemus on TRUE või FALSE, rakendada erinevaid tegevusi. <code>if</code>-ploki sisu täidetakse juhul, kui tingimuse väärtus on <code>TRUE</code>; võib defineerida ka <code>else</code>-ploki, mis täidetakse siis, kui <code>if</code>-tingimuse väärtus on <code>FALSE</code>.</p>
+<pre class="r"><code>if (väärtus %% 2 == 0) {
+  print(väärtus)
+} else {              # kui else-lauset kasutada, peab see olema if-lause suluga samal real
+  print(väärtus * 10)
+}</code></pre>
+<p>Meenutuseks mõned olulisemad võrdlustehted:</p>
+<ul>
+<li><code>==</code> – kahe elemendi võrdsus</li>
+<li><code>!=</code> – kahe elemendi erinevus</li>
+<li><code>&lt;</code>, <code>&lt;=</code> – kas üks element on väiksem (või võrdne) kui teine</li>
+<li><code>&gt;</code>, <code>&gt;=</code> – kas üks element on suurem (või võrdne) kui teine</li>
+<li><code>%in%</code> – kas element kuulub mingi vektori elementide hulka</li>
+<li><code>is.na(.)</code> – kas väärtus on NA</li>
+<li><code>is.factor(.)</code>, <code>is.numeric(.)</code>, <code>is.character(.)</code>, <code>is.logical(.)</code> – kas objekt on antud tüüpi</li>
+</ul>
+<p>Sageli tasub <code>if</code> lause tingimuste hulka lisada ka väärtuse või tüübi kontrollimine.</p>
+<pre class="r"><code>if (!is.na(väärtus) &amp; is.numeric(väärtus) &amp; väärtus %% 2 == 0) {  }</code></pre>
+<p>Kui <code>if</code>-ploki sisu on üherealine, võib loogelised sulud ka ära jätta. Samuti võib mitu käsku kirjutada ühele reale, eraldades need semikooloniga. Üldiselt aga pole see koodi loetavuse seisukohast soovitatav.</p>
+<p>Kasulikud on ka <code>ifelse(.)</code> ja <code>switch(.)</code> käsud. Käsu <code>ifelse(.)</code> esimene argument on tõeväärtusvektor, teine argument tulemus, mis vastab tõesele väärtusele, ja kolmas, mis vastab väärale väärtusele. Käsu <code>switch(.)</code> esimene argument on tavaliselt täisarv (ainult üks täisarv!) ning ülejäänud argumendid erinevatele täisarvudele vastavad toimingud (kasvavas järjekorras).</p>
+<pre class="r"><code>table(ifelse(is.na(mass$WAGP), &quot;palgatu&quot;, &quot;palgaga&quot;)  )</code></pre>
+<div id="section-ülesanne" class="section level3">
+<h3>Ülesanne</h3>
+<ol style="list-style-type: decimal">
+<li>Loe sisse arstivisiitide andmestik:  <code>visiidid &lt;- read.table("https://github.com/Rkursus/mooc/raw/main/data/visiidid.txt", sep = "\t", header = TRUE)</code> <code>for</code>-tsüklit kasutades käi läbi kõik inimesed ning trüki ekraanile nende inimeste isikukoodid, kellel esimese ja viimase vererõhu mõõtmise vahe on &gt; 5.</li>
+</ol>
+</div>
+</div>
+<div id="section-funktsioonide-defineerimine" class="section level2">
+<h2>Funktsioonide defineerimine</h2>
+<p>Uusi käske ehk <strong>funktsioone</strong> saab R-is tekitada funktsiooni <code>function(.){.}</code> abil. Funktsiooni <strong>päises</strong> on võimalik defineerida ja vaikeväärtustada argumendid, mida see funktsioon töö jaoks vajab. Argumendina võib defineerida/kasutada mistahes objekti, k.a mingit muud funktsiooni. Loogeliste sulgude vahel paiknevas funktsiooni <strong>kehas</strong> tuleb kirjeldada, mida teha nende argumentidega, mis funktsiooni päises on defineeritud. Hea tava on see, et funktsioon toimetab ainult nende objektidega, mis päises on defineeritud, ega muuda funktsiooniväliseid objekte.</p>
+<pre class="r"><code>minukäsk &lt;- function(argument1, argument2 = &quot;tere&quot;, argument3 = mean, ...) {
+  # funktsiooni sisu
+  tagastatav_objekt &lt;- argument3(argument1, ...)
+  return(tagastatav_objekt)
+}</code></pre>
+<p>Enamjaolt on soov, et funktsioon tagastaks midagi käsu <code>return(.)</code> abil. Kui funktsioon midagi tagastama ei pea, ei pea <code>return(.)</code> käsku kirjutama (siiski tagastatakse sel juhul viimase käsu tulemus).</p>
+<p>Funktsiooni argumentidel võivad olla <strong>vaikeväärtused</strong> (nagu <code>argument2 = "tere"</code>), ent sageli on vähemalt ühe argumendi väärtus vaja ette anda (antud näites on vaja kindlasti määrata <code>argument1</code> väärtus). Argumentideks võivad olla ka funktsioonid (praeguses näites <code>argument3 = mean</code>). Eriline argument on <code>...</code>, millega saab võimaldada teiste argumentidena kasutatavate funktsioonide lisaargumentide väärtuste lisamist.</p>
+<pre class="r"><code>minukäsk(argument1 = 1:6, argument3 = mean, na.rm = T) # argument na.rm saadetakse käsule mean
+minukäsk(1:6, , min)</code></pre>
+<div id="section-ülesanded-1" class="section level3">
+<h3>Ülesanded</h3>
+<ol style="list-style-type: decimal">
+<li>Kirjutada funktsioon, mis teisendab etteantud vektori väärtused Z-skoorideks (igast väärtusest lahutatakse vektori keskmine ja jagatakse standardhälbega).</li>
+<li>Defineeri uus funktsioon, mida saaks kasutada paketi <strong>dplyr</strong> käsus <code>summarise(.)</code> selleks, et leida arstivisiitide andmestikus iga inimese puhul, kui sageli (mitu korda aastas) külastab ta keskmiselt arsti. Andmestikus on genereeritud andmeid vahemikus 2004 kuni 2014, aga arvuta nõutud keskmine igal inimesel selles ajavahemikus milles on tal selles andmestikus andmed. Selleks on vaja defineerida funktsioon, mis etteantud <code>data.frame</code>-tüüpi objekti puhul leiab esimese ja viimase visiidi kuupäeva, leiab mitu aastat jääb nende kuupäevade vahele, loendab visiitide arvu ja leiab nende kahe arvu jagatise.</li>
+</ol>
+<!-- enne oli ülesanne plyr-paketi ddply kohta-->
+<!--\pagebreak-->
+</div>
+</div>
+<div id="section-juhuarvud.-simuleerimine" class="section level2">
+<h2>Juhuarvud. Simuleerimine</h2>
+<p>Statistikas tuleb ette olukordi, kus kõige lihtsam viis mingi väite kontrollimiseks on vastavat situatsiooni simuleerida. R-is on palju juhuarvude genereerimise käske kujul <code>rJAOTUS(.)</code>, teoreetiliste jaotuste kvantiilide leidmiseks on käsud kujul <code>qJAOTUS(.)</code>; tihedus- ja jaotusfunktsiooni väärtuste teadasaamiseks on vastavad käsud <code>dJAOTUS(.)</code> ja <code>pJAOTUS(.)</code>. Et simulatsioonid oleks korratavad (st iga kord koodi läbi jooksutades tuleks sama tulemus), võiks ette anda pseudojuhuarvude generaatori algväärtuse käsuga <code>set.seed(algväärtus)</code>. Näited ühtlase jaotusega:</p>
+<div class="tutorial-exercise" data-label="simu1" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>set.seed(1357) # kui seda rida poleks, tuleks järgmiste ridadega iga kord erinev tulemus
+(x &lt;- runif(n = 3, min = 0, max = 10))  # kolm arvu ühtlasest jaotusest U(0,10)</code></pre>
+<script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.checker":"NULL"}</script>
+</div>
+<div class="tutorial-exercise" data-label="simu2" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>punif(q = x, min = 0, max = 10)  # jaotusfunktsioon vastaval kohal</code></pre>
+<script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.checker":"NULL"}</script>
+</div>
+<div class="tutorial-exercise" data-label="simu3" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>qunif(p = c(0.3, 0.75), min = 0, max = 10)  # 30. ja 75. protsentiil jaotusel U(0, 10)</code></pre>
+<script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.checker":"NULL"}</script>
+</div>
+<p>Mõnede teiste jaotuse juhuarvude genereerimise funktsioonid (kvantiilide, tihedus- ja jaotusfunktsioonide jaoks tuleb esimene täht asendada vastavalt ‘q’, ‘d’ või ‘p’ tähega):</p>
+<ul>
+<li><code>rbinom(.)</code> – binoomjaotus; seda tuleb kasutada ka Bernoulli jaotusest arvude genereerimiseks</li>
+<li><code>rpois(.)</code> – Poissoni jaotus</li>
+<li><code>rnorm(.)</code> – normaaljaotus</li>
+<li><code>rt(.)</code> – t-jaotus</li>
+<li><code>rchisq(.)</code> – hii-ruut jaotus</li>
+<li><code>rexp(.)</code> – eksponentjaotus</li>
+</ul>
+<p>Väga kasulik on käsk <code>sample(.)</code>, mis aitab lihtsasti teha juhuvalikut etteantud vektori elementide hulgast. Näiteks siis, kui on vaja mingisuguse algoritmi tööd teatud suurel andmestikul kontrollida, on mõistlik võtta sellest andmestikust juhuvalim ja kontrollida selle peal.</p>
+<div id="section-ülesanded-2" class="section level3">
+<h3>Ülesanded</h3>
+<ol style="list-style-type: decimal">
+<li>Kirjuta funktsioon, mis genereerib kasutaja poolt määratud mõõtmetega arvutabeli (maatriksi) Poissoni jaotusest arvudega, kusjuures Poissoni jaotuse parameeter on samuti kasutaja poolt määratud.</li>
+<li>Kirjuta funktsioon, mis ette antud 2x2 maatriksi põhjal teeb hii-ruut testi ja tagastab vastava p-väärtuse.</li>
+</ol>
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::register_http_handlers(session, metadata = NULL)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+session$onSessionEnded(function() {
+        learnr:::session_stop_event(session)
+      })
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-simu1-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-simu1-code-editor`)), session)
+output$`tutorial-exercise-simu1-output` <- renderUI({
+  `tutorial-exercise-simu1-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-simu2-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-simu2-code-editor`)), session)
+output$`tutorial-exercise-simu2-output` <- renderUI({
+  `tutorial-exercise-simu2-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-simu3-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-simu3-code-editor`)), session)
+output$`tutorial-exercise-simu3-output` <- renderUI({
+  `tutorial-exercise-simu3-result`()
+})
+</script>
+ <!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="dependencies">
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["header-attrs"]},{"type":"character","attributes":{},"value":["2.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pandoc"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["header-attrs.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["5.1.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/fontawesome"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/all.css","css/v4-shims.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["4.4.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["idb-keyvalue"]},{"type":"character","attributes":{},"value":["3.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/idb-keyval"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["idb-keyval-iife-compat.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]}]}
+</script>
+<!--/html_preserve-->
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="execution_dependencies">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36]}},"value":[{"type":"character","attributes":{},"value":["backports","base","compiler","datasets","digest","evaluate","fastmap","graphics","grDevices","htmltools","htmlwidgets","httpuv","jsonlite","knitr","later","learnr","magrittr","markdown","methods","mime","promises","R6","Rcpp","rlang","rmarkdown","rprojroot","shiny","stats","stringi","stringr","tools","utils","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.1.10","4.0.2","4.0.2","4.0.2","0.6.27","0.14","1.0.1","4.0.2","4.0.2","0.5.0","1.5.2","1.5.4","1.7.1","1.30","1.1.0.1","0.10.1","2.0.1","1.1","4.0.2","0.9","1.1.1","2.4.1","1.0.5","0.4.10","2.4","1.3-2","1.5.0","4.0.2","1.5.3","1.4.0","4.0.2","4.0.2","2.3.0","0.20","1.8-4","2.2.1"]}]}]}
+</script>
+<!--/html_preserve-->
+</div>
+</div>
+</div>
+
+</div> <!-- topics -->
+
+<div class="topicsContainer">
+<div class="topicsPositioner">
+<div class="band">
+<div class="bandContent topicsListContainer">
+
+<!-- begin doc-metadata -->
+<div id="doc-metadata">
+<h2 class="title toc-ignore" style="display:none;">R MOOC: 9. praktikum</h2>
+</div>
+<!-- end doc-metadata -->
+
+</div> <!-- bandContent.topicsListContainer -->
+</div> <!-- band -->
+</div> <!-- topicsPositioner -->
+</div> <!-- topicsContainer -->
+
+
+</div> <!-- bandContent page -->
+</div> <!-- pageContent band -->
+
+
+
+
+<script>
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<meta name="progressive" content="false" />
+<meta name="allow-skip" content="false" />
+
+<title>R MOOC: 8. praktikum</title>
+
+
+<!-- highlightjs -->
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+<!-- taken from https://github.com/rstudio/rmarkdown/blob/67b7f5fc779e4cfdfd0f021d3d7745b6b6e17149/inst/rmd/h/default.html#L296-L362 -->
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("section-TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+<!-- end tabsets -->
+
+
+
+</head>
+
+<body>
+
+
+
+<div class="pageContent band">
+<div class="bandContent page">
+
+<div class="topics">
+
+<p><img src="https://www.hitsa.ee/photos/HITSA_logo.png" height="80px" style="display: block; margin: auto 0 auto auto;" /><img src="https://media.voog.com/0000/0034/3577/photos/IT%20Akadeemia%20logo%20RGB%201000%20px.png" height="80px" style="display: block; margin: auto 0 auto auto;" /></p>
+<div id="section-töötamine-sõnede-ja-kuupäevadega" class="section level1">
+<h1>Töötamine sõnede ja kuupäevadega</h1>
+<p>Tihti puutume andmetöötluses kokku tekstide ja kuupäevadega, mis vajavad omaette käsitlust. Tekstina esitatud andmete seest saab informatsioon välja eraldada (nt. Eesti isikukoodist sünnikuupäeva eraldamine, pangakonto IBANist päritolumaa jms.).Kuupäevade puhul saab mitmel erineval viisil läheneda - grupeerida andmed nädala kaupa, leida kahe kuupäeva vahe päevades, nädalates, kuudes jms. Head avastamist!</p>
+<div id="section-sõnetöötlus-paketiga-stringr" class="section level2">
+<h2>Sõnetöötlus paketiga <code>stringr</code></h2>
+<p>R- i baaspaketiga on kaasas mitmeid sõnede töötlemise käske, näiteks <code>grep(.)</code> ja <code>substr(.)</code>; pikemat loetelu näeb, kui trükkida konsooli <code>?grep</code> ja <code>?substr</code>. Kahjuks nende käskude süntaks pole päris ühesugune ning mõned neist ei ole täielikult vektoriseeritud. <!--(nt `substr(.)` argumendid `start` ja `stop` ei tohi olla vektorid).   
+Võivad olla küll! Kui x on üks sõna, siis ei mõju lihtsalt grep funktsiooni 'pattern' ei tohi olla vektor --></p>
+<p>Pakett <strong>stringr</strong> proovib seda puudust kõrvaldada, pakkudes sarnase süntaksiga rohkem vektoriseeritud käske (tegemist on nn <em>wrapper</em>-funktsioonidega baaspaketi sõnetöötluskäskudele).</p>
+<pre class="r"><code>#install.packages(&quot;stringr&quot;) #  kui paketti arvutis veel pole
+library(stringr) # paketi aktiveerimine</code></pre>
+</div>
+<div id="section-sõne-pikkus-sõnede-kokkukleepimine-ja-eraldamine-alamsõne-eraldamine" class="section level2">
+<h2>Sõne pikkus, sõnede kokkukleepimine ja eraldamine, alamsõne eraldamine</h2>
+<ul>
+<li>Sõnede <strong>pikkust</strong> saab teada käsuga <code>str_length(.)</code>.</li>
+<li>Sõnesid saab <strong>kokku kleepida</strong> üheks käsuga <code>str_c(.)</code>, millel saab argumendiga <code>sep</code> määrata, milline sümbol pannakse kokkukleebitavate sõnede vahele. Kui käsule <code>str_c(.)</code> kirjutada argumendi <code>collapse</code> väärtuseks mingi sümbol, siis kleebitakse kõik sõned üheks ainsaks sõneks, mis on selle sümboliga eraldatud.</li>
+<li>Sõne saab <strong>tükeldada</strong> käsuga <code>str_split(.)</code>, mille argumendiga <code>pattern</code> saab määrata, mis on tükkide eraldaja. Selle käsu tulemusena tekib <strong>list</strong> , mida saab vektoriks muuta käsuga <code>unlist(.)</code>, kui aga lisada käsku argument <code>simplify = TRUE</code> on tulemuseks <strong>maatriks</strong>. Kui <code>str_split(.)</code> käsule anda <code>pattern = ""</code>, siis tükeldatakse sõna üksikuteks tähtedeks.</li>
+<li><strong>Alamsõne eraldamiseks</strong> on stringr paketis käsk <code>str_sub(.)</code>, mille argumentidega <code>start</code> ja <code>end</code> saab määrata alamsõne alguse ja lõpu tärgi indeksid. Andes neile argumentidele negatiivsed indeksi väärtused alustatakse loendamist sõne lõpust st indeks <code>-2</code> märgib sõne eelviimast kohta.</li>
+</ul>
+<pre class="r"><code>sõnad &lt;- c(&quot;Õun&quot;, &quot;Apelsin&quot;, &quot;Porrulauk&quot;, NA, &quot;&quot;)
+str_length(sõnad)</code></pre>
+<pre><code>## [1]  3  7  9 NA  0</code></pre>
+<pre class="r"><code>str_c(sõnad, 1:5, sep = &quot;=&quot;)</code></pre>
+<pre><code>## [1] &quot;Õun=1&quot;       &quot;Apelsin=2&quot;   &quot;Porrulauk=3&quot; NA            &quot;=5&quot;</code></pre>
+<pre class="r"><code>(x &lt;- str_c(sõnad, 1:5, sep = &quot;=&quot;, collapse = &quot;. &quot;))</code></pre>
+<pre><code>## [1] NA</code></pre>
+<pre class="r"><code>(x &lt;- str_c(str_replace_na(sõnad), 1:5, sep = &quot;=&quot;, collapse = &quot;. &quot;))</code></pre>
+<pre><code>## [1] &quot;Õun=1. Apelsin=2. Porrulauk=3. NA=4. =5&quot;</code></pre>
+<pre class="r"><code>str_split(x, &quot;. &quot;)</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;Õun=1&quot;       &quot;Apelsin=2&quot;   &quot;Porrulauk=3&quot; &quot;NA=4&quot;        &quot;=5&quot;</code></pre>
+<pre class="r"><code>unlist(str_split(x, &quot;. &quot;))</code></pre>
+<pre><code>## [1] &quot;Õun=1&quot;       &quot;Apelsin=2&quot;   &quot;Porrulauk=3&quot; &quot;NA=4&quot;        &quot;=5&quot;</code></pre>
+<pre class="r"><code>str_split(sõnad, &quot;&quot;)</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;Õ&quot; &quot;u&quot; &quot;n&quot;
+## 
+## [[2]]
+## [1] &quot;A&quot; &quot;p&quot; &quot;e&quot; &quot;l&quot; &quot;s&quot; &quot;i&quot; &quot;n&quot;
+## 
+## [[3]]
+## [1] &quot;P&quot; &quot;o&quot; &quot;r&quot; &quot;r&quot; &quot;u&quot; &quot;l&quot; &quot;a&quot; &quot;u&quot; &quot;k&quot;
+## 
+## [[4]]
+## [1] NA
+## 
+## [[5]]
+## character(0)</code></pre>
+<pre class="r"><code>lause1 &lt;- &quot;see ja teine ja kolmas ja neljas&quot;; lause2 &lt;- &quot;üks või kaks või kolm&quot;
+str_split(c(lause1, lause2), c(&quot;ja&quot;, &quot;või&quot;))</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;see &quot;     &quot; teine &quot;  &quot; kolmas &quot; &quot; nel&quot;     &quot;s&quot;       
+## 
+## [[2]]
+## [1] &quot;üks &quot;   &quot; kaks &quot; &quot; kolm&quot;</code></pre>
+<pre class="r"><code>str_sub(sõnad, 1:5, 3:7)</code></pre>
+<pre><code>## [1] &quot;Õun&quot; &quot;pel&quot; &quot;rru&quot; NA    &quot;&quot;</code></pre>
+<pre class="r"><code>str_sub(sõnad, end = -3)</code></pre>
+<pre><code>## [1] &quot;Õ&quot;       &quot;Apels&quot;   &quot;Porrula&quot; NA        &quot;&quot;</code></pre>
+<div id="section-ülesanded" class="section level3">
+<h3>Ülesanded</h3>
+<ol style="list-style-type: decimal">
+<li>Loe sisse Massatchusettsi andmestik:<br />
+<code>link &lt;- "https://github.com/Rkursus/sygis2019/raw/master/data/"</code><br />
+<code>mass &lt;- read.table(str_c(link, "mass.txt"), sep = "\t", header = T)</code><br />
+Andmetabelis on veerus OCCP iga inimese amet, sealjuures kolme esimese tähega on kodeeritud vastav valdkond; näiteks kõik puhastusteenustega seotud ametid algavad tähtedega CLN. Mitu erinevat valdkonda on selles andmetabelis?</li>
+<li>Kasutades sama tunnnust (<code>OCCP</code>) lisa andmestikku uus veerg <code>OCCP1</code>, mille väärtused oleks samad kui <code>OCCP</code>-l, kuid töötutel oleks tunnuse väärtus kujul <em>“UNE-UNEMPLOYED, LAST WORKED 5 YEARS AGO OR EARLIER OR NEVER”</em>.</li>
+</ol>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="section-alamsõne-otsimine-ja-muutmine" class="section level2">
+<h2>Alamsõne otsimine ja muutmine</h2>
+<p>Et teada saada, kas üks sõne sisaldub teises sõnes, saab kasutada käsku <code>str_detect(.)</code> argumendiga <code>pattern</code>. Sisaldumiste esinemiste kokkuloendamiseks sobib käsk <code>str_count(.)</code>. Juhul, kui on soov otsitava alamsõne teksti kujul leida ja väljastada, saab kasutada käsku <code>str_extract(.)</code>. Et teada saada, millisel positsioonil asub otsitav alamsõne, võiks kasutada käsku <code>str_locate(.)</code>, mis tagastab kõige esimesel positsioonil leitud alamsõne (kui sellist alamsõne üldse leidub) algus- ja lõpuindeksid <strong>matrix</strong>-tüüpi objektina. Kui tahame kätte saada kõigil positsioonidel olevate alamsõnede algus- ja lõpuindeksid, sobib käsk <code>str_locate_all(.)</code>, mis tagastab listi.</p>
+<pre class="r"><code># Vaatame üle oma vektori
+sõnad</code></pre>
+<pre><code>## [1] &quot;Õun&quot;       &quot;Apelsin&quot;   &quot;Porrulauk&quot; NA          &quot;&quot;</code></pre>
+<pre class="r"><code>str_detect(sõnad, &quot;r&quot;)</code></pre>
+<pre><code>## [1] FALSE FALSE  TRUE    NA FALSE</code></pre>
+<pre class="r"><code>str_count(sõnad, &quot;r&quot;)</code></pre>
+<pre><code>## [1]  0  0  2 NA  0</code></pre>
+<pre class="r"><code>str_extract(sõnad, &quot;r&quot;)</code></pre>
+<pre><code>## [1] NA  NA  &quot;r&quot; NA  NA</code></pre>
+<pre class="r"><code>str_extract_all(sõnad, &quot;r&quot;)</code></pre>
+<pre><code>## [[1]]
+## character(0)
+## 
+## [[2]]
+## character(0)
+## 
+## [[3]]
+## [1] &quot;r&quot; &quot;r&quot;
+## 
+## [[4]]
+## [1] NA
+## 
+## [[5]]
+## character(0)</code></pre>
+<pre class="r"><code>str_locate(sõnad, &quot;r&quot;)</code></pre>
+<pre><code>##      start end
+## [1,]    NA  NA
+## [2,]    NA  NA
+## [3,]     3   3
+## [4,]    NA  NA
+## [5,]    NA  NA</code></pre>
+<pre class="r"><code>str_locate_all(sõnad, &quot;r&quot;)</code></pre>
+<pre><code>## [[1]]
+##      start end
+## 
+## [[2]]
+##      start end
+## 
+## [[3]]
+##      start end
+## [1,]     3   3
+## [2,]     4   4
+## 
+## [[4]]
+##      start end
+## [1,]    NA  NA
+## 
+## [[5]]
+##      start end</code></pre>
+<p>Mõnikord on sõnede alguses või lõpus liiga palju tühikuid, neid saab eemaldada käsuga <code>str_trim(.)</code>. Käsuga <code>str_pad(.)</code> aga saab sõne algusesse või lõppu panna tühikuid (või muid sümboleid) juurde, nii et sõne saavutaks argumendiga <code>width</code> ette antud pikkuse.</p>
+<pre class="r"><code>str_trim(&quot;    siin on palju tühjust    &quot;)
+str_pad(sõnad, width = 9, side = &quot;both&quot;, pad = &quot;_&quot;)  </code></pre>
+<pre><code>## [1] &quot;siin on palju tühjust&quot;
+## [1] &quot;___Õun___&quot; &quot;_Apelsin_&quot; &quot;Porrulauk&quot; NA          &quot;_________&quot;</code></pre>
+<p>Kõige üldisem sõnede muutmise käsk on <code>str_replace(.)</code>, mis proovib argumendiga <code>pattern</code> ette antud ja leitud mustrit asendada argumendiga <code>replacement</code> määratud mustriga; asendatakse ainult esimene leidumine. Kõiki leidumisi saab asendada käsuga <code>str_replace_all(.)</code></p>
+<pre class="r"><code>str_replace(sõnad, &quot;r&quot;, &quot;l&quot;)
+str_replace_all(sõnad, &quot;r&quot;, &quot;l&quot;)</code></pre>
+<pre><code>## [1] &quot;Õun&quot;       &quot;Apelsin&quot;   &quot;Polrulauk&quot; NA          &quot;&quot;         
+## [1] &quot;Õun&quot;       &quot;Apelsin&quot;   &quot;Pollulauk&quot; NA          &quot;&quot;</code></pre>
+<p>Kõigile <code>stringr</code> paketi käskudele võib argumentidega <code>pattern</code> ja <code>replacement</code> ette anda ka regulaaravaldisi<a href="#section-fn1" class="footnote-ref" id="section-fnref1"><sup>1</sup></a>. <!-- R-is on kasutusel selline määratlus, nagu on kirjeldatud käsu `regex(.)` abifailis `?regex`.
+
+```r
+str_replace("telefoninumber: +372 55-549-85", "[a-zA-Z: ]*(\\+[0-9]*)*( )*(.*)", "(\\1) \\3")
+```
+
+```
+## [1] "(+372) 55-549-85"
+```
+--></p>
+<div id="section-ülesanded-1" class="section level3">
+<h3>Ülesanded</h3>
+<ol style="list-style-type: decimal">
+<li>Massatchusettsi andmestikus on veerus <code>COW</code> ära toodud, kelle heaks inimene töötab. Kui tegemist on palgatöötajaga, sisaldab <code>COW</code> väärtus vastava inimese puhul sõna <em>Employee</em> või <em>employee</em>. Milline on palgatöötajate keskmine palk (<code>WAGP</code>)? Andmestik:<br />
+<code>link &lt;- "https://github.com/Rkursus/sygis2019/raw/master/data/"</code><br />
+<code>mass &lt;- read.table(str_c(link, "mass.txt"), sep = "\t", header = T)</code></li>
+<li>Eesti isikukoodi formaat<a href="#section-fn2" class="footnote-ref" id="section-fnref2"><sup>2</sup></a> on järgmine: abcdefghijk, kus a – sugu ja sajand (paaritu arv mees, paarisarv naine, 1,2 – 1800, 3,4 – 1900, 5,6 – 2000); bc – aasta, de – kuu, fg – päev, hij – (haigla) sel päeval (selles haiglas) sündimise järjekord, k – kontrollnumber.
+<ol style="list-style-type: decimal">
+<li>Loe sisse komaga eraldatud isikukoodide jada:<br />
+<code>isikukoodid &lt;- read.table(str_c(link, "isikukoodid.txt"))[1,]</code></li>
+<li>Eralda isikukoodid üksteisest ja salvesta tekkiv vektor mingi nimega.</li>
+<li>Tekita uus andmetabel (<code>data.frame</code>), millesse lisa isikukoodide veerg.</li>
+<li>Lisa veerg, kus oleks kirjas, mis sugu iga inimene selles andmetabelis on.</li>
+</ol></li>
+</ol>
+</div>
+</div>
+<div id="section-kuupäevadega-töötamine" class="section level2">
+<h2>Kuupäevadega töötamine</h2>
+<p>R-is on kuupäevade jaoks <code>Date</code> andmetüüp. See on omapärane andmetüüp: näiliselt on tegemist tekstiga, ent sisuliselt arvuga – kuupäevi saab liita-lahutada, arvutada keskmist. ISO standardile vastav kuupäev on kujul aasta-kuu-päev, sealjuures aasta on nelja numbriga, kuu ja päev kumbki kahe numbriga. Sageli on sisse loetavates andmestikes aga kuupäev teisiti vormindatud. Suvalises formaadis kuupäevalise sõna saab <code>Date</code>-tüüpi väärtuseks teisendada käsuga <code>as.Date(.)</code>, mille argumendiga <code>format</code> saab määrata, millises formaadis kuupäev ette antakse. Kui formaati ei ole käsus täpsustatud, siis proovib funktsioon esmalt formaadi <code>"%Y-%m-%d"</code> ehk <em>aasta-kuu-päev (2018-02-01)</em>, seejärel <code>"%Y/%m/%d"</code> ehk <em>aasta/kuu/päev (2018/03/01)</em> sobivust, kui kumbki ei klapi antakse veateade.</p>
+<pre class="r"><code>d1 &lt;- as.Date(&quot;22.04.2009&quot;, &quot;%d.%m.%Y&quot;)
+d2 &lt;- as.Date(&quot;30.04.2009&quot;, &quot;%d.%m.%Y&quot;)
+d2 - d1</code></pre>
+<pre><code>## Time difference of 8 days</code></pre>
+<pre class="r"><code>as.numeric(d2 - d1)</code></pre>
+<pre><code>## [1] 8</code></pre>
+<p>Näites kasutatud formaadi tähiste <code>%d</code>, mis tähendab päeva numbrit, <code>%m</code> mis näitab kuu numbrit, <code>%Y</code> mis tähistab neljakohalist aastanumbrit ja teiste formaadi võimaluste kohta saab täpsemalt lugeda käsu <code>strptime(.)</code> abifailist <code>?strptime</code>.</p>
+<p>Kuupäevaks formaaditud objektidega saab teha kõiki mõistlikke operatsioone, näiteks leida miinimum, keskmine, võrrelda hulki:</p>
+<pre class="r"><code>d3 &lt;- Sys.Date()
+paevad &lt;- c(d1, d2, d3)
+mean(paevad)</code></pre>
+<pre><code>## [1] &quot;2013-03-30&quot;</code></pre>
+<pre class="r"><code>d2 %in% paevad</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>Küll aga ei saa näiteks leida kuupäevast logaritmi või ruutjuurt.Põhjus on selles, et R talletab kuupäevi tegelikult päevade arvuna alates nullpunktist, sealjuures nullpunktiks loetakse vaikimisi 1970-01-01. Selles võime veenduda <code>as.numeric(.)</code> käsku kasutades.</p>
+<pre class="r"><code>d1:d2</code></pre>
+<pre><code>## [1] 14356 14357 14358 14359 14360 14361 14362 14363 14364</code></pre>
+<pre class="r"><code>as.numeric(as.Date(&quot;1970-01-02&quot;))</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>as.numeric(as.Date(&quot;1969-12-30&quot;))</code></pre>
+<pre><code>## [1] -2</code></pre>
+<p><em>Date</em>-tüüpi muutuja väärtuse saab sobival kujul sõneks teisendada käsuga <code>format(.)</code>, see võimaldab kombineerida teksti ja kuupäeva elemente:</p>
+<pre class="r"><code>format(Sys.Date(), &quot;Kuupäev: %d. %B, (aastal %Y). Nädal nr %V.&quot;)</code></pre>
+<pre><code>## [1] &quot;Kuupäev: 05. veebruar, (aastal 2021). Nädal nr 05.&quot;</code></pre>
+<div id="section-ülesanded-2" class="section level3">
+<h3>Ülesanded</h3>
+<p>Vaatame edasi isikukoodide vektori (<code>isikukoodid</code> eelmisest ülesandest) põhjal tekitatud isikute info andmestikku.</p>
+<ol style="list-style-type: decimal">
+<li>Lisa isikute andmestikku veerg, mis sisaldaks iga inimese sünnikuupäeva <em>Date</em>-tüüpi muutujana.</li>
+<li>Lisa veerg, mis annab inimese vanuse täisaastates tänasel päeval (arvestades, et aastas on ~365,25 päeva).</li>
+<li>Leia kuupäev, mil said/saad 10 000 päeva vanuseks.</li>
+</ol>
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="dependencies">
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["header-attrs"]},{"type":"character","attributes":{},"value":["2.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pandoc"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["header-attrs.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]}]}
+</script>
+<!--/html_preserve-->
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="execution_dependencies">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36]}},"value":[{"type":"character","attributes":{},"value":["backports","base","compiler","datasets","digest","evaluate","fastmap","graphics","grDevices","htmltools","htmlwidgets","httpuv","jsonlite","knitr","later","learnr","magrittr","markdown","methods","mime","promises","R6","Rcpp","rlang","rmarkdown","rprojroot","shiny","stats","stringi","stringr","tools","utils","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.1.10","4.0.2","4.0.2","4.0.2","0.6.27","0.14","1.0.1","4.0.2","4.0.2","0.5.0","1.5.2","1.5.4","1.7.1","1.30","1.1.0.1","0.10.1","2.0.1","1.1","4.0.2","0.9","1.1.1","2.4.1","1.0.5","0.4.10","2.4","1.3-2","1.5.0","4.0.2","1.5.3","1.4.0","4.0.2","4.0.2","2.3.0","0.20","1.8-4","2.2.1"]}]}]}
+</script>
+<!--/html_preserve-->
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="section-fn1"><p><a href="http://en.wikipedia.org/wiki/Regular_expression" class="uri">http://en.wikipedia.org/wiki/Regular_expression</a><a href="#section-fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="section-fn2"><p><a href="http://et.wikipedia.org/wiki/Isikukood" class="uri">http://et.wikipedia.org/wiki/Isikukood</a><a href="#section-fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+</div> <!-- topics -->
+
+<div class="topicsContainer">
+<div class="topicsPositioner">
+<div class="band">
+<div class="bandContent topicsListContainer">
+
+<!-- begin doc-metadata -->
+<div id="doc-metadata">
+<h2 class="title toc-ignore" style="display:none;">R MOOC: 8. praktikum</h2>
+</div>
+<!-- end doc-metadata -->
+
+</div> <!-- bandContent.topicsListContainer -->
+</div> <!-- band -->
+</div> <!-- topicsPositioner -->
+</div> <!-- topicsContainer -->
+
+
+</div> <!-- bandContent page -->
+</div> <!-- pageContent band -->
+
+
+
+
+<script>
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+
+</body>
+
+</html>

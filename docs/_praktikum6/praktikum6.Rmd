@@ -13,6 +13,7 @@ knitr::include_graphics("https://media.voog.com/0000/0034/3577/photos/IT%20Akade
 ```{r, include=FALSE, warning=FALSE}
 library(reshape2)
 library(ggplot2)
+library(learnr)
 link <- "https://github.com/Rkursus/mooc/raw/main/data/"
 mk <- read.table(paste0(link, "maakonnad.txt"), sep = " ", header=T)
 #mk <- read.table("C:\\Users\\annes\\Documents\\10 AinedÕpetamine\\R kursus\\R kursus 2017 EAP3\\praksid\\failid-veebist-Mait\\maakonnad.txt", sep = " ", header=T)

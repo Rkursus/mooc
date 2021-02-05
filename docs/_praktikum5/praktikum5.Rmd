@@ -5,6 +5,9 @@ runtime: shiny_prerendered
 description: "Tutvume R-ga"
 ---
 
+```{r echo = F}
+library(learnr)
+```
 
 ```{r, out.height="80px", echo = F, figure-side, fig.align = 'right'}
 knitr::include_graphics("https://www.hitsa.ee/photos/HITSA_logo.png")
