@@ -46,6 +46,7 @@ test_that(ylesanne,
                         info = paste0(ylesanne, ".1: by() funktsiooni kolmas argument peaks olema 'mean'"),
                         label = paste0(ylesanne, ".1 funktsiooni kontroll"))
             
+            keskmised_test = by(iris$Petal.Length, iris$Species, mean)
             expect_equal(names(keskmised_test),names(keskmised), 
                         info = paste0(ylesanne, ".1: vaata üle by() funktsiooni teine argument ehk grupitunnus"))
             
@@ -101,7 +102,7 @@ test_that(ylesanne,
           {
             tmp_part = tmp_parts[[yl]]
             eval(parse(text = paste(tmp_part, collapse = '\n')))
-            tyhjad
+
             #1
             intervallid_test = cut(iris$Petal.Length,breaks = seq(1,7,0.5),right=FALSE)
             expect_equal(object = intervallid,
@@ -360,7 +361,7 @@ test_that(ylesanne,
 
 # Ülesanne 3.2.1 õige lahendus -----
 if(FALSE){
-  rotid <- read.csv(file.choose(), header = T, stringsAsFactors = F, 
+  rotid <- read.csv(file="https://raw.githubusercontent.com/Rkursus/sygis2019/master/data/rotid.csv", header = T, stringsAsFactors = F, 
                     colClasses = c("numeric", "character", "character", "factor"))
   summary(rotid)
   #1
@@ -427,7 +428,9 @@ yl = 8
 test_that(ylesanne, 
           {
             tmp_part = tmp_parts[[yl]]
+            eval(parse(text = paste(tmp_parts[[yl-1]], collapse = '\n')))  
             eval(parse(text = paste(tmp_part, collapse = '\n')))
+               
             
             #1
             tabel1_test = table(rotid$Rat)
@@ -481,6 +484,7 @@ yl = 9
 test_that(ylesanne, 
           {
             tmp_part = tmp_parts[[yl]]
+            eval(parse(text = paste(tmp_parts[[yl-2]], collapse = '\n')))
             eval(parse(text = paste(tmp_part, collapse = '\n')))
             
             #1
@@ -582,8 +586,8 @@ yl = 11
 test_that(ylesanne,
           {
           tmp_part = tmp_parts[[yl]]
+          eval(parse(text = paste(tmp_parts[[yl-1]], collapse = '\n')))
           eval(parse(text = paste(tmp_part, collapse = '\n')))
-          
           #1
           transponeeritud_test = recast(arstiabita, variable~Arstiabiliik)
           expect_equal(object = transponeeritud,

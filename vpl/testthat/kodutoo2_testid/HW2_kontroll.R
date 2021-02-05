@@ -37,5 +37,5 @@ source('../homework_check_functions.R')
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-homework_check(.filenames, .tests_file, .tests_structure)
+homework_check( .tests_file, .tests_structure)
 

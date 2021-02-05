@@ -28,11 +28,14 @@ homework_check <- function(.tests_file, .tests_structure){
   output <- test_file(.tests_file, reporter = SilentReporter) %>% 
     as.data.frame()
   
+  # Correct the total number of tests if some didn't run and are not taken into account in output$nb
+  dif = .tests_structure$Total - sum(output$nb)
+
   # Calculate grade
   output %>%
-    summarise(grade = round((1 - sum(failed) / sum(nb))*100)) %>% 
+    summarise(grade = round((1 - (sum(failed)+dif) / .tests_structure$Total)*100)) %>% 
     grade()
-    
+  
   # Tests skipped
   if(any(output$skipped)){
     comment('Syntax errors!')
@@ -48,7 +51,7 @@ homework_check <- function(.tests_file, .tests_structure){
   
   # Tests failed
   if(sum(output$failed) > 0){
-    comment('Some mistakes were fount in your solution')
+    comment('Some mistakes were found in your solution')
     
     output %>% 
       filter(failed > 0 & !skipped) %>%

@@ -95,6 +95,7 @@ yl = 2
 test_that(ylesanne, 
           {
             tmp_part = tmp_parts[[yl]]
+            eval(parse(text = paste(tmp_parts[[1]], collapse = '\n')))
             eval(parse(text = paste(tmp_part, collapse = '\n')))
             
             #aes(x = day, fill = time)
@@ -163,6 +164,7 @@ yl = 3
 test_that(ylesanne, 
           {
             tmp_part = tmp_parts[[yl]]
+            eval(parse(text = paste(tmp_parts[[1]], collapse = '\n')))
             eval(parse(text = paste(tmp_part, collapse = '\n')))
             
             #1
@@ -227,7 +229,6 @@ yl = 4
 test_that(ylesanne, 
           {
             tmp_part = tmp_parts[[yl]]
-            eval(parse(text = paste(tmp_part, collapse = '\n')))
             
             #1
             #aes(x = total_bill, y = tip)
@@ -288,6 +289,7 @@ yl = 5
 test_that(ylesanne, 
           {
             tmp_part = tmp_parts[[yl]]
+            eval(parse(text = paste(tmp_parts[[1]], collapse = '\n')))
             eval(parse(text = paste(tmp_part, collapse = '\n')))
             
             #1
@@ -363,6 +365,7 @@ yl = 7
 test_that(ylesanne, 
           {
             tmp_part = tmp_parts[[yl]]
+            eval(parse(text = paste(tmp_parts[[1]], collapse = '\n')))
             eval(parse(text = paste(tmp_part, collapse = '\n')))
             
             #1
@@ -424,6 +427,7 @@ yl = 8
 test_that(ylesanne, 
           {
             tmp_part = tmp_parts[[yl]]
+            eval(parse(text = paste(tmp_parts[[1]], collapse = '\n')))
             eval(parse(text = paste(tmp_part, collapse = '\n')))
             
             #1
@@ -471,7 +475,6 @@ yl = 9
 test_that(ylesanne, 
           {
             tmp_part = tmp_parts[[yl]]
-            eval(parse(text = paste(tmp_part, collapse = '\n')))
             
             #aes(x = size, y = tip.per.person, color = sex)
             expect_true(length(grep("aes\\(x=size", tmp_part)) > 0, 
@@ -515,7 +518,6 @@ yl = 10
 test_that(ylesanne, 
           {
             tmp_part = tmp_parts[[yl]]
-            eval(parse(text = paste(tmp_part, collapse = '\n')))
             
             #aes(x = size, y = tip.per.person, linetype = sex)
             expect_true(length(grep("aes\\(x=size", tmp_part)) > 0, 

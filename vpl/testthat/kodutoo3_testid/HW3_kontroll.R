@@ -39,4 +39,4 @@ source('../homework_check_functions.R')
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # Test and write results into a Google Spreadsheet
-homework_check(.submission, .tests_file, .tests_structure)
+homework_check(.tests_file, .tests_structure)
