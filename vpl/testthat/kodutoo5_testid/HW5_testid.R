@@ -31,6 +31,7 @@ yl = 1
 test_that(ylesanne, 
           {
             tmp_part = tmp_parts[[yl]]
+            code_run_test(list(tmp_part), ylesanne)
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
             #1
@@ -79,7 +80,8 @@ if(FALSE){
               kesk.kmi = mean(kmi), visiit.osak = sum(visiit) / length(visiit))
   
   # 2
-  # sugu = 1, elukoht = 0
+  sugu = 1
+  elukoht = 0
   
 }
 
@@ -88,8 +90,8 @@ yl = 2
 
 test_that(ylesanne, 
           {
-            
             tmp_part = tmp_parts[[yl]]
+            code_run_test(list(tmp_part), ylesanne)
             # 1
             #A1 tabel 2. ülesande kontrolliks
             library(stringr)
@@ -137,9 +139,13 @@ test_that(ylesanne,
             
             # 2
             
-            expect_true(length(grep("sugu=1,elukoht=1", tmp_part))>0,
-                        info = paste0(ylesanne,".2: leitud vale grupp"),
-                        label = paste0(ylesanne,".2: vastuse grupi kontroll"))
+            expect_true(sugu==1,
+                        info = paste0(ylesanne,".2: leitud vale soo grupp"),
+                        label = paste0(ylesanne,".2: vastuse soo grupi kontroll"))
+            
+            expect_true(elukoht==0,
+                        info = paste0(ylesanne,".2: leitud vale elukoha grupp"),
+                        label = paste0(ylesanne,".2: vastuse elukoha grupi kontroll"))
             
           })
 
@@ -167,6 +173,7 @@ yl = 3
 test_that(ylesanne, 
           {
             tmp_part = tmp_parts[[yl]]
+            code_run_test(list(tmp_part), ylesanne)
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
             # 1
@@ -284,6 +291,7 @@ yl = 4
 test_that(ylesanne, 
           {
             tmp_part = tmp_parts[[yl]]
+            code_run_test(list(tmp_part), ylesanne)
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
             # 1 
@@ -312,7 +320,7 @@ test_that(ylesanne,
                          info = paste0(ylesanne, ".2 Funktsiooni `uus_funktsioon` pole tekitatud!"),
                          label = paste0(ylesanne, ".2 Funktsiooni uus_funktsioon nime kontroll"))
              
-             expect_true(length(grep("function\([^,]\)", tmp_part)) >0,
+             expect_true(length(grep("function\\([^,]\\)", tmp_part)) >0,
                          info = paste0(ylesanne, ".2 Piisab, kui defineeritaval funkstioonil on üks argument."),
                          label = paste0(ylesanne, ".2 Funktsiooni uus_funktsioon argumendi kontroll"))
              
@@ -376,13 +384,13 @@ yl = 5
 
 test_that(ylesanne, 
           {
+            tmp_part = tmp_parts[[yl]]
+            code_run_test(list(tmp_part), ylesanne)
             
             A_kt <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/A.csv", nrows = 45)
             B_kt <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/B.csv", nrows = 160)
             B_kt <- B_kt[, c("id", "grupp", sort(names(B_kt)[-(1:2)]))]
             
-            
-            tmp_part = tmp_parts[[yl]]
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
             # 1 
@@ -488,6 +496,7 @@ yl = 6
 test_that(ylesanne, 
           {
             tmp_part = tmp_parts[[yl]]
+            code_run_test(list(tmp_part), ylesanne)
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
             # 1 
@@ -590,6 +599,7 @@ yl = 7
 test_that(ylesanne, 
           {
             tmp_part = tmp_parts[[yl]]
+            code_run_test(list(tmp_part), ylesanne)
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
             # 1 
@@ -657,7 +667,7 @@ test_that(ylesanne,
                         info = paste0(ylesanne, ".3: Kontrolli, kas panid  `by`-pesasse kirja grupeeriva tunnuse nime. Jutumärke selle tunnuse nime ümber pole vaja!"),
                         label = paste0(ylesanne, ".3 by-pesa kontroll"))
             
-            expect_true(length(grep("length(loigunr)", tmp_part)) >0 | 
+            expect_true(length(grep("length\\(loigunr\\)", tmp_part)) >0 | 
                           length(grep("\\.N", tmp_part)) >0 , 
                         info = paste0(ylesanne, ".3: Pole kokku tekstid loetud "),
                         label = paste0(ylesanne, ".3 teise veeru leidmise kontroll"))
@@ -688,6 +698,8 @@ yl = 8
 test_that(ylesanne, 
           {
             tmp_part = tmp_parts[[yl]]
+            code_run_test(list(tmp_parts[[yl-1]],tmp_part), ylesanne)
+            eval(parse(text = paste(tmp_parts[[yl-1]], collapse = '\n')))
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
             # 1 
@@ -784,6 +796,7 @@ test_that(ylesanne,
           {
             library(lubridate)
             tmp_part = tmp_parts[[yl]]
+            code_run_test(list(tmp_part), ylesanne)
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
             # 1
@@ -875,6 +888,7 @@ yl = 10
 test_that(ylesanne, 
           {
             tmp_part = tmp_parts[[yl]]
+            code_run_test(list(tmp_part), ylesanne)
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
             # 1 
@@ -919,3 +933,4 @@ test_that(ylesanne,
                         label = paste0(ylesanne, ".2 Andmestiku vead1 veerunimede kontroll"))
             
           })
+

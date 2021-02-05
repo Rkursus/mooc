@@ -21,16 +21,16 @@ source('../homework_check_functions.R')
   data.frame(
     context = as.character(Sys.time()),
     submission = 'Total nr of unit tests',
-    "Ülesanne 1.1" = 0.0,
-    "Ülesanne 2.1" = 0.0,
-    "Ülesanne 3.1" = 0.0,
-    "Ülesanne 4.1" = 0.0,
-    "Ülesanne 5.1" = 0.0,
-    "Ülesanne 6.1" = 0.0,
-    "Ülesanne 7.1" = 0.0,
-    "Ülesanne 8.1" = 0.0,
-    "Ülesanne 9.1" = 0.0,
-    "Ülesanne 10.1" = 0.0
+    "Ülesanne 1.1" = 7.0,
+    "Ülesanne 2.1" = 11.0,
+    "Ülesanne 3.1" = 21.0,
+    "Ülesanne 4.1" = 12.0,
+    "Ülesanne 5.1" = 18.0,
+    "Ülesanne 6.1" = 16.0,
+    "Ülesanne 7.1" = 16.0,
+    "Ülesanne 8.1" = 13.0,
+    "Ülesanne 9.1" = 14.0,
+    "Ülesanne 10.1" = 8.0
   ) %>%
   # Add total number of tests
   mutate(Total = rowSums(.[-c(1:2)]))
@@ -38,4 +38,5 @@ source('../homework_check_functions.R')
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # Test and write results into a Google Spreadsheet
-homework_check(.submission, .tests_file, .tests_structure)
+homework_check(.tests_file, .tests_structure)
+

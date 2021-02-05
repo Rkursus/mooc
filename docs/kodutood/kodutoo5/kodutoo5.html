@@ -1,14 +1,14 @@
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
 
@@ -51,7 +51,7 @@ if (window.hljs) {
 <p>Paketi <strong>dplyr</strong> funktsioonidest <code>mutate()</code> on abiks kui on vaja andmestikku uusi tunnuseid lisada. Korraga saab defineerida mitu uut tunnust, kusjuures tunnust, mille definitsioon on käsus juba kirjas, saab kohe samas kasutada.</p>
 <p>Loe töölauale andmestik <code>A</code>. Andmestikus on kirjas 40 inimese id-kood, sugu, elukoht, vanus, pikkus, kaal, käte siruulatus ning arstivisiidi toimumine.</p>
 <pre class="r"><code>A &lt;- read.csv2(&quot;https://github.com/Rkursus/sygis2019/raw/master/data/A.csv&quot;, nrows = 45)</code></pre>
-<div id="ulesanded" class="section level2">
+<div id="ülesanded" class="section level2">
 <h2><span class="header-section-number">1.1</span> Ülesanded</h2>
 <ul>
 <li><strong>Ülesanne 1</strong> Aktiveeri pakett <strong>dplyr</strong>.</li>
@@ -79,15 +79,15 @@ ____________</code></pre>
 </ul>
 </div>
 </div>
-<div id="pakett-dplyr---grupikokkuvotete-arvutamine" class="section level1">
+<div id="pakett-dplyr---grupikokkuvõtete-arvutamine" class="section level1">
 <h1><span class="header-section-number">2</span> Pakett dplyr - Grupikokkuvõtete arvutamine</h1>
 <p>Paketi <strong>dplyr</strong> funktsiooni <code>summarise()</code> saab kasutada andmete agregeerimiseks.</p>
 <p>Kasuta andmestikku <code>A1</code> eelmisest ülesandest.</p>
-<div id="ulesanded-1" class="section level2">
+<div id="ülesanded-1" class="section level2">
 <h2><span class="header-section-number">2.1</span> Ülesanded</h2>
 <ul>
 <li><strong>Ülesanne 1</strong> Kasutades funktsiooni <code>summarise()</code> leia tabel, kus soo ja elukoha gruppides oleks esitatud uuritavate arv (<code>n</code>), keskmine vanus (<code>kesk.vanus</code>), keskmine KMI (<code>kesk.kmi</code>) ja arstivisiidil käinute osakaal (<code>visiit.osak</code>). Tulemuseks olevas tabelis peaks esimeseks veeruks olema soo tunnus, teiseks elukoht. Koodi kirjapanekul kasuta aheldamisoperaatorit <code>%&gt;%</code>.</li>
-<li><strong>Ülesanne 2</strong> Milline grupp on kõige madalama arstivisiidil käinute osakaaluga? Omista selle grupi koodid (0 või 1) vastusesse.</li>
+<li><strong>Ülesanne 2</strong> Milline grupp on kõige madalama arstivisiidil käinute osakaaluga? Omista selle grupi koodid (0 või 1) muutujatele <code>sugu</code> ja <code>elukoht</code>.</li>
 </ul>
 <pre class="r"><code># Vaata andmestik üle
 str(A1)
@@ -100,7 +100,8 @@ tabel &lt;- A1 %&gt;%
 tabel
 
 # Ülesanne 2: leia mis grupp on kõige madalama arstivisiidil käimise osakaaluga.
-# sugu = ___, elukoht = ___</code></pre>
+sugu &lt;- ___
+elukoht &lt;- ___</code></pre>
 <p><strong>Vihjed</strong></p>
 <ul>
 <li>Kasuta funktsiooni <code>group_by()</code>, et määrata andmestikule grupeering soo ja elukoha põhjal</li>
@@ -167,7 +168,7 @@ tabel
 </tr>
 </tbody>
 </table>
-<div id="ulesanded-2" class="section level2">
+<div id="ülesanded-2" class="section level2">
 <h2><span class="header-section-number">3.1</span> Ülesanded</h2>
 <ul>
 <li><strong>Ülesanne 1</strong> Kasutades funktsioone <code>select()</code> ja <code>starts_with()</code> ning aheldamisoperaatorit <code>%&gt;%</code> vali andmestikust need tunnused, mille nimi algab sõnaga <em>test</em>, omista valitud andmed muutujale <code>B1</code>.</li>
@@ -196,13 +197,13 @@ arrange(tabel, variable)</code></pre>
 </ul>
 </div>
 </div>
-<div id="pakett-dplyr---mitmele-tunnusele-teisenduse-maaramine" class="section level1">
+<div id="pakett-dplyr---mitmele-tunnusele-teisenduse-määramine" class="section level1">
 <h1><span class="header-section-number">4</span> Pakett dplyr - Mitmele tunnusele teisenduse määramine</h1>
 <p>Nagu öeldud on lisapaketis <strong>dplyr</strong> on olemas funktsioonide <code>mutate()</code> ja <code>summarise()</code> eriversioonid sufiksitega <code>_at</code>, <code>_if</code> ja <code>_all</code> juhuks kui fuktsioone on vaja rakendada mingite tunnuste valikule nime järgi, loogilise tingimuse järgi või kõigile tunnustele, mis ei esine grupeeriva tunnusena.</p>
 <p>Loe töölauale andmestikud <code>mass</code> (tuttav praktikumist) ja <code>antropo</code>. Andmestikus <code>antropo</code> on mõned antropomeetrilised mõõtmised, mõõdetud on pikkus õlani (mm), kerepikkus istudes (mm), põlve kõrgus, istudes (mm), talje ümbermõõt (mm), õlgade ümbermõõt (mm), randmeümbermõõt (mm) ja kaal (kg*10), lisaks on teada uuritava sugu.</p>
 <pre class="r"><code>antropo &lt;- read.table(&quot;https://github.com/Rkursus/sygis2019/raw/master/data/antropo.txt&quot;, header=T, sep=&quot;\t&quot;)
 mass&lt;- read.table(&quot;https://github.com/Rkursus/sygis2019/raw/master/data/mass.txt&quot;, header=T, sep=&quot;\t&quot;)</code></pre>
-<div id="ulesanded-3" class="section level2">
+<div id="ülesanded-3" class="section level2">
 <h2><span class="header-section-number">4.1</span> Ülesanded</h2>
 <ul>
 <li><strong>Ülesanne 1</strong> Teisenda andmestikus <code>mass</code> kõik tunnused, mis on tüüpi <code>factor</code> tavaliseks tekstiks ehk tüüpi <code>character</code>. Selleks täienda antud koodi sobivalt. Teisendatud tunnustega andmestik nimeta <code>mass_char</code>. Koodi kirjapanekul kasuta aheldamisoperaatorit <code>%&gt;%</code>.</li>
@@ -227,7 +228,7 @@ antropo_cm_kg &lt;- _______  ____  mutate______(.vars = vars(-SEX), .funs = uus_
 </ul>
 </div>
 </div>
-<div id="pakett-dplyr---andmestike-uhendamine" class="section level1">
+<div id="pakett-dplyr---andmestike-ühendamine" class="section level1">
 <h1><span class="header-section-number">5</span> Pakett dplyr - Andmestike ühendamine</h1>
 <p>Paketis <strong>dplyr</strong> on olemas valik funktsioone, mis on mõeldud andmestike ühendamiseks:</p>
 <ul>
@@ -247,7 +248,7 @@ antropo_cm_kg &lt;- _______  ____  mutate______(.vars = vars(-SEX), .funs = uus_
 <pre class="r"><code>A &lt;- read.csv2(&quot;https://github.com/Rkursus/sygis2019/raw/master/data/A.csv&quot;, nrows = 45)
 B &lt;- read.csv2(&quot;https://github.com/Rkursus/sygis2019/raw/master/data/B.csv&quot;, nrows = 160)
 B &lt;- B[, c(&quot;id&quot;, &quot;grupp&quot;, sort(names(B)[-(1:2)]))]</code></pre>
-<div id="ulesanded-4" class="section level2">
+<div id="ülesanded-4" class="section level2">
 <h2><span class="header-section-number">5.1</span> Ülesanded</h2>
 <ul>
 <li><strong>Ülesanne 1</strong> Teisenda esmalt mõlemas andmestikus faktortunnused tavaliseks tekstiks, selleks täienda etteantud koodi. Teisendatud andmestikud omista muutujatele <code>A1</code> ja <code>B1</code>. Edasi kasuta neid andmestikke.</li>
@@ -282,7 +283,7 @@ AB2 &lt;- ___ %&gt;% _________________</code></pre>
 <li><code>by</code> määrab vajadusel grupitunnuse <code>j</code> tehtavateks arvutusteks.</li>
 </ul>
 <p>Töölaual peaks varasemast olema andmestik <code>A</code>. Andmestikus on kirjas 40 inimese id-kood, sugu, elukoht, vanus, pikkus, kaal, käte siruulatus ning arstivisiidi toimumine.</p>
-<div id="ulesanded-5" class="section level2">
+<div id="ülesanded-5" class="section level2">
 <h2><span class="header-section-number">6.1</span> Ülesanded</h2>
 <ul>
 <li><strong>Ülesanne 1</strong> Aktiveeri pakett <strong>data.table</strong> ja muuda andmestik <code>A</code> tüüpi <code>dt</code> ehk <code>data.table</code>.</li>
@@ -310,7 +311,7 @@ ______</code></pre>
 </ul>
 </div>
 </div>
-<div id="pakett-data.table---tunnuse-tuubi-teisendus-sagedustabeli-leidmine." class="section level1">
+<div id="pakett-data.table---tunnuse-tüübi-teisendus-sagedustabeli-leidmine." class="section level1">
 <h1><span class="header-section-number">7</span> Pakett data.table - Tunnuse tüübi teisendus, sagedustabeli leidmine.</h1>
 <p>Kui <code>DT</code> on <em>data.table</em> tüüpi andmetabel, siis paketi <strong>data.table</strong> põhisüntaksi kuju saab kirja panna järgnevalt</p>
 <pre class="r"><code>DT[i, j, by]</code></pre>
@@ -325,7 +326,7 @@ ______</code></pre>
 <pre class="r"><code>tekstid &lt;- fread(&quot;https://github.com/Rkursus/sygis2019/raw/master/data/tekstid.csv&quot;, nrow = 1000, encoding = &quot;UTF-8&quot;, 
                col.names = c(&quot;rubriik&quot;, &quot;loigunr&quot;, &quot;hinnang&quot;, &quot;tekst&quot;), select = c(1,3:5))
 tekstid &lt;- tekstid[loigunr != &quot;None&quot;, ] # Eemaldame read, kus 'loigunr' puudub.</code></pre>
-<div id="ulesanded-6" class="section level2">
+<div id="ülesanded-6" class="section level2">
 <h2><span class="header-section-number">7.1</span> Ülesanded</h2>
 <ul>
 <li><strong>Ülesanne 1</strong> Kontrolli, kas andmestik on <em>data.table</em> tüüpi, kasutades funktsiooni <code>is.data.table()</code>.</li>
@@ -348,10 +349,10 @@ valik &lt;- tekstid[___________]</code></pre>
 </ul>
 </div>
 </div>
-<div id="too-tekstiga---teksti-esinemise-kontroll" class="section level1">
+<div id="töö-tekstiga---teksti-esinemise-kontroll" class="section level1">
 <h1><span class="header-section-number">8</span> Töö tekstiga - Teksti esinemise kontroll</h1>
 <p>Kasuta eelmise ülesande andmestikku <code>tekstid</code>, mis sisaldab tekstilõike ajalehe Postimees artiklitest. Tekstilõigud on andmestikus tunnuse <code>tekst</code> nime all.</p>
-<div id="ulesanded-7" class="section level2">
+<div id="ülesanded-7" class="section level2">
 <h2><span class="header-section-number">8.1</span> Ülesanded</h2>
 <ul>
 <li><strong>Ülesanne 1</strong> Kasutades paketi <code>stringr</code> sobivat käsku tuvasta, millistes tekstilõikudes esineb string ‘Eesti’ või ‘eesti’. Tulemuseks peaks olema tõevektor (<code>TRUE</code> kui otsitav väärtus on tekstis), omista see muutujale <code>esineb</code>. Väike/suurtähe võimaluse otsitavas tekstis saab kirja panna järgnevalt <code>[Ss]uurtäht</code>.</li>
@@ -381,13 +382,13 @@ tinglikjaotus</code></pre>
 </ul>
 </div>
 </div>
-<div id="too-kuupaevadega---date-tuupi-muutuja-loomine" class="section level1">
+<div id="töö-kuupäevadega---date-tüüpi-muutuja-loomine" class="section level1">
 <h1><span class="header-section-number">9</span> Töö kuupäevadega - Date-tüüpi muutuja loomine</h1>
 <p>Loe töölauale andmestik <code>apelsinid</code> (andmestik mis tuleb vaikimisi kaasa paketiga <code>nlme</code>).</p>
 <pre class="r"><code>library(nlme)
 apelsinid &lt;- as.data.frame(Orange)</code></pre>
 <p>Mõõdetud on apelsinipuude tüve ümbermõõtu (<code>circumference</code>). Iga puud on mõõdetud korduvalt, mõõtmise aeg on veerus <code>age</code>, mis näitab puu vanust päevades mõõtmishetkel. Puu vanust hakati lugema alates katse algusest, mis oli 1968 aasta 31. detsember. Kõiki puid mõõdeti samadel päevadel.</p>
-<div id="ulesanded-8" class="section level2">
+<div id="ülesanded-8" class="section level2">
 <h2><span class="header-section-number">9.1</span> Ülesanded</h2>
 <ul>
 <li><strong>Ülesanne 1</strong> Lisa andmestikku uus tunnus nimega <code>kuupaev</code>, mis näitaks mõõtmiste kuupäevi kujul “YYYY-MM-DD”.</li>
@@ -416,11 +417,11 @@ nadalad</code></pre>
 </ul>
 </div>
 </div>
-<div id="too-kuupaevadega---kuupaevade-vordlemine" class="section level1">
+<div id="töö-kuupäevadega---kuupäevade-võrdlemine" class="section level1">
 <h1><span class="header-section-number">10</span> Töö kuupäevadega - Kuupäevade võrdlemine</h1>
 <p>Loe töölauale andmestik <code>haigla</code>. See sisaldab infot patsientide haiglasse saabumise(<code>haiglasse.kp</code>) ja lahkumise(<code>haiglast.kp</code>) kuupäevade kohta.</p>
 <pre class="r"><code>haigla &lt;- read.csv2(&quot;https://github.com/Rkursus/sygis2019/raw/master/data/haigla.csv&quot;, colClasses = c(&quot;integer&quot;, &quot;Date&quot;, &quot;Date&quot;))</code></pre>
-<div id="ulesanded-9" class="section level2">
+<div id="ülesanded-9" class="section level2">
 <h2><span class="header-section-number">10.1</span> Ülesanded</h2>
 <ul>
 <li><strong>Ülesanne 1</strong> Kontrolli, kas andmestikus on vigaseid vaatlusi: ridu, kus patsient on haiglast lahkunud enne haiglasse saabumise kuupäeva. Vali selliste vaatluste read andmestikust ja omista muutujale <code>vead1</code>. Prindi tulemus ekraanile.</li>

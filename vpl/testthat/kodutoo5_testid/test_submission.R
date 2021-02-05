@@ -21,7 +21,8 @@ tabel <- A1 %>% group_by(sugu, elukoht) %>%
   kesk.kmi = mean(kmi), visiit.osak = sum(visiit) / length(visiit))
 
 # 2
-# sugu = 1, elukoht = 0
+sugu = 1
+elukoht = 0
 
 
 

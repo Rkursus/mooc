@@ -151,7 +151,7 @@ Kasuta andmestikku `A1` eelmisest ülesandest.
 ## Ülesanded
 
 - **Ülesanne 1** Kasutades funktsiooni `summarise()` leia tabel, kus soo ja elukoha gruppides oleks esitatud uuritavate arv (`n`), keskmine vanus (`kesk.vanus`), keskmine KMI (`kesk.kmi`) ja  arstivisiidil käinute osakaal (`visiit.osak`). Tulemuseks olevas tabelis peaks esimeseks veeruks olema soo tunnus, teiseks elukoht.  Koodi kirjapanekul kasuta aheldamisoperaatorit `%>%`.
-- **Ülesanne 2** Milline grupp on kõige madalama arstivisiidil käinute osakaaluga? Omista selle grupi koodid (0 või 1)  vastusesse.
+- **Ülesanne 2** Milline grupp on kõige madalama arstivisiidil käinute osakaaluga? Omista selle grupi koodid (0 või 1)  muutujatele `sugu` ja `elukoht`.
 
 ```{r eval = F}
 # Vaata andmestik üle
@@ -165,7 +165,8 @@ tabel <- A1 %>%
 tabel
 
 # Ülesanne 2: leia mis grupp on kõige madalama arstivisiidil käimise osakaaluga.
-# sugu = ___, elukoht = ___
+sugu <- ___
+elukoht <- ___
 ```
 
 
