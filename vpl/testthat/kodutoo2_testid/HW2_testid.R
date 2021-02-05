@@ -27,7 +27,8 @@ yl = 1
 test_that(ylesanne, 
   {
     tmp_part = tmp_parts[[yl]]
-    eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
+    code_run_test(list(tmp_part), ylesanne)
+    eval(parse(text = paste(tmp_part, collapse = '\n')))
     
     veerud_expected = c("nimi", "tulemus")
     expect_equal(object = colnames(andmed2),
@@ -51,11 +52,11 @@ test_that(ylesanne,
                 info = paste0(ylesanne, ".1: pole kasutatud funktsiooni read.table()"),
                 label = paste0(ylesanne, ".1 käsu argumendi kontroll"))
     
-    expect_true(length(grep("^andmed2$|^print\\(andmed2\\)$", tmp_file)) > 0, 
+    expect_true(length(grep("^andmed2$|^print\\(andmed2\\)$", tmp_part)) > 0, 
                 info = paste0(ylesanne, ".1: pole andmestikku välja prinditud"),
                 label = paste0(ylesanne, ".1 andmestiku väljatrüki kontroll"))
     
-    expect_true(length(grep("^summary\\(andmed2\\)$|^print\\(summary\\(andmed2\\)\\)$", tmp_file)) > 0, 
+    expect_true(length(grep("^summary\\(andmed2\\)$|^print\\(summary\\(andmed2\\)\\)$", tmp_part)) > 0, 
                 info = paste0(ylesanne, ".2: pole andmestiku kokkuvõtet välja prinditud"),
                 label = paste0(ylesanne, ".2 kokkuvõtte väljatrüki kontroll"))
     
@@ -73,6 +74,7 @@ yl = 2
 
 test_that(ylesanne, 
           {
+            code_run_test(list(tmp_parts[[yl]]), ylesanne)
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             
             expect_true(vastus==3, 
@@ -108,6 +110,7 @@ yl = 3
 test_that(ylesanne, 
           { 
             tmp_part = tmp_parts[[yl]]
+            code_run_test(list(tmp_part), ylesanne)
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             #1
             expect_true(grep("^nrows$|^nrow\\(\\)$", argumendinimi) > 0,
@@ -115,7 +118,7 @@ test_that(ylesanne,
                         label = paste0(ylesanne, ".1 vastuse kontroll"))
             
             #2
-            expect_true(length(grep("list\\.files\\(", tmp_file)) > 0, 
+            expect_true(length(grep("list\\.files\\(", tmp_part)) > 0, 
                         info = paste0(ylesanne, ".2: käsust on midagi puudu"),
                         label = paste0(ylesanne, ".2 käsu kontroll"))
             
@@ -142,7 +145,7 @@ test_that(ylesanne,
                          info = paste0(ylesanne, ".4: vale vastus, andmestik ei kattu"),
                          label = paste0(ylesanne, ".4 valiku kontroll"))
             
-            expect_true(length(grep("^valik$", tmp_file)) > 0, 
+            expect_true(length(grep("^valik$", tmp_part)) > 0, 
                         info = paste0(ylesanne, ".4: pole andmestikku välja prinditud"),
                         label = paste0(ylesanne, ".4 andmestiku väljarüki kontroll"))
           })
@@ -173,17 +176,18 @@ yl=4
 test_that(ylesanne, 
           {
             tmp_part = tmp_parts[[yl]]
+            code_run_test(list(tmp_part), ylesanne)
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             #1
-            expect_true(length(grep("dim\\(andmed5a\\)", tmp_file)) > 0, 
+            expect_true(length(grep("dim\\(andmed5a\\)", tmp_part)) > 0, 
                         info = paste0(ylesanne, ".1: dimensiooni käsust on midagi puudu"),
                         label = paste0(ylesanne, ".1 dimensiooni käsu kontroll"))
             
-            expect_true(length(grep("str\\(andmed5a\\)", tmp_file)) > 0, 
+            expect_true(length(grep("str\\(andmed5a\\)", tmp_part)) > 0, 
                         info = paste0(ylesanne, ".1: tunnuste käsust on midagi puudu"),
                         label = paste0(ylesanne, ".1 tunnuste käsu kontroll"))
             
-            expect_true(length(grep("^tail\\(andmed5a\\[.+1\\:5.+\\)", tmp_file)) > 0, 
+            expect_true(length(grep("^tail\\(andmed5a\\[.+1\\:5.+\\)", tmp_part)) > 0, 
                         info = paste0(ylesanne, ".1: 'tail' käsust on midagi puudu"),
                         label = paste0(ylesanne, ".1 'tail' käsu kontroll"))
             
@@ -237,6 +241,7 @@ yl=5
 test_that(ylesanne, 
           {
             tmp_part = tmp_parts[[yl]]
+            code_run_test(list(tmp_part), ylesanne)
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             #1
             pojad_expected = read.table("https://github.com/Rkursus/2020/raw/master/data/pojad.txt", header = T)
@@ -299,7 +304,9 @@ yl = 6
 
 test_that(ylesanne, 
           {
+            code_run_test(list(tmp_parts[[yl]]), ylesanne)
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
+            
             #1
             kapsad_expected = read.table("https://github.com/Rkursus/sygis2019/raw/master/data/cabbages.txt", header = T)
             expect_equal(object = kapsad,
@@ -307,7 +314,7 @@ test_that(ylesanne,
                          info = paste0(ylesanne, ".1: valesti sisse loetud andmestik"),
                          label = paste0(ylesanne, ".1 andmestiku sisselugemise kontroll"))
             
-            expect_true(length(grep("^summary\\(kapsad\\)$", tmp_file)) > 0, 
+            expect_true(length(grep("^summary\\(kapsad\\)$", tmp_parts[[yl]])) > 0, 
                         info = paste0(ylesanne, ".1: pole andmestiku kokkuvõtet välja prinditud"),
                         label = paste0(ylesanne, ".1 andmestiku kokkuvõtte väljarüki kontroll"))
             
@@ -372,7 +379,10 @@ yl = 7
 
 test_that(ylesanne, 
           {
+            code_run_test(list(tmp_parts[[yl-2]],tmp_parts[[yl]]), ylesanne)
+            eval(parse(text = paste(tmp_parts[[yl-2]], collapse = '\n')))
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
+            
             #1
             expect_true("pikkus_vahe" %in% colnames(pojad),
                         info = paste0(ylesanne, ".1: andmestikust puudub tunnus 'pikkus_vahe'"),
@@ -401,7 +411,6 @@ test_that(ylesanne,
                          expected = uus_expected,
                          info = paste0(ylesanne, ".3: valesti ümberjärjestatud andmed"),
                          label = paste0(ylesanne, ".3 ümberjärjestuse kontroll"))
-            
           })
 
 
@@ -426,9 +435,10 @@ yl = 8
 
 test_that(ylesanne, 
           {
+            code_run_test(list(tmp_parts[[yl]]), ylesanne)
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             #1
-            expect_true(length(grep("^summary\\(dieet\\)$", tmp_file)) > 0, 
+            expect_true(length(grep("^summary\\(dieet\\)$", tmp_parts[[yl]])) > 0, 
                         info = paste0(ylesanne, ".1: pole andmestiku kokkuvõtet välja prinditud"),
                         label = paste0(ylesanne, ".1 andmestiku kokkuvõtte väljatrüki kontroll"))
             
@@ -491,6 +501,7 @@ yl = 9
 
 test_that(ylesanne, 
           {
+            code_run_test(list(tmp_parts[[yl]]), ylesanne)
             eval(parse(text = paste(tmp_parts[[yl]], collapse = '\n')))
             A_tmp <- read.csv2(file = "https://github.com/Rkursus/sygis2019/raw/master/data/A.csv", nrows = 45)
             B_tmp <- read.csv2(file = "https://github.com/Rkursus/sygis2019/raw/master/data/B.csv", nrows = 160)
