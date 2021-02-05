@@ -70,7 +70,7 @@ code_run_test <- function(code, ylesanne = NULL){
   #' '''''
   
   # Read and evaluate code lines
-  for(i in 1:lenght(code)){
+  for(i in 1:length(code)){
     read.commands = tryCatch(eval(parse(text = paste(code[i], collapse = '\n'))), condition = identity)
   
     # If error while running the exercise code, then skip all following tests
