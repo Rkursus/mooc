@@ -83,8 +83,8 @@ str(testid.pikk)
 
 ###% ylesanne 3.2.1 lahendus
 
-#rotid <- read.csv(file.choose(), header = T, stringsAsFactors = F, 
-#                  colClasses = c("numeric", "character", "character", "factor"))
+rotid <- read.csv(file="https://raw.githubusercontent.com/Rkursus/sygis2019/master/data/rotid.csv", header = T, stringsAsFactors = F, 
+                  colClasses = c("numeric", "character", "character", "factor"))
 summary(rotid)
 #1
 library(reshape2)
