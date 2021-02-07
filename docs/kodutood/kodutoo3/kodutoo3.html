@@ -146,9 +146,15 @@ xy &lt;- data.frame(x, y)</code></pre>
 <div id="ülesanded-2" class="section level3" number="2.1.1">
 <h3 number="2.1.1"><span class="header-section-number">2.1.1</span> Ülesanded</h3>
 <ul>
-<li><strong>Ülesanne 1</strong> Sorteeri andmestik <code>xy</code> kasvavalt <code>x</code> ja <code>y</code> järgi, kasuta selleks <code>order</code> käsku. Omista sorteeritud andmestik muuutujale <code>xy1</code>, prindi ekraanile.</li>
-<li><strong>Ülesanne 2</strong> Moodusta andmestik <code>xy2</code>, selleks anna andmestikule <code>xy</code> ridade järjestus ette käsuga <code>order(x, -y)</code>. Prindi tulemus ekraanile.</li>
-<li><strong>Ülesanne 3</strong> Võrdle kahte tulemust, milles seisneb erinevus?</li>
+<li><p><strong>Ülesanne 1</strong> Sorteeri andmestik <code>xy</code> kasvavalt <code>x</code> ja <code>y</code> järgi, kasuta selleks <code>order</code> käsku. Omista sorteeritud andmestik muuutujale <code>xy1</code>, prindi ekraanile.</p></li>
+<li><p><strong>Ülesanne 2</strong> Moodusta andmestik <code>xy2</code>, selleks anna andmestikule <code>xy</code> ridade järjestus ette käsuga <code>order(x, -y)</code>. Prindi tulemus ekraanile.</p></li>
+<li><p><strong>Ülesanne 3</strong> Võrdle kahte tulemust, milles seisneb erinevus? Vali õige väide:</p>
+<ol style="list-style-type: decimal">
+<li>Esimeses andmestikus on sorteeritud andmestik <code>y</code>-i järgi kasvavalt, teises andmestikus on <code>y</code>-i järgi kahanevalt ning seejärel omakorda <code>x</code>-i järgi</li>
+<li>Mõlemad on sorteeritud esmalt <code>x</code> järgi aga esimeses andmestikus on seejärel sorteeritud y-i järgi kasvavalt, teises andmestikus on y-i järgi kahanevalt.</li>
+<li>Mõlemad on sorteeritud esmalt <code>x</code> järgi aga esimeses andmestikus on seejärel sorteeritud y-i järgi kahanevalt, teises andmestikus on y-i järgi kasvavalt.</li>
+<li>Mõlemad andmestikud on täpselt samamoodi järjestatud.</li>
+</ol></li>
 </ul>
 <pre class="r"><code># Vaata vektorite x, y ja andmestiku xy sisu
 x; y; xy
@@ -163,8 +169,8 @@ xy2 &lt;- xy[_____, ]
 xy2
 
 
-# Ülesanne 3: Milles seisneb erinevus? (vastust kirjuta kommentaarina)
-# _____</code></pre>
+# Ülesanne 3: Milles seisneb erinevus? (vastuseks kirjuta õige väite number)
+oige_vaide &lt;- </code></pre>
 </div>
 </div>
 <div id="andmestiku-sorteerimine-kasvavalt" class="section level2" number="2.2">
@@ -250,9 +256,8 @@ _____(testid.pikk)</code></pre>
 </div>
 <div id="andmestiku-viimine-laia-formaati" class="section level2" number="3.2">
 <h2 number="3.2"><span class="header-section-number">3.2</span> Andmestiku viimine laia formaati</h2>
-<p>Lae alla andmestik <a href="https://github.com/Rkursus/mooc/raw/main/data/rotid.csv">rotid</a> ja loe andmestik töölauale nimega <code>rotid</code>.</p>
-<pre class="r"><code># file.choose() avab akna, kus saad andmestiku &#39;rotid.csv&#39; üles otsida
-rotid &lt;- read.csv(file.choose(), header = T, stringsAsFactors = F, 
+<p>Loe sisse andmestik <a href="https://github.com/Rkursus/mooc/raw/main/data/rotid.csv">rotid</a> nimega <code>rotid</code>.</p>
+<pre class="r"><code>rotid &lt;- read.csv(&#39;https://github.com/Rkursus/mooc/raw/main/data/rotid.csv&#39;, header = T, stringsAsFactors = F, 
                   colClasses = c(&quot;numeric&quot;, &quot;character&quot;, &quot;character&quot;, &quot;factor&quot;))</code></pre>
 <p>Rotid on jagatud 3 gruppi, iga grupp sai erinevat toitu (<code>Diet</code>). Sööda mõju uurimiseks kaaluti rotid korduvalt, mõõtmisajad on kirjas tunnuses <code>Time</code> (aeg päevades katse algusest) kaal grammides on toodud veerus <code>weight</code>.</p>
 <div id="ülesanded-6" class="section level3" number="3.2.1">

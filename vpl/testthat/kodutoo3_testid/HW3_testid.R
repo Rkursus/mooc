@@ -171,7 +171,7 @@ if(FALSE){
   xy2
   
   #3
-  ##
+  oige_vaide <- 2
 }
 
 ylesanne = "Ülesanne 2.1.1"
@@ -211,6 +211,18 @@ test_that(ylesanne,
             expect_true(length(grep("order\\(", tmp_part)) >= 2, 
                         info = paste0(ylesanne, ": mõlemas ülesandes on vaja kasutada käsku 'order'"),
                         label = paste0(ylesanne, " order() funktsiooni kontroll"))
+            
+            #3
+            expect_is(oige_vaide, 
+                      class = 'numeric',
+                      info = paste0(ülesanne, '.3: vastus pean olema antud numbrina.')
+                      )
+            
+            if(is.numeric(oige_vaide)){
+              expect_equal(object = oige_vaide,
+                           expected = 2,
+                           info = paste0(ylesanne, ".3: Antud vastus", oige_vaide," on Vale vastus. Proovi uuesti!"))
+            }
             
           })
 

@@ -124,7 +124,12 @@ xy <- data.frame(x, y)
 
 - **Ülesanne 1** Sorteeri andmestik `xy` kasvavalt `x` ja `y` järgi, kasuta selleks `order` käsku. Omista sorteeritud andmestik muuutujale `xy1`, prindi ekraanile.
 - **Ülesanne 2** Moodusta andmestik `xy2`, selleks anna andmestikule `xy` ridade järjestus ette käsuga `order(x, -y)`. Prindi tulemus ekraanile.
-- **Ülesanne 3** Võrdle kahte tulemust, milles seisneb erinevus? 
+- **Ülesanne 3** Võrdle kahte tulemust, milles seisneb erinevus? Vali õige väide:
+  
+    1. Esimeses andmestikus on sorteeritud andmestik `y`-i järgi kasvavalt, teises andmestikus on `y`-i järgi kahanevalt ning seejärel omakorda `x`-i järgi
+    1. Mõlemad on sorteeritud esmalt `x` järgi aga esimeses andmestikus on seejärel sorteeritud y-i järgi kasvavalt, teises andmestikus on y-i järgi kahanevalt.
+    1. Mõlemad on sorteeritud esmalt `x` järgi aga esimeses andmestikus on seejärel sorteeritud y-i järgi kahanevalt, teises andmestikus on y-i järgi kasvavalt.
+    1. Mõlemad andmestikud on täpselt samamoodi järjestatud.
 
 ```{r eval = F}
 # Vaata vektorite x, y ja andmestiku xy sisu
@@ -140,8 +145,8 @@ xy2 <- xy[_____, ]
 xy2
 
 
-# Ülesanne 3: Milles seisneb erinevus? (vastust kirjuta kommentaarina)
-# _____
+# Ülesanne 3: Milles seisneb erinevus? (vastuseks kirjuta õige väite number)
+oige_vaide <- 
 
 ```
 
@@ -246,11 +251,10 @@ _____(testid.pikk)
 
 ## Andmestiku viimine laia formaati
 
-Lae alla andmestik [rotid](https://github.com/Rkursus/mooc/raw/main/data/rotid.csv) ja loe andmestik töölauale nimega `rotid`. 
+Loe sisse andmestik [rotid](https://github.com/Rkursus/mooc/raw/main/data/rotid.csv) nimega `rotid`. 
 
 ```{r eval = F}
-# file.choose() avab akna, kus saad andmestiku 'rotid.csv' üles otsida
-rotid <- read.csv(file.choose(), header = T, stringsAsFactors = F, 
+rotid <- read.csv('https://github.com/Rkursus/mooc/raw/main/data/rotid.csv', header = T, stringsAsFactors = F, 
                   colClasses = c("numeric", "character", "character", "factor"))
 ```
 
