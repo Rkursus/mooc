@@ -3,143 +3,124 @@
 
 # ----- 1. Pakett dplyr - Andmestikku tunnuste lisamine -----
 
-A <- read.csv2("https://github.com/Rkursus/2020/raw/master/data/A.csv", nrows = 45)
-
-# Vaata andmestik üle:
-
-head(A)
+A <- read.csv2("https://github.com/Rkursus/mooc/raw/main/data/A.csv", nrows = 45)
 
 
 # 1.1 ÜLESANDED
 
-# Ülesande 1 lahendus
+# Vaata andmestik üle
+head(A)
 
-library(dplyr)
 
-# Ülesande 2 lahendus
+# Ülesanne 1: aktiveeri pakett
+_____________
 
-A1 <- mutate(A,
-             kmi = kaal/(kasv/100)^2,
-             kaalugrupp = ifelse(kmi <= 25, "ala voi normkaal", "ylekaal"))
 
-# Ülesande 3 lahendus
+# Ülesanne 2: lisa tunnused
+A1 <- mutate(___________________)
 
-str(A1)
+
+# Ülesanne 3: vaata tulemust
+____________
+
+
 
 
 ###% ----- 2. Pakett dplyr - Grupikokkuvõtete arvutamine -----
 
-# Vaata andmestik üle:
-
-str(A1)
-
 
 # 2.1 ÜLESANDED
 
-# Ülesande 1 lahendus
+# Vaata andmestik üle
+str(A1)
 
+
+# Ülesanne 1: leia tabel
 tabel <- A1 %>%   
-  group_by(sugu, elukoht) %>% 
-  summarise(n = n(),
-            kesk.vanus = mean(vanus),
-            kesk.kmi = mean(kmi),
-            visiit.osak = table(visiit)[2]/n)
+  ______________ %>% 
+  ____________________________
 tabel
 
-
-# Ülesande 2 lahendus
-
-# sugu = 1, elukoht = 0
+# Ülesanne 2: leia mis grupp on kõige madalama arstivisiidil käimise osakaaluga.
+sugu <- ___
+elukoht <- ___
 
 
 ###% ----- 3. Pakett dplyr - Mitmele tunnusele kirjeldavate karakteristikute leidmine -----
 
-B <- read.csv2("https://github.com/Rkursus/2020/raw/master/data/B.csv", nrows = 160)
-
-# Vaata üle tunnusenimed ja andmestiku dimensioonid:
-
-names(B)
-dim(B)
-
+B <- read.csv2("https://github.com/Rkursus/mooc/raw/main/data/B.csv", nrows = 160)
 
 # 3.1 ÜLESANDED
 
-# Ülesande 1 lahendus
+# Vaata üle tunnusenimed ja andmestiku dimensioonid
+names(B)
+dim(B)
 
-B1 <- B %>%
-  select(starts_with("test"))
+# Ülesanne 1: Alamandmestiku valik
+B1 <- __________________________________
 
-# Ülesande 2 lahendus
 
-library(reshape2)
 
+# Ülesanne 2: Täienda koodi
+library(____________)
 tabel <- B1 %>% 
-  melt() %>%  
-  group_by(variable) %>%  
-  summarise_all(.funs = c("mean", "sd", "min", "max"))
+  __________________  %>%  
+  _____________(___________)  %>%  
+  ______________(.funs = c("mean", "sd", "min", "max"))
 arrange(tabel, variable)
 
 
 ###% ----- 4. Pakett dplyr - Mitmele tunnusele teisenduse määramine -----
 
-antropo <- read.table("https://github.com/Rkursus/2020/raw/master/data/antropo.txt", header = T, sep = "\t")
-mass<- read.table("https://github.com/Rkursus/2020/raw/master/data/mass.txt", header = T, sep = "\t")
-
-# Tutvu andmestikega:
-
-str(mass)
-str(antropo)
+antropo <- read.table("https://github.com/Rkursus/mooc/raw/main/data/antropo.txt", header = T, sep = "\t")
+mass<- read.table("https://github.com/Rkursus/mooc/raw/main/data/mass.txt", header = T, sep = "\t")
 
 
 # 4.1 ÜLESANDED
 
-# Ülesande 1 lahendus
+# Tutvu andmestikega
+str(mass)
+str(antropo)
 
-mass_char <- mass %>%
-  mutate_if(.predicate = is.factor, .funs = as.character)
-str(mass_char)
+# Ülesanne 1: teisenda faktorid tavaliseks tekstiks
+_________ <-  __________ %>% mutate______(.predicate = __________, .funs = __________)
 
-# Ülesande 2 lahendus
 
-uus_funktsioon <- function(x) x/10
-antropo_cm_kg <- antropo %>%
-  mutate_at(.vars = vars(-SEX), .funs = uus_funktsioon)
+# Ülesanne 2: teisenda ühikud
+uus_funktsioon <- function(_____) ____________
+antropo_cm_kg <- _______  ____  mutate______(.vars = vars(-SEX), .funs = uus_funktsioon)
+
+
+
 
 
 ###% ----- 5. Pakett dplyr - Andmestike ühendamine -----
 
-A <- read.csv2("https://github.com/Rkursus/2020/raw/master/data/A.csv", nrows = 45)
-B <- read.csv2("https://github.com/Rkursus/2020/raw/master/data/B.csv", nrows = 160)
+A <- read.csv2("https://github.com/Rkursus/mooc/raw/main/data/A.csv", nrows = 45)
+B <- read.csv2("https://github.com/Rkursus/mooc/raw/main/data/B.csv", nrows = 160)
 B <- B[ , c("id", "grupp", sort(names(B)[-(1:2)]))]
-
-# Vaata anmdestikud üle:
-
-str(A)
-str(B)
 
 
 # 5.1 ÜLESANDED
 
-# Ülesande 1 lahendus
+# Vaata anmdestikud üle
+str(A)
+str(B)
 
-A1 <- A %>% 
-  mutate_if(.predicate = is.factor, .funs = as.character)
 
-B1 <- B %>% 
-  mutate_if(.predicate = is.factor, .funs = as.character)
+# Ülesanne 1:  Teisenda tunnuse tüüp
+A1 <- A %>% mutate_if(__________)
+B1 <- B %>% mutate_if(__________)
 
-str(A1)
-str(B1)
 
-# Ülesande 2 lahendus
+# Ülesanne 2: ühenda andmestikud
+AB1 <- ___ %>% _________________
 
-AB1 <- B1 %>% 
-  semi_join(A1, by = "id")
+# Ülesanne 3: ühenda andmestikud
+AB2 <- ___ %>% _________________
 
-# Ülesande 3 lahendus
 
-AB2 <- A1 %>%
-  inner_join(B1, by = "id")
+
 
 
 ###% ----- 6. Pakett data.table - Ridade filtreerimine ja veergude valik/defineerimine -----
@@ -147,78 +128,71 @@ AB2 <- A1 %>%
 
 # 6.1 ÜLESANDED
 
-# Ülesande 1 lahendus
-
-library(data.table)
-
+# Ülesanne 1: aktiveeri pakett
+_______________________
 class(A) # Mis tüüpi on andmestik A?
-A <- as.data.table(A)
-class(A) # Mis tüüpi nüüd? data.table ja data.frame
 
-# Ülesande 2 lahendus
+A <- as._________(A)
+class(A) # Mis tüüpi nüüd?
 
-tabel1 <- A[vanus > 50 & kaal > 80, 
-            .(kmi = kaal/(kasv/100)^2, sirutus)]
-tabel1
+# Ülesanne 2: tee valik objektidest ja vali/arvuta tunnused
+tabel1 <- A[______, ______]
+______
 
-# Ülesande 3 lahendus
+# Ülesanne 3: tee valik objektidest ja vali/arvuta tunnused gruppide kaupa
+tabel2 <- A[______, ______, ______]
+______
 
-tabel2 <- A[visiit == FALSE, 
-            .(kesk.vanus = mean(vanus), kesk.pikkus = mean(kasv)), 
-            by = list(sugu, elukoht)]
-tabel2
+
 
 
 ###% ----- 7. Pakett data.table - Tunnuse tüübi teisendus, sagedustabeli leidmine -----
 
-tekstid <- fread("https://github.com/Rkursus/2020/raw/master/data/tekstid.csv", nrow = 1000, encoding = "UTF-8", 
+tekstid <- fread("https://github.com/Rkursus/mooc/raw/main/data/tekstid.csv", nrow = 1000, encoding = "UTF-8", 
                  col.names = c("rubriik", "loigunr", "hinnang", "tekst"), select = c(1,3:5))
 tekstid <- tekstid[loigunr != "None", ] # eemaldame read, kus 'loigunr' puudub.
 
 
 # 7.1 ÜLESANDED
 
-# Ülesande 1 lahendus
+# Ülesanne 1: kontrolli, kas andmestik on data.table-tüüpi
+_______________________
 
-is.data.table(tekstid)
+# Ülesanne 2: tee tüübiteisendus
+tekstid[_________]
 
-# Ülesande 2 lahendus
 
-is.integer(tekstid$loigunr)
+# Ülesanne 3: vali read ja leia sagedused (ära pane veergudele uusi nimesid)
+valik <- tekstid[___________]
 
-tekstid[ , loigunr := as.integer(loigunr)]
 
-is.integer(tekstid$loigunr)
 
-# Ülesande 3 lahendus
-
-valik <- tekstid[loigunr > 2 & startsWith(tekst, "A"), .(n = .N), by = hinnang]
 
 
 ###% ----- 8. Töö tekstiga - Teksti esinemise kontroll -----
 
-library(stringr)
-
-# vaata andmestikku:
-
-str(tekstid)
-
 
 # 8.1 ÜLESANDED
 
-# Ülesande 1 lahendus
+library(stringr)
 
-esineb <- str_detect(tekstid$tekst, pattern = "[Ee]sti")
+# vaata andmestikku
+str(tekstid)
 
-# Ülesande 2 lahendus
 
-sagedustabel <- table(tekstid$hinnang, esineb)
+# Ülesanne 1: tuvasta stringi esinemine
+esineb <- _______________________
+
+# Ülesanne 2: sagedustabeli leidmine
+sagedustabel <- table(______________)
 sagedustabel
 
-# Ülesande 3 lahendus
-
-tinglikjaotus <- prop.table(sagedustabel, margin = 1)
+# Ülesanne 3: osakaalude leidmine
+tinglikjaotus <- __________________
 tinglikjaotus
+
+
+
 
 
 ###% ----- 9. Töö kuupäevadega - Date-tüüpi muutuja loomine -----
@@ -227,31 +201,31 @@ library(nlme)
 
 apelsinid <- as.data.frame(Orange)
 
-# Vaata andmestikku:
-
-head(apelsinid)
-
 
 # 9.1 ÜLESANDED
 
-# Ülesande 1 lahendus
+# Vaata andmestikku
+head(apelsinid)
 
-apelsinid$kuupaev <- as.Date(apelsinid$age, origin = "1968-12-31") 
 
-# Ülesande 2 lahendus
+# Ülesanne 1: Lisa kuupäeva tunnus andmestikku
+apelsinid$kuupaev <- _______________________
 
-ajad <- unique(apelsinid$kuupaev)
-ajad
 
-# Ülesande 3 lahendus
+# Ülesanne 2: Moodusta unikaalsete väärtuste vektor
+ajad <- ______(apelsinid$kuupaev)
 
-nadalad <- difftime(ajad, shift(ajad, n = 1, ajad[length(ajad)]), units = "weeks")
+
+# Ülesanne 3: Kui pikk on mõõtmistevaheline aeg nädalates?
+nadalad <- difftime(___________)
 nadalad
+
+
 
 
 ###% ----- 10. Töö kuupäevadega - Kuupäevade võrdlemine -----
 
-haigla <- read.csv2("https://github.com/Rkursus/sygis2019/raw/master/data/haigla.csv", colClasses = c("integer", "Date", "Date"))
+haigla <- read.csv2("https://github.com/Rkursus/mooc/raw/main/data/haigla.csv", colClasses = c("integer", "Date", "Date"))
 
 # Vaata andmestikku:
 str(haigla)
@@ -259,14 +233,16 @@ str(haigla)
 
 # 10.1 ÜLESANDED
 
-# Ülesande 1 lahendus
+# vaata andmestikku
+str(andmed)
 
-vead1 <- haigla[!is.na(haigla$haiglasse.kp) & 
-                  !is.na(haigla$haiglast.kp) & 
-                  haigla$haiglasse.kp > haigla$haiglast.kp, ]
+
+# Ülesanne 1: leia enne haiglasse tulekut lahkunud isikud
+vead1 <- _________________________________
 vead1
 
-# Ülesande 2 lahendus
 
-vead2 <- haigla[is.na(haigla$haiglast.kp), ]
+
+# Ülesanne 2: leia need, kelle haiglast lahkumise kuupäev pole teada
+vead2 <- _________________________________
 vead2
