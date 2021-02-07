@@ -3,6 +3,7 @@ library(testthat)
 # Helpful command, then whiespace differences will not show up (assumes 'filename' is provided)
 tmp_file = gsub(" ","", readLines(.submission,encoding="UTF-8"))
 
+
 # Split the submission by exercises, to that previous results would not interfere
 tmp_parts = split(tmp_file, cumsum(stringr::str_detect(tmp_file, "^###%")))
 
@@ -11,13 +12,58 @@ context("Kodutöö 1 kontroll")
 
 
 # Ülesanne 2.1.1 õige lahendus -----
+if(FALSE){
+  25 - (1/4) + (5/9)
+  (sqrt(3) + 4)/5
+  (245 - 3^6)^2
+  (log(3) + 4)/55
+}
+
 
 ylesanne = "Ülesanne 2.01.1"
 yl = 1
 
 test_that(ylesanne, 
           {
-            succeed()
+            correct_answers = c(25 - (1/4) + (5/9),
+                                (sqrt(3) + 4)/5,
+                                (245 - 3^6)^2,
+                                (log(3) + 4)/55)
+            
+            # First test if exercise code runs without errors
+            code_run_test(list(tmp_parts[[yl]]), ylesanne)
+            
+            # Evaluate submission answers
+            submitted_answers = NULL
+            for(i in 1:length(tmp_parts[[yl]])){
+              tmp = eval(parse(text = tmp_parts[[yl]][i]))
+              if(is.null(tmp)) next
+
+              submitted_answers = c(submitted_answers, tmp)
+            }
+            
+            # Check if all correct answers are submitted
+            submission_test = correct_answers %in% tmp_answers
+            
+            #1
+            expect_true(submission_test[1],       # juht: 25 - (1/4) + (5/9)
+                        info = paste0(ylesanne, ".1: Esimeses arvutuses on viga"),
+                        label = paste0(ylesanne, " Esimese tehte kontroll"))
+            
+            #2
+            expect_true(submission_test[2],       # juht: (sqrt(3) + 4)/5
+                        info = paste0(ylesanne, ".1: Teises arvutuses on viga"),
+                        label = paste0(ylesanne, " Teise tehte kontroll"))
+            
+            #3
+            expect_true(submission_test[3],       # juht: (245 - 3^6)^2
+                        info = paste0(ylesanne, ".1: Kolmandas arvutuses on viga"),
+                        label = paste0(ylesanne, " Kolmanda tehte kontroll"))
+            
+            #4
+            expect_true(submission_test[4],       # juht: (log(3) + 4)/55)
+                        info = paste0(ylesanne, ".1: Neljandas arvutuses on viga"),
+                        label = paste0(ylesanne, " Neljanda tehte kontroll"))
           })
 
 # Ülesanne 2.2.1 õige lahendus -----
